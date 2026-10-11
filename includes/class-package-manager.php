@@ -112,7 +112,28 @@ class Package_Manager {
 	 * @return array|\WP_Error Parsed manifest.
 	 */
 	public static function import( $package_id, $zip_path ) {
-		$extracted = Storage::extract( $zip_path, $package_id );
+		return self::finish_import( $package_id, Storage::extract( $zip_path, $package_id ) );
+	}
+
+	/**
+	 * Import an already extracted SCORM folder (used by course bundles).
+	 *
+	 * @param int    $package_id Package post ID.
+	 * @param string $directory  Folder containing imsmanifest.xml.
+	 * @return array|\WP_Error Parsed manifest.
+	 */
+	public static function import_directory( $package_id, $directory ) {
+		return self::finish_import( $package_id, Storage::copy_directory( $directory, $package_id ) );
+	}
+
+	/**
+	 * Parse the manifest of freshly stored files and attach them to the package.
+	 *
+	 * @param int            $package_id Package post ID.
+	 * @param array|\WP_Error $extracted  Result of Storage::extract() / copy_directory().
+	 * @return array|\WP_Error Parsed manifest.
+	 */
+	private static function finish_import( $package_id, $extracted ) {
 		if ( is_wp_error( $extracted ) ) {
 			return $extracted;
 		}

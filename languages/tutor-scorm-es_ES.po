@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Tutor SCORM 1.0.0\n"
+"Project-Id-Version: Tutor SCORM 1.1.0\n"
 "POT-Creation-Date: 2026-10-11 00:00+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Language: es_ES\n"
@@ -9,6 +9,141 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: tutor-scorm\n"
+
+msgid "Tutor LMS must be active to import courses."
+msgstr "Tutor LMS debe estar activo para importar cursos."
+
+msgid "The outline file %1$s is not valid: %2$s"
+msgstr "El archivo de estructura %1$s no es válido: %2$s"
+
+msgid "No outline file (outline.csv or outline.json) and no SCORM packages were found in the ZIP."
+msgstr "El ZIP no contiene un archivo de estructura (outline.csv u outline.json) ni paquetes SCORM."
+
+msgid "No outline file was found: one lesson was created for each SCORM package in the ZIP."
+msgstr "No se encontró archivo de estructura: se creó una lección por cada paquete SCORM del ZIP."
+
+msgid "The selected course does not exist."
+msgstr "El curso seleccionado no existe."
+
+msgid "Imported SCORM course"
+msgstr "Curso SCORM importado"
+
+msgid "No SCORM package was specified for this lesson."
+msgstr "No se indicó paquete SCORM para esta lección."
+
+msgid "The SCORM package \"%s\" was not found in the ZIP."
+msgstr "No se encontró el paquete SCORM «%s» en el ZIP."
+
+msgid "\"%s\" is not a ZIP file or a folder."
+msgstr "«%s» no es un archivo ZIP ni una carpeta."
+
+msgid "Import SCORM course"
+msgstr "Importar curso SCORM"
+
+msgid "Upload a ZIP that contains an outline file and one SCORM package per lesson. The course, its topics and lessons are created in Tutor LMS and each lesson gets its SCORM package."
+msgstr "Sube un ZIP con un archivo de estructura y un paquete SCORM por lección. Se crean en Tutor LMS el curso, sus temas y lecciones, y cada lección recibe su paquete SCORM."
+
+msgid "Course ZIP"
+msgstr "ZIP del curso"
+
+msgid "Maximum upload size: %s."
+msgstr "Tamaño máximo de subida: %s."
+
+msgid "Select ZIP"
+msgstr "Seleccionar ZIP"
+
+msgid "Or a ZIP uploaded by FTP:"
+msgstr "O un ZIP subido por FTP:"
+
+msgid "— None —"
+msgstr "— Ninguno —"
+
+msgid "For very large courses, upload the ZIP by FTP to %s or use WP-CLI: wp tutor-scorm import-course course.zip"
+msgstr "Para cursos muy grandes, sube el ZIP por FTP a %s o usa WP-CLI: wp tutor-scorm import-course curso.zip"
+
+msgid "Destination"
+msgstr "Destino"
+
+msgid "Create a new course"
+msgstr "Crear un curso nuevo"
+
+msgid "Add to: %s"
+msgstr "Añadir a: %s"
+
+msgid "New course status"
+msgstr "Estado del curso nuevo"
+
+msgid "Draft (review before publishing)"
+msgstr "Borrador (revisar antes de publicar)"
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "Import course"
+msgstr "Importar curso"
+
+msgid "ZIP structure"
+msgstr "Estructura del ZIP"
+
+msgid "(or outline.json)"
+msgstr "(o outline.json)"
+
+msgid "← SCORM exported from your authoring tool"
+msgstr "← SCORM exportado desde tu herramienta de autor"
+
+msgid "← or the same SCORM already unzipped (with imsmanifest.xml)"
+msgstr "← o el mismo SCORM ya descomprimido (con imsmanifest.xml)"
+
+msgid "outline.csv has one row per lesson. Columns: course, topic, lesson, scorm (path inside the ZIP) and content (optional text shown above the player). Spanish headers (curso, tema, leccion, scorm, contenido) also work. Separate with commas or semicolons."
+msgstr "outline.csv tiene una fila por lección. Columnas: curso, tema, leccion, scorm (ruta dentro del ZIP) y contenido (texto opcional que se muestra encima del reproductor). También valen los encabezados en inglés (course, topic, lesson, scorm, content). Separa con comas o punto y coma."
+
+msgid "Download outline.csv template"
+msgstr "Descargar plantilla outline.csv"
+
+msgid "Download outline.json template"
+msgstr "Descargar plantilla outline.json"
+
+msgid "If the ZIP has no outline file, one lesson is created for each SCORM ZIP or folder found at the top level, in alphabetical order."
+msgstr "Si el ZIP no tiene archivo de estructura, se crea una lección por cada ZIP o carpeta SCORM del primer nivel, en orden alfabético."
+
+msgid "Course \"%1$s\": %2$d topic(s) and %3$d lesson(s) imported."
+msgstr "Curso «%1$s»: %2$d tema(s) y %3$d lección(es) importados."
+
+msgid "Edit course"
+msgstr "Editar curso"
+
+msgid "View course"
+msgstr "Ver curso"
+
+msgid "Topic"
+msgstr "Tema"
+
+msgid "Lesson"
+msgstr "Lección"
+
+msgid "SCORM package"
+msgstr "Paquete SCORM"
+
+msgid "Result"
+msgstr "Resultado"
+
+msgid "The ZIP is larger than the server allows (post_max_size). Upload it by FTP to wp-content/uploads/tutor-scorm-inbox/ or use WP-CLI."
+msgstr "El ZIP supera el tamaño que permite el servidor (post_max_size). Súbelo por FTP a wp-content/uploads/tutor-scorm-inbox/ o usa WP-CLI."
+
+msgid "You are not allowed to import courses."
+msgstr "No tienes permiso para importar cursos."
+
+msgid "The ZIP file could not be uploaded. Check the server upload_max_filesize and post_max_size limits."
+msgstr "No se pudo subir el archivo ZIP. Revisa los límites upload_max_filesize y post_max_size del servidor."
+
+msgid "Please upload a .zip file."
+msgstr "Sube un archivo .zip."
+
+msgid "The selected Media Library file is not a ZIP archive."
+msgstr "El archivo seleccionado de la biblioteca de medios no es un ZIP."
+
+msgid "Choose a ZIP file to import."
+msgstr "Elige un archivo ZIP para importar."
 
 msgid "SCORM Packages"
 msgstr "Paquetes SCORM"
@@ -42,9 +177,6 @@ msgstr "Manifiesto SCORM no válido: %s"
 
 msgid "The manifest references files outside of the package."
 msgstr "El manifiesto hace referencia a archivos fuera del paquete."
-
-msgid "SCORM package"
-msgstr "Paquete SCORM"
 
 msgid "Tutor LMS lessons"
 msgstr "Lecciones de Tutor LMS"
@@ -85,14 +217,8 @@ msgstr "Sube un archivo ZIP exportado como SCORM 1.2 o SCORM 2004 desde tu herra
 msgid "Upload ZIP"
 msgstr "Subir ZIP"
 
-msgid "Maximum upload size: %s."
-msgstr "Tamaño máximo de subida: %s."
-
 msgid "Or use a ZIP from the Media Library"
 msgstr "O usa un ZIP de la biblioteca de medios"
-
-msgid "Select ZIP"
-msgstr "Seleccionar ZIP"
 
 msgid "Activate Tutor LMS to attach this package to lessons. You can still embed it anywhere with the shortcode."
 msgstr "Activa Tutor LMS para asignar este paquete a lecciones. Aun así puedes insertarlo en cualquier lugar con el shortcode."
@@ -105,15 +231,6 @@ msgstr "Selecciona las lecciones que deben mostrar este paquete. El reproductor 
 
 msgid "Hold Ctrl (Cmd on Mac) to select several lessons. Alternatively, paste the shortcode into the lesson content from the Tutor course builder."
 msgstr "Mantén pulsado Ctrl (Cmd en Mac) para seleccionar varias lecciones. También puedes pegar el shortcode en el contenido de la lección desde el constructor de cursos de Tutor."
-
-msgid "The ZIP file could not be uploaded. Check the server upload_max_filesize and post_max_size limits."
-msgstr "No se pudo subir el archivo ZIP. Revisa los límites upload_max_filesize y post_max_size del servidor."
-
-msgid "Please upload a .zip file."
-msgstr "Sube un archivo .zip."
-
-msgid "The selected Media Library file is not a ZIP archive."
-msgstr "El archivo seleccionado de la biblioteca de medios no es un ZIP."
 
 msgid "SCORM %1$s package imported with %2$d launchable item(s)."
 msgstr "Paquete SCORM %1$s importado con %2$d elemento(s) ejecutable(s)."
@@ -353,9 +470,6 @@ msgstr "Exporta cada curso desde tu herramienta de autor como SCORM 1.2 o SCORM 
 msgid "No lessons with xAPI content were found."
 msgstr "No se encontraron lecciones con contenido xAPI."
 
-msgid "Lesson"
-msgstr "Lección"
-
 msgid "Course"
 msgstr "Curso"
 
@@ -374,6 +488,9 @@ msgstr "No se pudo crear la carpeta de almacenamiento SCORM en wp-content/upload
 msgid "The uploaded file is not a valid ZIP archive."
 msgstr "El archivo subido no es un ZIP válido."
 
+msgid "The ZIP file is empty."
+msgstr "El archivo ZIP está vacío."
+
 msgid "imsmanifest.xml was not found. Make sure you export the course as a SCORM 1.2 or SCORM 2004 package."
 msgstr "No se encontró imsmanifest.xml. Asegúrate de exportar el curso como paquete SCORM 1.2 o SCORM 2004."
 
@@ -386,8 +503,8 @@ msgstr "No se pudo crear la carpeta del paquete."
 msgid "The package could not be extracted."
 msgstr "No se pudo descomprimir el paquete."
 
-msgid "— None —"
-msgstr "— Ninguno —"
+msgid "The SCORM folder does not exist."
+msgstr "La carpeta SCORM no existe."
 
 msgid "The SCORM player is shown after the lesson content and completes the lesson automatically."
 msgstr "El reproductor SCORM se muestra después del contenido de la lección y la completa automáticamente."

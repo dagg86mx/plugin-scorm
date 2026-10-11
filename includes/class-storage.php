@@ -95,9 +95,11 @@ class Storage {
 	 *
 	 * @param string $zip_path   Path to the ZIP file.
 	 * @param int    $package_id Package post ID.
+	 * @param bool   $require_manifest Whether imsmanifest.xml must be present (false for course bundles).
+	 * @param string $prefix     Folder name prefix (defaults to the package ID).
 	 * @return array|\WP_Error { dir: relative folder name, root: sub folder containing imsmanifest.xml, skipped: int }
 	 */
-	public static function extract( $zip_path, $package_id ) {
+	public static function extract( $zip_path, $package_id, $require_manifest = true, $prefix = '' ) {
 		if ( ! class_exists( 'ZipArchive' ) ) {
 			return new \WP_Error( 'tutor_scorm_no_zip', __( 'The PHP ZipArchive extension is required to import SCORM packages.', 'tutor-scorm' ) );
 		}
@@ -137,20 +139,14 @@ class Storage {
 			$total_size += (int) $stat['size'];
 			$entries[]   = $name;
 
-			$normalized = str_replace( '\\', '/', $name );
-			if ( 'imsmanifest.xml' === strtolower( basename( $normalized ) ) ) {
-				// Prefer the shallowest manifest (packages zipped with an enclosing folder).
-				$folder = dirname( $normalized );
-				$folder = ( '.' === $folder ) ? '' : $folder;
-				$depth  = ( '' === $folder ) ? 0 : substr_count( $folder, '/' ) + 1;
-				if ( null === $manifest_root || $depth < $manifest_depth ) {
-					$manifest_root  = $folder;
-					$manifest_depth = $depth;
-				}
-			}
+			self::track_manifest( $name, $manifest_root, $manifest_depth );
 		}
 
-		if ( null === $manifest_root ) {
+		if ( ! $entries ) {
+			$zip->close();
+			return new \WP_Error( 'tutor_scorm_empty_zip', __( 'The ZIP file is empty.', 'tutor-scorm' ) );
+		}
+		if ( null === $manifest_root && $require_manifest ) {
 			$zip->close();
 			return new \WP_Error( 'tutor_scorm_no_manifest', __( 'imsmanifest.xml was not found. Make sure you export the course as a SCORM 1.2 or SCORM 2004 package.', 'tutor-scorm' ) );
 		}
@@ -159,7 +155,7 @@ class Storage {
 			return new \WP_Error( 'tutor_scorm_too_big', __( 'The package is too large once uncompressed.', 'tutor-scorm' ) );
 		}
 
-		$folder = absint( $package_id ) . '-' . strtolower( wp_generate_password( 16, false, false ) );
+		$folder = ( '' !== $prefix ? $prefix : absint( $package_id ) ) . '-' . strtolower( wp_generate_password( 16, false, false ) );
 		$target = self::base_dir() . '/' . $folder;
 		if ( ! wp_mkdir_p( $target ) ) {
 			$zip->close();
@@ -175,7 +171,88 @@ class Storage {
 
 		return array(
 			'dir'     => $folder,
-			'root'    => $manifest_root,
+			'root'    => (string) $manifest_root,
+			'skipped' => $skipped,
+		);
+	}
+
+	/**
+	 * Remember the shallowest imsmanifest.xml (packages are often zipped with an enclosing folder).
+	 */
+	private static function track_manifest( $name, &$root, &$depth ) {
+		$normalized = str_replace( '\\', '/', $name );
+		if ( 'imsmanifest.xml' !== strtolower( basename( $normalized ) ) ) {
+			return;
+		}
+		$folder = dirname( $normalized );
+		$folder = ( '.' === $folder ) ? '' : $folder;
+		$level  = ( '' === $folder ) ? 0 : substr_count( $folder, '/' ) + 1;
+		if ( null === $root || $level < $depth ) {
+			$root  = $folder;
+			$depth = $level;
+		}
+	}
+
+	/**
+	 * Extract a course bundle into a temporary folder inside the storage dir.
+	 *
+	 * @return string|\WP_Error Absolute path of the temporary folder.
+	 */
+	public static function extract_bundle( $zip_path ) {
+		$result = self::extract( $zip_path, 0, false, '_import' );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		return self::base_dir() . '/' . $result['dir'];
+	}
+
+	/**
+	 * Copy an already extracted SCORM folder (e.g. from a course bundle) into a fresh package folder.
+	 *
+	 * @param string $source     Absolute folder containing imsmanifest.xml (at any depth).
+	 * @param int    $package_id Package post ID.
+	 * @return array|\WP_Error Same structure as extract().
+	 */
+	public static function copy_directory( $source, $package_id ) {
+		$source = rtrim( $source, '/' );
+		self::ensure_base_dir();
+		if ( ! is_dir( $source ) ) {
+			return new \WP_Error( 'tutor_scorm_no_folder', __( 'The SCORM folder does not exist.', 'tutor-scorm' ) );
+		}
+		$files          = array();
+		$skipped        = 0;
+		$manifest_root  = null;
+		$manifest_depth = PHP_INT_MAX;
+		$iterator       = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $source, \FilesystemIterator::SKIP_DOTS ) );
+		foreach ( $iterator as $file ) {
+			if ( $file->isLink() || ! $file->isFile() ) {
+				continue;
+			}
+			$relative = ltrim( str_replace( '\\', '/', substr( $file->getPathname(), strlen( $source ) ) ), '/' );
+			if ( ! self::is_safe_entry( $relative ) ) {
+				++$skipped;
+				continue;
+			}
+			$files[] = $relative;
+			self::track_manifest( $relative, $manifest_root, $manifest_depth );
+		}
+		if ( null === $manifest_root ) {
+			return new \WP_Error( 'tutor_scorm_no_manifest', __( 'imsmanifest.xml was not found. Make sure you export the course as a SCORM 1.2 or SCORM 2004 package.', 'tutor-scorm' ) );
+		}
+
+		$folder = absint( $package_id ) . '-' . strtolower( wp_generate_password( 16, false, false ) );
+		$target = self::base_dir() . '/' . $folder;
+		foreach ( $files as $relative ) {
+			$destination = $target . '/' . $relative;
+			if ( ! wp_mkdir_p( dirname( $destination ) ) || ! copy( $source . '/' . $relative, $destination ) ) {
+				self::delete_dir( $folder );
+				return new \WP_Error( 'tutor_scorm_extract', __( 'The package could not be extracted.', 'tutor-scorm' ) );
+			}
+		}
+
+		return array(
+			'dir'     => $folder,
+			'root'    => (string) $manifest_root,
 			'skipped' => $skipped,
 		);
 	}

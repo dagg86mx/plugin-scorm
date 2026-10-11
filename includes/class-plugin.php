@@ -13,6 +13,8 @@ class Plugin {
 
 	private static $instance = null;
 
+	private $import_hook = '';
+
 	public static function instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -29,6 +31,7 @@ class Plugin {
 		Player::init();
 		REST_Controller::init();
 		Reports::init();
+		Course_Importer::init();
 
 		add_action( 'admin_init', array( 'TutorScorm\\Settings', 'register' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
@@ -48,13 +51,14 @@ class Plugin {
 
 	public function admin_menu() {
 		$parent = self::parent_menu();
+		$this->import_hook = (string) add_submenu_page( $parent, __( 'Import SCORM course', 'tutor-scorm' ), __( 'Import SCORM course', 'tutor-scorm' ), Settings::capability(), Course_Importer::PAGE, array( 'TutorScorm\\Course_Importer', 'render_page' ) );
 		add_submenu_page( $parent, __( 'SCORM Reports', 'tutor-scorm' ), __( 'SCORM Reports', 'tutor-scorm' ), Reports::capability(), 'tutor-scorm-reports', array( 'TutorScorm\\Reports', 'render_page' ) );
 		add_submenu_page( $parent, __( 'SCORM Settings', 'tutor-scorm' ), __( 'SCORM Settings', 'tutor-scorm' ), 'manage_options', 'tutor-scorm-settings', array( 'TutorScorm\\Settings', 'render_page' ) );
 	}
 
 	public function admin_assets( $hook ) {
 		$screen = get_current_screen();
-		if ( $screen && Package_Manager::POST_TYPE === $screen->post_type && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+		if ( ( $screen && Package_Manager::POST_TYPE === $screen->post_type && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) || ( $this->import_hook && $hook === $this->import_hook ) ) {
 			wp_enqueue_media();
 			wp_enqueue_script( 'tutor-scorm-admin', TUTOR_SCORM_URL . 'assets/js/admin.js', array( 'jquery' ), TUTOR_SCORM_VERSION, true );
 			wp_localize_script(

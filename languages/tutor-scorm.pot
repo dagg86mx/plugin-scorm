@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Tutor SCORM 1.0.0\n"
+"Project-Id-Version: Tutor SCORM 1.1.0\n"
 "POT-Creation-Date: 2026-10-11 00:00+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Language: \n"
@@ -9,6 +9,141 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: tutor-scorm\n"
+
+msgid "Tutor LMS must be active to import courses."
+msgstr ""
+
+msgid "The outline file %1$s is not valid: %2$s"
+msgstr ""
+
+msgid "No outline file (outline.csv or outline.json) and no SCORM packages were found in the ZIP."
+msgstr ""
+
+msgid "No outline file was found: one lesson was created for each SCORM package in the ZIP."
+msgstr ""
+
+msgid "The selected course does not exist."
+msgstr ""
+
+msgid "Imported SCORM course"
+msgstr ""
+
+msgid "No SCORM package was specified for this lesson."
+msgstr ""
+
+msgid "The SCORM package \"%s\" was not found in the ZIP."
+msgstr ""
+
+msgid "\"%s\" is not a ZIP file or a folder."
+msgstr ""
+
+msgid "Import SCORM course"
+msgstr ""
+
+msgid "Upload a ZIP that contains an outline file and one SCORM package per lesson. The course, its topics and lessons are created in Tutor LMS and each lesson gets its SCORM package."
+msgstr ""
+
+msgid "Course ZIP"
+msgstr ""
+
+msgid "Maximum upload size: %s."
+msgstr ""
+
+msgid "Select ZIP"
+msgstr ""
+
+msgid "Or a ZIP uploaded by FTP:"
+msgstr ""
+
+msgid "— None —"
+msgstr ""
+
+msgid "For very large courses, upload the ZIP by FTP to %s or use WP-CLI: wp tutor-scorm import-course course.zip"
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Create a new course"
+msgstr ""
+
+msgid "Add to: %s"
+msgstr ""
+
+msgid "New course status"
+msgstr ""
+
+msgid "Draft (review before publishing)"
+msgstr ""
+
+msgid "Published"
+msgstr ""
+
+msgid "Import course"
+msgstr ""
+
+msgid "ZIP structure"
+msgstr ""
+
+msgid "(or outline.json)"
+msgstr ""
+
+msgid "← SCORM exported from your authoring tool"
+msgstr ""
+
+msgid "← or the same SCORM already unzipped (with imsmanifest.xml)"
+msgstr ""
+
+msgid "outline.csv has one row per lesson. Columns: course, topic, lesson, scorm (path inside the ZIP) and content (optional text shown above the player). Spanish headers (curso, tema, leccion, scorm, contenido) also work. Separate with commas or semicolons."
+msgstr ""
+
+msgid "Download outline.csv template"
+msgstr ""
+
+msgid "Download outline.json template"
+msgstr ""
+
+msgid "If the ZIP has no outline file, one lesson is created for each SCORM ZIP or folder found at the top level, in alphabetical order."
+msgstr ""
+
+msgid "Course \"%1$s\": %2$d topic(s) and %3$d lesson(s) imported."
+msgstr ""
+
+msgid "Edit course"
+msgstr ""
+
+msgid "View course"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Lesson"
+msgstr ""
+
+msgid "SCORM package"
+msgstr ""
+
+msgid "Result"
+msgstr ""
+
+msgid "The ZIP is larger than the server allows (post_max_size). Upload it by FTP to wp-content/uploads/tutor-scorm-inbox/ or use WP-CLI."
+msgstr ""
+
+msgid "You are not allowed to import courses."
+msgstr ""
+
+msgid "The ZIP file could not be uploaded. Check the server upload_max_filesize and post_max_size limits."
+msgstr ""
+
+msgid "Please upload a .zip file."
+msgstr ""
+
+msgid "The selected Media Library file is not a ZIP archive."
+msgstr ""
+
+msgid "Choose a ZIP file to import."
+msgstr ""
 
 msgid "SCORM Packages"
 msgstr ""
@@ -41,9 +176,6 @@ msgid "Invalid SCORM manifest: %s"
 msgstr ""
 
 msgid "The manifest references files outside of the package."
-msgstr ""
-
-msgid "SCORM package"
 msgstr ""
 
 msgid "Tutor LMS lessons"
@@ -85,13 +217,7 @@ msgstr ""
 msgid "Upload ZIP"
 msgstr ""
 
-msgid "Maximum upload size: %s."
-msgstr ""
-
 msgid "Or use a ZIP from the Media Library"
-msgstr ""
-
-msgid "Select ZIP"
 msgstr ""
 
 msgid "Activate Tutor LMS to attach this package to lessons. You can still embed it anywhere with the shortcode."
@@ -104,15 +230,6 @@ msgid "Select the lessons that should display this package. The player is added 
 msgstr ""
 
 msgid "Hold Ctrl (Cmd on Mac) to select several lessons. Alternatively, paste the shortcode into the lesson content from the Tutor course builder."
-msgstr ""
-
-msgid "The ZIP file could not be uploaded. Check the server upload_max_filesize and post_max_size limits."
-msgstr ""
-
-msgid "Please upload a .zip file."
-msgstr ""
-
-msgid "The selected Media Library file is not a ZIP archive."
 msgstr ""
 
 msgid "SCORM %1$s package imported with %2$d launchable item(s)."
@@ -353,9 +470,6 @@ msgstr ""
 msgid "No lessons with xAPI content were found."
 msgstr ""
 
-msgid "Lesson"
-msgstr ""
-
 msgid "Course"
 msgstr ""
 
@@ -374,6 +488,9 @@ msgstr ""
 msgid "The uploaded file is not a valid ZIP archive."
 msgstr ""
 
+msgid "The ZIP file is empty."
+msgstr ""
+
 msgid "imsmanifest.xml was not found. Make sure you export the course as a SCORM 1.2 or SCORM 2004 package."
 msgstr ""
 
@@ -386,7 +503,7 @@ msgstr ""
 msgid "The package could not be extracted."
 msgstr ""
 
-msgid "— None —"
+msgid "The SCORM folder does not exist."
 msgstr ""
 
 msgid "The SCORM player is shown after the lesson content and completes the lesson automatically."

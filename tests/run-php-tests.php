@@ -14,6 +14,7 @@ function wp_parse_url( $url, $component = -1 ) { return parse_url( $url, $compon
 function wp_check_invalid_utf8( $s ) { return $s; }
 
 require dirname( __DIR__ ) . '/includes/class-manifest-parser.php';
+require dirname( __DIR__ ) . '/includes/class-outline-parser.php';
 require dirname( __DIR__ ) . '/includes/class-time.php';
 require dirname( __DIR__ ) . '/includes/class-settings.php';
 require dirname( __DIR__ ) . '/includes/class-storage.php';
@@ -21,6 +22,7 @@ require dirname( __DIR__ ) . '/includes/class-tracking.php';
 require dirname( __DIR__ ) . '/includes/class-package-manager.php';
 
 use TutorScorm\Manifest_Parser;
+use TutorScorm\Outline_Parser;
 use TutorScorm\Time;
 use TutorScorm\Storage;
 use TutorScorm\Tracking;
@@ -79,6 +81,56 @@ foreach ( array(
 // Parameters.
 check( 'params hash', Manifest_Parser::append_parameters( 'a.html', '#p1' ), 'a.html#p1' );
 check( 'params amp', Manifest_Parser::append_parameters( 'a.html?x=1#h', '&y=2' ), 'a.html?x=1&y=2#h' );
+
+// Outline: CSV with Spanish headers, semicolons and grouping.
+$o = Outline_Parser::parse_csv( "\xEF\xBB\xBFCurso;Tema;Lección;Paquete;Contenido\nMi curso;Módulo 1;Intro;mod1/intro.zip;Hola\n;Módulo 1;Conceptos;./mod1\\conceptos/;\n;Módulo 2;Examen;mod2/examen.zip;\"Texto; con punto y coma\"\n\n" );
+check( 'csv course title', $o['course']['title'], 'Mi curso' );
+check( 'csv topics', count( $o['topics'] ), 2 );
+check( 'csv topic title', $o['topics'][0]['title'], 'Módulo 1' );
+check( 'csv lessons in topic 1', count( $o['topics'][0]['lessons'] ), 2 );
+check( 'csv path normalized', $o['topics'][0]['lessons'][1]['scorm'], 'mod1/conceptos' );
+check( 'csv quoted content', $o['topics'][1]['lessons'][0]['content'], 'Texto; con punto y coma' );
+
+// Outline: CSV in Windows-1252 (Excel) with English headers.
+$o = Outline_Parser::parse_csv( mb_convert_encoding( "topic,lesson,scorm\nSección,Lección única,a.zip\n", 'Windows-1252', 'UTF-8' ) );
+check( 'csv cp1252 converted', $o['topics'][0]['lessons'][0]['title'], 'Lección única' );
+check( 'csv cp1252 topic', $o['topics'][0]['title'], 'Sección' );
+
+// Outline: CSV with only a scorm column, no topic.
+$o = Outline_Parser::parse_csv( "scorm\na.zip\nb.zip\n" );
+check( 'csv scorm-only lessons', count( $o['topics'][0]['lessons'] ), 2 );
+check( 'csv default topic title', $o['topics'][0]['title'], '' );
+
+// Outline: nested JSON with Spanish keys.
+$o = Outline_Parser::parse_json( '{"curso":{"titulo":"Curso JSON","descripcion":"<p>x</p>"},"temas":[{"titulo":"T1","lecciones":[{"titulo":"L1","scorm":"t1/l1.zip"},"t1/l2"]},{"titulo":"Vacío","lecciones":[]}]}' );
+check( 'json course', $o['course']['title'], 'Curso JSON' );
+check( 'json description', $o['course']['description'], '<p>x</p>' );
+check( 'json empty topic dropped', count( $o['topics'] ), 1 );
+check( 'json string lesson', $o['topics'][0]['lessons'][1]['scorm'], 't1/l2' );
+
+// Outline: flat JSON lessons with topic field.
+$o = Outline_Parser::parse_json( '{"title":"Flat","lessons":[{"topic":"A","title":"1","scorm":"1.zip"},{"topic":"B","title":"2","scorm":"2.zip"},{"topic":"A","title":"3","scorm":"3.zip"}]}' );
+check( 'json flat grouping', array( count( $o['topics'] ), count( $o['topics'][0]['lessons'] ) ), array( 2, 2 ) );
+check( 'json flat course title', $o['course']['title'], 'Flat' );
+
+// Outline: unsafe paths and errors.
+check( 'path traversal rejected', Outline_Parser::normalize_path( '../../etc/passwd' ), '' );
+check( 'path url rejected', Outline_Parser::normalize_path( 'http://x/y.zip' ), '' );
+check( 'path ok', Outline_Parser::normalize_path( '/a//b/./c.zip' ), 'a/b/c.zip' );
+foreach ( array(
+	'bad json'    => array( 'json', '{nope' ),
+	'no lessons'  => array( 'json', '{"topics":[]}' ),
+	'csv no cols' => array( 'csv', "foo,bar\n1,2\n" ),
+	'csv empty'   => array( 'csv', "\n\n" ),
+) as $label => $case ) {
+	$threw = false;
+	try {
+		'json' === $case[0] ? Outline_Parser::parse_json( $case[1] ) : Outline_Parser::parse_csv( $case[1] );
+	} catch ( RuntimeException $e ) {
+		$threw = true;
+	}
+	check( "outline rejects {$label}", $threw, true );
+}
 
 // Time.
 check( 'time 1.2 to seconds', Time::to_seconds( '0001:02:03.50' ), 3723.5 );

@@ -36,6 +36,13 @@ class Tutor_Integration {
 		return 'courses';
 	}
 
+	public static function topic_post_type() {
+		if ( function_exists( 'tutor' ) && isset( tutor()->topics_post_type ) ) {
+			return tutor()->topics_post_type;
+		}
+		return 'topics';
+	}
+
 	public static function is_lesson( $post_id ) {
 		return $post_id && get_post_type( $post_id ) === self::lesson_post_type();
 	}
