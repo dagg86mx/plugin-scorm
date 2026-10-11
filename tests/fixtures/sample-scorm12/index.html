@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample SCORM 1.2 SCO</title>
+<style>body{font-family:sans-serif;padding:24px}button{margin:4px;padding:8px 16px}</style>
+</head>
+<body>
+<h1>Sample SCORM 1.2 SCO</h1>
+<p>Learner: <strong id="learner"></strong> &middot; Entry: <code id="entry"></code> &middot; Visits: <code id="visits"></code></p>
+<button id="pass">Score 90 &amp; finish</button>
+<button id="fail">Score 40 &amp; finish</button>
+<button id="suspend">Suspend</button>
+<p id="log"></p>
+<script>
+function findAPI(win) {
+	var tries = 0;
+	while (win && !win.API && win.parent && win.parent !== win && tries++ < 10) { win = win.parent; }
+	return win && win.API ? win.API : null;
+}
+var API = findAPI(window) || (window.opener ? findAPI(window.opener) : null);
+var log = function (m) { document.getElementById('log').textContent += m + ' '; };
+if (!API) { log('API not found'); } else {
+	API.LMSInitialize('');
+	document.getElementById('learner').textContent = API.LMSGetValue('cmi.core.student_name');
+	document.getElementById('entry').textContent = API.LMSGetValue('cmi.core.entry');
+	var visits = parseInt(API.LMSGetValue('cmi.suspend_data') || '0', 10) + 1;
+	document.getElementById('visits').textContent = visits;
+	API.LMSSetValue('cmi.suspend_data', String(visits));
+	API.LMSSetValue('cmi.core.lesson_location', 'page-1');
+	API.LMSCommit('');
+	log('initialized');
+}
+var finished = false;
+function finish(score) {
+	if (finished) { return; }
+	finished = true;
+	if (score !== null) {
+		API.LMSSetValue('cmi.core.score.raw', String(score));
+		API.LMSSetValue('cmi.core.score.max', '100');
+		API.LMSSetValue('cmi.core.lesson_status', 'completed');
+		API.LMSSetValue('cmi.core.exit', '');
+	} else {
+		API.LMSSetValue('cmi.core.exit', 'suspend');
+	}
+	API.LMSSetValue('cmi.core.session_time', '0000:01:05.00');
+	API.LMSFinish('');
+	log('finished:' + API.LMSGetLastError());
+}
+document.getElementById('pass').onclick = function () { finish(90); };
+document.getElementById('fail').onclick = function () { finish(40); };
+document.getElementById('suspend').onclick = function () { finish(null); };
+window.addEventListener('unload', function () { if (API && !finished) { finish(null); } });
+</script>
+</body>
+</html>

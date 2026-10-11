@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="com.example.course" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="ORG-1">
+    <organization identifier="ORG-1">
+      <title>Curso de prueba</title>
+      <item identifier="MOD-1">
+        <title>Módulo 1</title>
+        <item identifier="ITEM-1" identifierref="RES-1" parameters="?lang=es">
+          <title>Lección 1</title>
+          <adlcp:masteryscore>80</adlcp:masteryscore>
+          <adlcp:datafromlms>launch-data</adlcp:datafromlms>
+        </item>
+      </item>
+      <item identifier="ITEM-2" identifierref="RES-2">
+        <title>Glosario</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="RES-1" type="webcontent" adlcp:scormtype="sco" xml:base="content/" href="index.html?x=1">
+      <file href="content/index.html"/>
+    </resource>
+    <resource identifier="RES-2" type="webcontent" adlcp:scormtype="asset" href="glossary.html">
+      <file href="glossary.html"/>
+    </resource>
+  </resources>
+</manifest>

@@ -1,0 +1,393 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tutor SCORM 1.0.0\n"
+"POT-Creation-Date: 2026-10-11 00:00+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: tutor-scorm\n"
+
+msgid "SCORM Packages"
+msgstr "Paquetes SCORM"
+
+msgid "SCORM Package"
+msgstr "Paquete SCORM"
+
+msgid "SCORM"
+msgstr "SCORM"
+
+msgid "Add SCORM Package"
+msgstr "Añadir paquete SCORM"
+
+msgid "Edit SCORM Package"
+msgstr "Editar paquete SCORM"
+
+msgid "New SCORM Package"
+msgstr "Nuevo paquete SCORM"
+
+msgid "Search SCORM Packages"
+msgstr "Buscar paquetes SCORM"
+
+msgid "No SCORM packages found."
+msgstr "No se encontraron paquetes SCORM."
+
+msgid "No SCORM packages found in Trash."
+msgstr "No hay paquetes SCORM en la papelera."
+
+msgid "Invalid SCORM manifest: %s"
+msgstr "Manifiesto SCORM no válido: %s"
+
+msgid "The manifest references files outside of the package."
+msgstr "El manifiesto hace referencia a archivos fuera del paquete."
+
+msgid "SCORM package"
+msgstr "Paquete SCORM"
+
+msgid "Tutor LMS lessons"
+msgstr "Lecciones de Tutor LMS"
+
+msgid "SCORM version"
+msgstr "Versión SCORM"
+
+msgid "Manifest title"
+msgstr "Título del manifiesto"
+
+msgid "Imported"
+msgstr "Importado"
+
+msgid "Shortcode"
+msgstr "Shortcode"
+
+msgid "Preview"
+msgstr "Vista previa"
+
+msgid "Open preview"
+msgstr "Abrir vista previa"
+
+msgid "Launchable items"
+msgstr "Elementos ejecutables"
+
+msgid "asset"
+msgstr "recurso"
+
+msgid "Replace package"
+msgstr "Reemplazar paquete"
+
+msgid "Uploading a new version keeps the learners' progress as long as the SCO identifiers do not change."
+msgstr "Al subir una nueva versión se conserva el progreso de los estudiantes siempre que no cambien los identificadores de los SCO."
+
+msgid "Upload a ZIP file exported as SCORM 1.2 or SCORM 2004 from your authoring tool (Articulate Storyline/Rise, iSpring, Adobe Captivate, Elucidat, H5P, etc.)."
+msgstr "Sube un archivo ZIP exportado como SCORM 1.2 o SCORM 2004 desde tu herramienta de autor (Articulate Storyline/Rise, iSpring, Adobe Captivate, Elucidat, H5P, etc.)."
+
+msgid "Upload ZIP"
+msgstr "Subir ZIP"
+
+msgid "Maximum upload size: %s."
+msgstr "Tamaño máximo de subida: %s."
+
+msgid "Or use a ZIP from the Media Library"
+msgstr "O usa un ZIP de la biblioteca de medios"
+
+msgid "Select ZIP"
+msgstr "Seleccionar ZIP"
+
+msgid "Activate Tutor LMS to attach this package to lessons. You can still embed it anywhere with the shortcode."
+msgstr "Activa Tutor LMS para asignar este paquete a lecciones. Aun así puedes insertarlo en cualquier lugar con el shortcode."
+
+msgid "(no course)"
+msgstr "(sin curso)"
+
+msgid "Select the lessons that should display this package. The player is added below the lesson content and the lesson is completed automatically when the learner finishes the package."
+msgstr "Selecciona las lecciones que deben mostrar este paquete. El reproductor se añade debajo del contenido de la lección y la lección se completa automáticamente cuando el estudiante termina el paquete."
+
+msgid "Hold Ctrl (Cmd on Mac) to select several lessons. Alternatively, paste the shortcode into the lesson content from the Tutor course builder."
+msgstr "Mantén pulsado Ctrl (Cmd en Mac) para seleccionar varias lecciones. También puedes pegar el shortcode en el contenido de la lección desde el constructor de cursos de Tutor."
+
+msgid "The ZIP file could not be uploaded. Check the server upload_max_filesize and post_max_size limits."
+msgstr "No se pudo subir el archivo ZIP. Revisa los límites upload_max_filesize y post_max_size del servidor."
+
+msgid "Please upload a .zip file."
+msgstr "Sube un archivo .zip."
+
+msgid "The selected Media Library file is not a ZIP archive."
+msgstr "El archivo seleccionado de la biblioteca de medios no es un ZIP."
+
+msgid "SCORM %1$s package imported with %2$d launchable item(s)."
+msgstr "Paquete SCORM %1$s importado con %2$d elemento(s) ejecutable(s)."
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Items"
+msgstr "Elementos"
+
+msgid "Lessons"
+msgstr "Lecciones"
+
+msgid "SCORM package updated."
+msgstr "Paquete SCORM actualizado."
+
+msgid "SCORM package published."
+msgstr "Paquete SCORM publicado."
+
+msgid "SCORM package saved."
+msgstr "Paquete SCORM guardado."
+
+msgid "SCORM package draft updated."
+msgstr "Borrador del paquete SCORM actualizado."
+
+msgid "%d server-side script file was skipped for security reasons."
+msgid_plural "%d server-side script files were skipped for security reasons."
+msgstr[0] "Se omitió %d archivo de script de servidor por motivos de seguridad."
+msgstr[1] "Se omitieron %d archivos de script de servidor por motivos de seguridad."
+
+msgid "Saving…"
+msgstr "Guardando…"
+
+msgid "Progress saved"
+msgstr "Progreso guardado"
+
+msgid "Progress could not be saved. Check your connection."
+msgstr "No se pudo guardar el progreso. Revisa tu conexión."
+
+msgid "Lesson completed"
+msgstr "Lección completada"
+
+msgid "Launch course"
+msgstr "Iniciar curso"
+
+msgid "Open course again"
+msgstr "Abrir el curso de nuevo"
+
+msgid "The course is open in a new window. Keep this page open to save your progress."
+msgstr "El curso está abierto en una ventana nueva. Mantén esta página abierta para guardar tu progreso."
+
+msgid "Your browser blocked the course window. Allow pop-ups for this site and try again."
+msgstr "Tu navegador bloqueó la ventana del curso. Permite las ventanas emergentes para este sitio e inténtalo de nuevo."
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Full screen"
+msgstr "Pantalla completa"
+
+msgid "Exit full screen"
+msgstr "Salir de pantalla completa"
+
+msgid "Preview mode: progress is not saved."
+msgstr "Modo vista previa: el progreso no se guarda."
+
+msgid "Log in to save your progress."
+msgstr "Inicia sesión para guardar tu progreso."
+
+msgid "Not started"
+msgstr "Sin empezar"
+
+msgid "In progress"
+msgstr "En curso"
+
+msgid "Browsed"
+msgstr "Explorado"
+
+msgid "Completed"
+msgstr "Completado"
+
+msgid "Passed"
+msgstr "Aprobado"
+
+msgid "Failed"
+msgstr "Suspendido"
+
+msgid "You are not allowed to preview this package."
+msgstr "No tienes permiso para previsualizar este paquete."
+
+msgid "SCORM package not found or not imported yet."
+msgstr "Paquete SCORM no encontrado o aún no importado."
+
+msgid "JavaScript is required to play this course."
+msgstr "Se necesita JavaScript para reproducir este curso."
+
+msgid "Guest"
+msgstr "Invitado"
+
+msgid "SCORM Reports"
+msgstr "Informes SCORM"
+
+msgid "SCORM Settings"
+msgstr "Ajustes SCORM"
+
+msgid "Select SCORM ZIP"
+msgstr "Seleccionar ZIP SCORM"
+
+msgid "Use this file"
+msgstr "Usar este archivo"
+
+msgid "Tutor SCORM works best with Tutor LMS. Install and activate Tutor LMS to attach SCORM packages to lessons and complete them automatically."
+msgstr "Tutor SCORM funciona mejor con Tutor LMS. Instala y activa Tutor LMS para asignar paquetes SCORM a lecciones y completarlas automáticamente."
+
+msgid "Packages"
+msgstr "Paquetes"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Export CSV"
+msgstr "Exportar CSV"
+
+msgid "All packages"
+msgstr "Todos los paquetes"
+
+msgid "All statuses"
+msgstr "Todos los estados"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Search learners"
+msgstr "Buscar estudiantes"
+
+msgid "You are not allowed to export this report."
+msgstr "No tienes permiso para exportar este informe."
+
+msgid "Learner"
+msgstr "Estudiante"
+
+msgid "Package / item"
+msgstr "Paquete / elemento"
+
+msgid "Course / lesson"
+msgstr "Curso / lección"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Score"
+msgstr "Puntuación"
+
+msgid "Time"
+msgstr "Tiempo"
+
+msgid "Sessions"
+msgstr "Sesiones"
+
+msgid "Last activity"
+msgstr "Última actividad"
+
+msgid "Reset progress"
+msgstr "Reiniciar progreso"
+
+msgid "No SCORM activity recorded yet."
+msgstr "Aún no hay actividad SCORM registrada."
+
+msgid "%d record reset."
+msgid_plural "%d records reset."
+msgstr[0] "%d registro reiniciado."
+msgstr[1] "%d registros reiniciados."
+
+msgid "Invalid tracking token."
+msgstr "Token de seguimiento no válido."
+
+msgid "SCORM package not found."
+msgstr "Paquete SCORM no encontrado."
+
+msgid "Unknown SCO."
+msgstr "SCO desconocido."
+
+msgid "Lesson completion rule"
+msgstr "Regla para completar la lección"
+
+msgid "Completed or passed (recommended)"
+msgstr "Completado o aprobado (recomendado)"
+
+msgid "Passed only"
+msgstr "Solo aprobado"
+
+msgid "Completed, passed or failed"
+msgstr "Completado, aprobado o suspendido"
+
+msgid "When every SCO of the package meets this rule, the Tutor LMS lesson is marked as complete for the student."
+msgstr "Cuando todos los SCO del paquete cumplen esta regla, la lección de Tutor LMS se marca como completada para el estudiante."
+
+msgid "Default player mode"
+msgstr "Modo de reproductor por defecto"
+
+msgid "Embedded in the lesson"
+msgstr "Integrado en la lección"
+
+msgid "New window"
+msgstr "Ventana nueva"
+
+msgid "Player height (px)"
+msgstr "Altura del reproductor (px)"
+
+msgid "Autosave interval (seconds)"
+msgstr "Intervalo de autoguardado (segundos)"
+
+msgid "Saves progress periodically even if the content never calls Commit. 0 disables it."
+msgstr "Guarda el progreso periódicamente aunque el contenido nunca llame a Commit. 0 lo desactiva."
+
+msgid "Tutor \"Mark as complete\" button"
+msgstr "Botón «Marcar como completada» de Tutor"
+
+msgid "Hide it on lessons that contain a SCORM package (completion is reported by the package)."
+msgstr "Ocultarlo en lecciones con un paquete SCORM (la finalización la informa el paquete)."
+
+msgid "Uninstall"
+msgstr "Desinstalación"
+
+msgid "Delete packages, files and tracking data when the plugin is uninstalled."
+msgstr "Eliminar paquetes, archivos y datos de seguimiento al desinstalar el plugin."
+
+msgid "Migration from xAPI"
+msgstr "Migración desde xAPI"
+
+msgid "Export each course from your authoring tool as SCORM 1.2 or SCORM 2004, upload it as a SCORM package and attach it to the lesson. Then remove the xAPI shortcode or block from the lesson. No LRS is needed: progress is stored in WordPress."
+msgstr "Exporta cada curso desde tu herramienta de autor como SCORM 1.2 o SCORM 2004, súbelo como paquete SCORM y asígnalo a la lección. Después elimina de la lección el shortcode o bloque xAPI. No se necesita un LRS: el progreso se guarda en WordPress."
+
+msgid "No lessons with xAPI content were found."
+msgstr "No se encontraron lecciones con contenido xAPI."
+
+msgid "Lesson"
+msgstr "Lección"
+
+msgid "Course"
+msgstr "Curso"
+
+msgid "xAPI source"
+msgstr "Origen xAPI"
+
+msgid "Not attached yet"
+msgstr "Sin asignar todavía"
+
+msgid "The PHP ZipArchive extension is required to import SCORM packages."
+msgstr "Se necesita la extensión ZipArchive de PHP para importar paquetes SCORM."
+
+msgid "The SCORM storage folder could not be created in wp-content/uploads."
+msgstr "No se pudo crear la carpeta de almacenamiento SCORM en wp-content/uploads."
+
+msgid "The uploaded file is not a valid ZIP archive."
+msgstr "El archivo subido no es un ZIP válido."
+
+msgid "imsmanifest.xml was not found. Make sure you export the course as a SCORM 1.2 or SCORM 2004 package."
+msgstr "No se encontró imsmanifest.xml. Asegúrate de exportar el curso como paquete SCORM 1.2 o SCORM 2004."
+
+msgid "The package is too large once uncompressed."
+msgstr "El paquete es demasiado grande una vez descomprimido."
+
+msgid "The package folder could not be created."
+msgstr "No se pudo crear la carpeta del paquete."
+
+msgid "The package could not be extracted."
+msgstr "No se pudo descomprimir el paquete."
+
+msgid "— None —"
+msgstr "— Ninguno —"
+
+msgid "The SCORM player is shown after the lesson content and completes the lesson automatically."
+msgstr "El reproductor SCORM se muestra después del contenido de la lección y la completa automáticamente."

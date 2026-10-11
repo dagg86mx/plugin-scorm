@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample SCORM 2004 SCO</title>
+<style>body{font-family:sans-serif;padding:24px}button{margin:4px;padding:8px 16px}</style>
+</head>
+<body>
+<h1 id="title">Sample SCORM 2004 SCO</h1>
+<p>Learner: <strong id="learner"></strong> &middot; Entry: <code id="entry"></code></p>
+<button id="complete">Complete &amp; continue</button>
+<p id="log"></p>
+<script>
+function findAPI(win) {
+	var tries = 0;
+	while (win && !win.API_1484_11 && win.parent && win.parent !== win && tries++ < 10) { win = win.parent; }
+	return win && win.API_1484_11 ? win.API_1484_11 : null;
+}
+var API = findAPI(window) || (window.opener ? findAPI(window.opener) : null);
+var part = (location.search.match(/part=(\d+)/) || [])[1] || '?';
+document.getElementById('title').textContent = 'Part ' + part;
+var log = function (m) { document.getElementById('log').textContent += m + ' '; };
+var done = false;
+if (!API) { log('API not found'); } else {
+	API.Initialize('');
+	document.getElementById('learner').textContent = API.GetValue('cmi.learner_name');
+	document.getElementById('entry').textContent = API.GetValue('cmi.entry');
+	API.SetValue('cmi.completion_status', 'incomplete');
+	API.Commit('');
+	log('initialized');
+}
+document.getElementById('complete').onclick = function () {
+	done = true;
+	API.SetValue('cmi.completion_status', 'completed');
+	API.SetValue('cmi.success_status', 'passed');
+	API.SetValue('cmi.score.scaled', '0.95');
+	API.SetValue('cmi.session_time', 'PT2M');
+	API.SetValue('cmi.exit', 'normal');
+	if (API.GetValue('adl.nav.request_valid.continue') === 'true') {
+		API.SetValue('adl.nav.request', 'continue');
+	}
+	API.Terminate('');
+	log('terminated:' + API.GetLastError());
+};
+window.addEventListener('unload', function () {
+	if (API && !done) { API.SetValue('cmi.exit', 'suspend'); API.Terminate(''); }
+});
+</script>
+</body>
+</html>
