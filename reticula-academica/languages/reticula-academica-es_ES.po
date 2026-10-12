@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Reticula Academica 1.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: reticula-academica\n"
+
+msgid "Students"
+msgstr "Alumnos"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "You are not allowed to manage students."
+msgstr "No tienes permiso para gestionar alumnos."
+
+msgid "Student not found. Use the user ID, email or username."
+msgstr "No se encontró el alumno. Usa el ID, correo o nombre de usuario."
+
+msgid "%1$s was assigned to %2$s."
+msgstr "%1$s fue asignado a %2$s."
+
+msgid "Inscription deleted."
+msgstr "Inscripción eliminada."
+
+msgid "Inscription updated."
+msgstr "Inscripción actualizada."
+
+msgid "Choose a CSV file to import."
+msgstr "Elige un archivo CSV para importar."
+
+msgid "Import finished: %1$d students assigned, %2$d rows with errors."
+msgstr "Importación terminada: %1$d alumnos asignados, %2$d filas con errores."
+
+msgid "Line %1$d: student \"%2$s\" not found."
+msgstr "Línea %1$d: no se encontró el alumno «%2$s»."
+
+msgid "Line %1$d: program \"%2$s\" not found."
+msgstr "Línea %1$d: no se encontró la carrera «%2$s»."
+
+msgid "Line %1$d: term \"%2$s\" not found in the program."
+msgstr "Línea %1$d: el tetramestre «%2$s» no existe en la carrera."
+
+msgid "Export CSV"
+msgstr "Exportar CSV"
+
+msgid "Assign a student"
+msgstr "Asignar alumno"
+
+msgid "Student (email, username or ID)"
+msgstr "Alumno (correo, usuario o ID)"
+
+msgid "Program"
+msgstr "Carrera"
+
+msgid "— Select —"
+msgstr "— Selecciona —"
+
+msgid "Starts in term"
+msgstr "Inicia en el tetramestre"
+
+msgid "First term"
+msgstr "Primer tetramestre"
+
+msgid "Earlier terms are considered credited (e.g. transfer students)."
+msgstr "Los tetramestres anteriores se consideran acreditados (p. ej. alumnos por revalidación)."
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Automatic (pending until the inscription fee is paid)"
+msgstr "Automático (pendiente hasta pagar la inscripción)"
+
+msgid "Active (no inscription fee required)"
+msgstr "Activo (sin cobrar inscripción)"
+
+msgid "Notes"
+msgstr "Notas"
+
+msgid "Assign"
+msgstr "Asignar"
+
+msgid "Import from CSV"
+msgstr "Importar desde CSV"
+
+msgid "Columns: alumno (email, username or ID), carrera (ID, slug or title), tetramestre (number, optional), estado (optional: activo, pendiente, pausado, baja)."
+msgstr "Columnas: alumno (correo, usuario o ID), carrera (ID, slug o título), tetramestre (número, opcional), estado (opcional: activo, pendiente, pausado, baja)."
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "All programs"
+msgstr "Todas las carreras"
+
+msgid "All terms"
+msgstr "Todos los tetramestres"
+
+msgid "All statuses"
+msgstr "Todos los estados"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Search students"
+msgstr "Buscar alumnos"
+
+msgid "Inscription not found."
+msgstr "Inscripción no encontrada."
+
+msgid "%1$s in %2$s"
+msgstr "%1$s en %2$s"
+
+msgid "Back to students"
+msgstr "Volver a alumnos"
+
+msgid "Current term"
+msgstr "Tetramestre actual"
+
+msgid "The current term advances automatically when every course of the term is completed."
+msgstr "El tetramestre actual avanza automáticamente cuando se completan todos sus cursos."
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Delete this inscription? Course enrollments in Tutor are not affected."
+msgstr "¿Eliminar esta inscripción? Las matrículas de los cursos en Tutor no se modifican."
+
+msgid "Delete inscription"
+msgstr "Eliminar inscripción"
+
+msgid "What the student sees"
+msgstr "Lo que ve el alumno"
+
+msgid "Student"
+msgstr "Alumno"
+
+msgid "Progress"
+msgstr "Avance"
+
+msgid "Next course"
+msgstr "Siguiente curso"
+
+msgid "Origin"
+msgstr "Origen"
+
+msgid "No students assigned yet."
+msgstr "Aún no hay alumnos asignados."
+
+msgid "Edit / view progress"
+msgstr "Editar / ver avance"
+
+msgid "Self-service"
+msgstr "Autoservicio"
+
+msgid "Admin"
+msgstr "Administrador"
+
+msgid "CSV import"
+msgstr "Importación CSV"
+
+msgid "My program"
+msgstr "Mi carrera"
+
+msgid "There are no programs available yet."
+msgstr "Aún no hay carreras disponibles."
+
+msgid "%1$d terms · %2$d courses"
+msgstr "%1$d tetramestres · %2$d cursos"
+
+msgid "See curriculum"
+msgstr "Ver retícula"
+
+msgid "My progress"
+msgstr "Mi avance"
+
+msgid "Enrollment in this program is managed by the school. Please contact us to join."
+msgstr "La inscripción a esta carrera la gestiona la escuela. Contáctanos para inscribirte."
+
+msgid "Log in or create an account to enroll in this program."
+msgstr "Inicia sesión o crea una cuenta para inscribirte en esta carrera."
+
+msgid "Log in to enroll"
+msgstr "Inicia sesión para inscribirte"
+
+msgid "Inscription fee: %s. You will be taken to the checkout after enrolling."
+msgstr "Cuota de inscripción: %s. Después de inscribirte irás al pago."
+
+msgid "You will be taken to pay the inscription fee after enrolling."
+msgstr "Después de inscribirte irás a pagar la cuota de inscripción."
+
+msgid "Enroll in this program"
+msgstr "Inscribirme a esta carrera"
+
+msgid "Curriculum"
+msgstr "Retícula"
+
+msgid "Log in to see your program."
+msgstr "Inicia sesión para ver tu carrera."
+
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+msgid "You are not enrolled in any program yet."
+msgstr "Aún no estás inscrito en ninguna carrera."
+
+msgid "Browse programs"
+msgstr "Ver carreras"
+
+msgid "Completed"
+msgstr "Completado"
+
+msgid "In progress"
+msgstr "En curso"
+
+msgid "Upcoming"
+msgstr "Próximo"
+
+msgid "Pending courses"
+msgstr "Cursos pendientes"
+
+msgid "Credited"
+msgstr "Acreditado"
+
+msgid "Current term: %s"
+msgstr "Tetramestre actual: %s"
+
+msgid "Program progress"
+msgstr "Avance de la carrera"
+
+msgid "%1$d of %2$d courses"
+msgstr "%1$d de %2$d cursos"
+
+msgid "Term fee paid"
+msgstr "Cuota del tetramestre pagada"
+
+msgid "Term fee pending"
+msgstr "Cuota del tetramestre pendiente"
+
+msgid "Congratulations!"
+msgstr "¡Felicidades!"
+
+msgid "You have completed every course of your program."
+msgstr "Completaste todos los cursos de tu carrera."
+
+msgid "Your inscription is not active. Please contact the school to continue."
+msgstr "Tu inscripción no está activa. Contacta a la escuela para continuar."
+
+msgid "Pay your inscription"
+msgstr "Paga tu inscripción"
+
+msgid "Pay now"
+msgstr "Pagar ahora"
+
+msgid "Pay the fee of %s"
+msgstr "Paga la cuota de %s"
+
+msgid "Continue your course"
+msgstr "Continúa tu curso"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Your next course"
+msgstr "Tu siguiente curso"
+
+msgid "Enroll"
+msgstr "Inscribirme"
+
+msgid "View course"
+msgstr "Ver curso"
+
+msgid "Your next step"
+msgstr "Tu siguiente paso"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Locked"
+msgstr "Bloqueado"
+
+msgid "%1$s · %2$s · Course %3$d of %4$d"
+msgstr "%1$s · %2$s · Curso %3$d de %4$d"
+
+msgid "This is your next course."
+msgstr "Este es tu siguiente curso."
+
+msgid "You completed this course. Next:"
+msgstr "Completaste este curso. Sigue:"
+
+msgid "See my program"
+msgstr "Ver mi carrera"
+
+msgid "Pay your program inscription to unlock this course."
+msgstr "Paga tu inscripción a la carrera para desbloquear este curso."
+
+msgid "Pay the term fee to unlock the courses of this term."
+msgstr "Paga la cuota del tetramestre para desbloquear sus cursos."
+
+msgid "This course belongs to a later term of your program."
+msgstr "Este curso pertenece a un tetramestre posterior de tu carrera."
+
+msgid "Complete the previous course of your program first."
+msgstr "Primero completa el curso anterior de tu carrera."
+
+msgid "Your program inscription is not active."
+msgstr "Tu inscripción a la carrera no está activa."
+
+msgid "This course is not available yet."
+msgstr "Este curso aún no está disponible."
+
+msgid "Pending payment"
+msgstr "Pago pendiente"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Paused"
+msgstr "Pausado"
+
+msgid "Dropped"
+msgstr "Baja"
+
+msgid "Graduated"
+msgstr "Egresado"
+
+msgid "The student does not exist."
+msgstr "El alumno no existe."
+
+msgid "The program does not exist."
+msgstr "La carrera no existe."
+
+msgid "Enrollment in this program is managed by the school. Please contact us."
+msgstr "La inscripción a esta carrera la gestiona la escuela. Contáctanos."
+
+msgid "Retícula Académica needs Tutor LMS to be installed and active."
+msgstr "Retícula Académica necesita Tutor LMS instalado y activo."
+
+msgid "Programs"
+msgstr "Carreras"
+
+msgid "Academic Grid"
+msgstr "Retícula"
+
+msgid "Add program"
+msgstr "Añadir carrera"
+
+msgid "Edit program"
+msgstr "Editar carrera"
+
+msgid "View program"
+msgstr "Ver carrera"
+
+msgid "Search programs"
+msgstr "Buscar carreras"
+
+msgid "No programs found."
+msgstr "No se encontraron carreras."
+
+msgid "Terms"
+msgstr "Tetramestres"
+
+msgid "Term"
+msgstr "Tetramestre"
+
+msgid "Add term"
+msgstr "Añadir tetramestre"
+
+msgid "Edit term"
+msgstr "Editar tetramestre"
+
+msgid "Search terms"
+msgstr "Buscar tetramestres"
+
+msgid "No terms found."
+msgstr "No se encontraron tetramestres."
+
+msgid "Enrollment and fees"
+msgstr "Inscripción y cuotas"
+
+msgid "Terms of this program"
+msgstr "Tetramestres de esta carrera"
+
+msgid "Courses (in the order they should be taken)"
+msgstr "Cursos (en el orden en que deben cursarse)"
+
+msgid "Inscription fee"
+msgstr "Cuota de inscripción"
+
+msgid "— No inscription fee —"
+msgstr "— Sin cuota de inscripción —"
+
+msgid "A paid Tutor course that represents the inscription. When the student buys it (with Tutor checkout), the inscription becomes active."
+msgstr "Un curso de pago de Tutor que representa la inscripción. Cuando el alumno lo compra (con el checkout de Tutor), su inscripción se activa."
+
+msgid "Course order"
+msgstr "Orden de cursos"
+
+msgid "Recommended only (no restrictions)"
+msgstr "Solo recomendado (sin restricciones)"
+
+msgid "By term (future terms locked)"
+msgstr "Por tetramestre (los futuros bloqueados)"
+
+msgid "Strict (finish each course before the next)"
+msgstr "Estricto (terminar cada curso antes del siguiente)"
+
+msgid "Students can enroll themselves"
+msgstr "Los alumnos pueden inscribirse solos"
+
+msgid "Save the program first, then add its terms."
+msgstr "Guarda primero la carrera y después añade sus tetramestres."
+
+msgid "This program has no terms yet."
+msgstr "Esta carrera aún no tiene tetramestres."
+
+msgid "Courses"
+msgstr "Cursos"
+
+msgid "Term fee"
+msgstr "Cuota del tetramestre"
+
+msgid "Term number"
+msgstr "Número de tetramestre"
+
+msgid "Term fee (optional)"
+msgstr "Cuota del tetramestre (opcional)"
+
+msgid "— No fee —"
+msgstr "— Sin cuota —"
+
+msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
+msgstr "Curso de pago de Tutor (p. ej. reinscripción). Los cursos de este tetramestre siguen bloqueados hasta que el alumno lo compre."
+
+msgid "No courses yet."
+msgstr "Aún no hay cursos."
+
+msgid "— Choose a Tutor course —"
+msgstr "— Elige un curso de Tutor —"
+
+msgid "Add course"
+msgstr "Añadir curso"
+
+msgid "Drag to reorder. Students see this order as the path to follow, and the program setting decides whether it is enforced."
+msgstr "Arrastra para ordenar. Los alumnos ven este orden como la ruta a seguir; el ajuste de la carrera decide si es obligatorio."
+
+msgid "Recommended"
+msgstr "Recomendado"
+
+msgid "By term"
+msgstr "Por tetramestre"
+
+msgid "Strict"
+msgstr "Estricto"
+
+msgctxt "URL slug"
+msgid "programs"
+msgstr "carreras"
+
+msgctxt "URL slug"
+msgid "program"
+msgstr "carrera"
+
+msgid "Free"
+msgstr "Gratis"

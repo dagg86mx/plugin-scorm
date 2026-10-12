@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Reticula Academica 1.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: reticula-academica\n"
+
+msgid "Students"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "You are not allowed to manage students."
+msgstr ""
+
+msgid "Student not found. Use the user ID, email or username."
+msgstr ""
+
+msgid "%1$s was assigned to %2$s."
+msgstr ""
+
+msgid "Inscription deleted."
+msgstr ""
+
+msgid "Inscription updated."
+msgstr ""
+
+msgid "Choose a CSV file to import."
+msgstr ""
+
+msgid "Import finished: %1$d students assigned, %2$d rows with errors."
+msgstr ""
+
+msgid "Line %1$d: student \"%2$s\" not found."
+msgstr ""
+
+msgid "Line %1$d: program \"%2$s\" not found."
+msgstr ""
+
+msgid "Line %1$d: term \"%2$s\" not found in the program."
+msgstr ""
+
+msgid "Export CSV"
+msgstr ""
+
+msgid "Assign a student"
+msgstr ""
+
+msgid "Student (email, username or ID)"
+msgstr ""
+
+msgid "Program"
+msgstr ""
+
+msgid "— Select —"
+msgstr ""
+
+msgid "Starts in term"
+msgstr ""
+
+msgid "First term"
+msgstr ""
+
+msgid "Earlier terms are considered credited (e.g. transfer students)."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Automatic (pending until the inscription fee is paid)"
+msgstr ""
+
+msgid "Active (no inscription fee required)"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Assign"
+msgstr ""
+
+msgid "Import from CSV"
+msgstr ""
+
+msgid "Columns: alumno (email, username or ID), carrera (ID, slug or title), tetramestre (number, optional), estado (optional: activo, pendiente, pausado, baja)."
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "All programs"
+msgstr ""
+
+msgid "All terms"
+msgstr ""
+
+msgid "All statuses"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Search students"
+msgstr ""
+
+msgid "Inscription not found."
+msgstr ""
+
+msgid "%1$s in %2$s"
+msgstr ""
+
+msgid "Back to students"
+msgstr ""
+
+msgid "Current term"
+msgstr ""
+
+msgid "The current term advances automatically when every course of the term is completed."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Delete this inscription? Course enrollments in Tutor are not affected."
+msgstr ""
+
+msgid "Delete inscription"
+msgstr ""
+
+msgid "What the student sees"
+msgstr ""
+
+msgid "Student"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Next course"
+msgstr ""
+
+msgid "Origin"
+msgstr ""
+
+msgid "No students assigned yet."
+msgstr ""
+
+msgid "Edit / view progress"
+msgstr ""
+
+msgid "Self-service"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "CSV import"
+msgstr ""
+
+msgid "My program"
+msgstr ""
+
+msgid "There are no programs available yet."
+msgstr ""
+
+msgid "%1$d terms · %2$d courses"
+msgstr ""
+
+msgid "See curriculum"
+msgstr ""
+
+msgid "My progress"
+msgstr ""
+
+msgid "Enrollment in this program is managed by the school. Please contact us to join."
+msgstr ""
+
+msgid "Log in or create an account to enroll in this program."
+msgstr ""
+
+msgid "Log in to enroll"
+msgstr ""
+
+msgid "Inscription fee: %s. You will be taken to the checkout after enrolling."
+msgstr ""
+
+msgid "You will be taken to pay the inscription fee after enrolling."
+msgstr ""
+
+msgid "Enroll in this program"
+msgstr ""
+
+msgid "Curriculum"
+msgstr ""
+
+msgid "Log in to see your program."
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "You are not enrolled in any program yet."
+msgstr ""
+
+msgid "Browse programs"
+msgstr ""
+
+msgid "Completed"
+msgstr ""
+
+msgid "In progress"
+msgstr ""
+
+msgid "Upcoming"
+msgstr ""
+
+msgid "Pending courses"
+msgstr ""
+
+msgid "Credited"
+msgstr ""
+
+msgid "Current term: %s"
+msgstr ""
+
+msgid "Program progress"
+msgstr ""
+
+msgid "%1$d of %2$d courses"
+msgstr ""
+
+msgid "Term fee paid"
+msgstr ""
+
+msgid "Term fee pending"
+msgstr ""
+
+msgid "Congratulations!"
+msgstr ""
+
+msgid "You have completed every course of your program."
+msgstr ""
+
+msgid "Your inscription is not active. Please contact the school to continue."
+msgstr ""
+
+msgid "Pay your inscription"
+msgstr ""
+
+msgid "Pay now"
+msgstr ""
+
+msgid "Pay the fee of %s"
+msgstr ""
+
+msgid "Continue your course"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
+msgid "Your next course"
+msgstr ""
+
+msgid "Enroll"
+msgstr ""
+
+msgid "View course"
+msgstr ""
+
+msgid "Your next step"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "%1$s · %2$s · Course %3$d of %4$d"
+msgstr ""
+
+msgid "This is your next course."
+msgstr ""
+
+msgid "You completed this course. Next:"
+msgstr ""
+
+msgid "See my program"
+msgstr ""
+
+msgid "Pay your program inscription to unlock this course."
+msgstr ""
+
+msgid "Pay the term fee to unlock the courses of this term."
+msgstr ""
+
+msgid "This course belongs to a later term of your program."
+msgstr ""
+
+msgid "Complete the previous course of your program first."
+msgstr ""
+
+msgid "Your program inscription is not active."
+msgstr ""
+
+msgid "This course is not available yet."
+msgstr ""
+
+msgid "Pending payment"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Paused"
+msgstr ""
+
+msgid "Dropped"
+msgstr ""
+
+msgid "Graduated"
+msgstr ""
+
+msgid "The student does not exist."
+msgstr ""
+
+msgid "The program does not exist."
+msgstr ""
+
+msgid "Enrollment in this program is managed by the school. Please contact us."
+msgstr ""
+
+msgid "Retícula Académica needs Tutor LMS to be installed and active."
+msgstr ""
+
+msgid "Programs"
+msgstr ""
+
+msgid "Academic Grid"
+msgstr ""
+
+msgid "Add program"
+msgstr ""
+
+msgid "Edit program"
+msgstr ""
+
+msgid "View program"
+msgstr ""
+
+msgid "Search programs"
+msgstr ""
+
+msgid "No programs found."
+msgstr ""
+
+msgid "Terms"
+msgstr ""
+
+msgid "Term"
+msgstr ""
+
+msgid "Add term"
+msgstr ""
+
+msgid "Edit term"
+msgstr ""
+
+msgid "Search terms"
+msgstr ""
+
+msgid "No terms found."
+msgstr ""
+
+msgid "Enrollment and fees"
+msgstr ""
+
+msgid "Terms of this program"
+msgstr ""
+
+msgid "Courses (in the order they should be taken)"
+msgstr ""
+
+msgid "Inscription fee"
+msgstr ""
+
+msgid "— No inscription fee —"
+msgstr ""
+
+msgid "A paid Tutor course that represents the inscription. When the student buys it (with Tutor checkout), the inscription becomes active."
+msgstr ""
+
+msgid "Course order"
+msgstr ""
+
+msgid "Recommended only (no restrictions)"
+msgstr ""
+
+msgid "By term (future terms locked)"
+msgstr ""
+
+msgid "Strict (finish each course before the next)"
+msgstr ""
+
+msgid "Students can enroll themselves"
+msgstr ""
+
+msgid "Save the program first, then add its terms."
+msgstr ""
+
+msgid "This program has no terms yet."
+msgstr ""
+
+msgid "Courses"
+msgstr ""
+
+msgid "Term fee"
+msgstr ""
+
+msgid "Term number"
+msgstr ""
+
+msgid "Term fee (optional)"
+msgstr ""
+
+msgid "— No fee —"
+msgstr ""
+
+msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
+msgstr ""
+
+msgid "No courses yet."
+msgstr ""
+
+msgid "— Choose a Tutor course —"
+msgstr ""
+
+msgid "Add course"
+msgstr ""
+
+msgid "Drag to reorder. Students see this order as the path to follow, and the program setting decides whether it is enforced."
+msgstr ""
+
+msgid "Recommended"
+msgstr ""
+
+msgid "By term"
+msgstr ""
+
+msgid "Strict"
+msgstr ""
+
+msgctxt "URL slug"
+msgid "programs"
+msgstr ""
+
+msgctxt "URL slug"
+msgid "program"
+msgstr ""
+
+msgid "Free"
+msgstr ""
