@@ -4,8 +4,12 @@
  */
 define( 'RA_TESTING', true );
 require dirname( __DIR__ ) . '/includes/class-progress.php';
+require dirname( __DIR__ ) . '/includes/class-grade-calculator.php';
+require dirname( __DIR__ ) . '/includes/class-template-renderer.php';
 
 use ReticulaAcademica\Progress;
+use ReticulaAcademica\Grade_Calculator as GC;
+use ReticulaAcademica\Template_Renderer as TR;
 
 $failures = 0;
 $count    = 0;
@@ -109,5 +113,55 @@ check( 'locate', array( $loc['term']['id'], $loc['position'], $loc['of'] ), arra
 $p = Progress::compute( array( 'terms' => array() ) );
 check( 'empty program', array( $p['total'], $p['next'], $p['status'], $p['finished'] ), array( 0, null, 'active', false ) );
 
-echo ( $failures ? "\n{$failures} of {$count} checks failed.\n" : "All {$count} progress checks passed.\n" );
+
+// ---------------- Grades ----------------
+$q = function ( $n, $score, $state = 'graded' ) {
+	return array( 'key' => 'quiz:' . $n, 'title' => 'Quiz ' . $n, 'type' => 'quiz', 'score' => $score, 'state' => $state );
+};
+// 5 quizzes at 20% each.
+$items = array( $q( 1, 100 ), $q( 2, 90 ), $q( 3, 80 ), $q( 4, 70 ), $q( 5, 60 ) );
+$g     = GC::course( $items, array() );
+check( 'equal weights grade', $g['grade'], 8.0 );
+check( 'equal weights each 20%', array_column( $g['items'], 'weight' ), array( 20.0, 20.0, 20.0, 20.0, 20.0 ) );
+check( 'passed', $g['status'], 'passed' );
+check( 'item score in scale', $g['items'][1]['score'], 9.0 );
+
+// Custom weights: final exam 60%.
+$g = GC::course( $items, array( 'quiz:1' => 10, 'quiz:2' => 10, 'quiz:3' => 10, 'quiz:4' => 10, 'quiz:5' => 60 ) );
+check( 'weighted grade (exactly passing)', $g['grade'], 7.0 );
+check( 'passing grade is inclusive', $g['status'], 'passed' );
+// Weights not adding to 100 are normalized; weight 0 excludes.
+$g = GC::course( $items, array( 'quiz:1' => 1, 'quiz:2' => 1, 'quiz:3' => 0 ) );
+check( 'normalized weights', array( $g['grade'], count( $g['items'] ) ), array( 9.5, 2 ) );
+
+// Missing evaluation: partial grade over what was taken, zero once final.
+$partial = array( $q( 1, 100 ), $q( 2, 80 ), $q( 3, null, 'not_taken' ) );
+$g       = GC::course( $partial, array() );
+check( 'partial status', array( $g['status'], $g['grade'], $g['missing'] ), array( 'in_progress', 9.0, 1 ) );
+$g = GC::course( $partial, array(), array( 'final' => true ) );
+check( 'final counts missing as 0', array( $g['status'], $g['grade'] ), array( 'failed', 6.0 ) );
+$g = GC::course( array( $q( 1, 90 ), $q( 2, null, 'pending_review' ) ), array(), array( 'final' => true ) );
+check( 'under review never counts as zero', array( $g['status'], $g['grade'] ), array( 'in_progress', 9.0 ) );
+$g = GC::course( array( $q( 1, null, 'pending_review' ) ), array() );
+check( 'nothing graded', array( $g['status'], $g['grade'] ), array( 'none', null ) );
+// Scale 100 and passing 60.
+$g = GC::course( $items, array(), array( 'scale' => 100, 'passing' => 60, 'decimals' => 0 ) );
+check( 'scale 100', array( $g['grade'], $g['status'] ), array( 80.0, 'passed' ) );
+// SCORM items weigh 0 unless configured.
+$scorm = array( 'key' => 'scorm:9', 'title' => 'SCORM', 'type' => 'scorm', 'score' => 0, 'state' => 'graded' );
+$g     = GC::course( array( $q( 1, 100 ), $scorm ), array() );
+check( 'scorm default excluded', $g['grade'], 10.0 );
+$g = GC::course( array( $q( 1, 100 ), $scorm ), array( 'quiz:1' => 50, 'scorm:9' => 50 ) );
+check( 'scorm configured', $g['grade'], 5.0 );
+check( 'average of final grades', GC::average( array( array( 'status' => 'passed', 'grade' => 9.0 ), array( 'status' => 'failed', 'grade' => 6.0 ), array( 'status' => 'in_progress', 'grade' => 1.0 ) ) ), 7.5 );
+check( 'format', array( GC::format( 8, 1 ), GC::format( null, 1 ) ), array( '8.0', '—' ) );
+
+// ---------------- Templates ----------------
+check( 'render', TR::render( 'Hola {alumno}, {matricula}. {desconocido}', array( 'alumno' => 'Ana', 'matricula' => 'UNTGU-10000' ) ), 'Hola Ana, UNTGU-10000. {desconocido}' );
+check( 'block placeholder unwrapped', TR::render( "<p>{tabla_calificaciones}</p>\n<p>x</p>", array( 'tabla_calificaciones' => '<table></table>' ) ), "<table></table>\n<p>x</p>" );
+check( 'long date', TR::long_date( gmmktime( 12, 0, 0, 10, 19, 2026 ) ), '19 de octubre de 2026' );
+check( 'ordinal', array( TR::ordinal( 1 ), TR::ordinal( 3 ), TR::ordinal( 15 ) ), array( 'primer', 'tercer', '15º' ) );
+check( 'folio', TR::folio( 'con', 2026, 42 ), 'CON-2026-000042' );
+
+echo ( $failures ? "\n{$failures} of {$count} checks failed.\n" : "All {$count} checks passed.\n" );
 exit( $failures ? 1 : 0 );

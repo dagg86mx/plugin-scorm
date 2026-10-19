@@ -51,7 +51,12 @@ class Admin {
 			wp_localize_script( 'ra-admin', 'RAAdmin', array( 'remove' => __( 'Remove', 'reticula-academica' ) ) );
 			wp_enqueue_style( 'ra-admin', RA_URL . 'assets/css/admin.css', array(), RA_VERSION );
 		}
-		if ( $hook === self::$hook ) {
+		if ( $screen && Documents::TEMPLATE === $screen->post_type && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+			wp_enqueue_media();
+			wp_enqueue_script( 'ra-admin', RA_URL . 'assets/js/admin.js', array( 'jquery', 'jquery-ui-sortable' ), RA_VERSION, true );
+			wp_localize_script( 'ra-admin', 'RAAdmin', array( 'remove' => __( 'Remove', 'reticula-academica' ), 'choose' => __( 'Choose image', 'reticula-academica' ) ) );
+		}
+		if ( $hook === self::$hook || false !== strpos( (string) $hook, Documents::PAGE ) ) {
 			wp_enqueue_style( 'ra-admin', RA_URL . 'assets/css/admin.css', array(), RA_VERSION );
 			wp_enqueue_style( 'reticula-academica', RA_URL . 'assets/css/reticula.css', array(), RA_VERSION );
 		}
@@ -317,7 +322,7 @@ class Admin {
 		header( 'Content-Disposition: attachment; filename=alumnos-reticula-' . gmdate( 'Y-m-d' ) . '.csv' );
 		$out = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 		fwrite( $out, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-		fputcsv( $out, array( 'user_id', 'nombre', 'email', 'carrera', 'tetramestre_inicio', 'tetramestre_actual', 'estado', 'avance_pct', 'siguiente_curso', 'origen', 'alta_utc', 'egreso_utc' ) );
+		fputcsv( $out, array( 'user_id', 'matricula', 'nombre', 'email', 'carrera', 'tetramestre_inicio', 'tetramestre_actual', 'estado', 'avance_pct', 'siguiente_curso', 'origen', 'alta_utc', 'egreso_utc' ) );
 		foreach ( $rows as $row ) {
 			fputcsv(
 				$out,
@@ -328,6 +333,7 @@ class Admin {
 					},
 					array(
 						$row['user_id'],
+						Student_Id::get( $row['user_id'] ),
 						$row['display_name'],
 						$row['user_email'],
 						get_the_title( $row['program_id'] ),
@@ -522,6 +528,24 @@ luis@example.com,Ingeniería en Software,3,activo</pre>
 						<button type="submit" name="ra_delete" value="1" class="button button-link-delete" onclick="return confirm('<?php echo esc_js( __( 'Delete this inscription? Course enrollments in Tutor are not affected.', 'reticula-academica' ) ); ?>');"><?php esc_html_e( 'Delete inscription', 'reticula-academica' ); ?></button>
 					</p>
 				</form>
+				<div class="ra-panel">
+					<h2><?php esc_html_e( 'Documents', 'reticula-academica' ); ?></h2>
+					<p>
+						<?php
+						$matricula = Student_Id::get( $row['user_id'] );
+						/* translators: %s: student ID. */
+						echo $matricula ? esc_html( sprintf( __( 'Student ID: %s', 'reticula-academica' ), $matricula ) ) : esc_html__( 'No student ID yet.', 'reticula-academica' );
+						?>
+					</p>
+					<?php Documents::issue_form( (int) $row['user_id'] ); ?>
+				</div>
+				<div class="ra-panel ra-panel-wide">
+					<h2><?php esc_html_e( 'Document history', 'reticula-academica' ); ?></h2>
+					<?php
+					list( $docs ) = Documents::query( array( 'user_id' => (int) $row['user_id'] ), 100 );
+					Documents::history_table( $docs );
+					?>
+				</div>
 				<div class="ra-panel ra-panel-wide">
 					<h2><?php esc_html_e( 'What the student sees', 'reticula-academica' ); ?></h2>
 					<?php echo Frontend::render_progress( $row ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
@@ -547,6 +571,7 @@ class Students_Table extends \WP_List_Table {
 	public function get_columns() {
 		return array(
 			'student'  => __( 'Student', 'reticula-academica' ),
+			'id'       => __( 'Student ID', 'reticula-academica' ),
 			'program'  => __( 'Program', 'reticula-academica' ),
 			'term'     => __( 'Current term', 'reticula-academica' ),
 			'progress' => __( 'Progress', 'reticula-academica' ),
@@ -582,6 +607,11 @@ class Students_Table extends \WP_List_Table {
 		);
 		return '<strong><a href="' . esc_url( $edit ) . '">' . esc_html( $item['display_name'] ? $item['display_name'] : '#' . $item['user_id'] ) . '</a></strong><br><span class="description">' . esc_html( $item['user_email'] ) . '</span>'
 			. $this->row_actions( array( 'edit' => '<a href="' . esc_url( $edit ) . '">' . esc_html__( 'Edit / view progress', 'reticula-academica' ) . '</a>' ) );
+	}
+
+	protected function column_id( $item ) {
+		$id = Student_Id::get( $item['user_id'] );
+		return $id ? '<code>' . esc_html( $id ) . '</code>' : '&mdash;';
 	}
 
 	protected function column_program( $item ) {

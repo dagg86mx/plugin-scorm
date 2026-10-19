@@ -112,3 +112,22 @@
 	.ra-course { flex-wrap: wrap; }
 	.ra-course-side { width: 100%; padding-left: 36px; }
 }
+
+/* Grades and documents */
+.ra-matricula,
+.ra-average { font-size: 13px; color: var(--ra-muted); }
+.ra-average { font-weight: 600; color: inherit; }
+.ra-grade-details { margin-top: 6px; font-size: 13px; }
+.ra-grade-details summary { cursor: pointer; color: var(--ra-accent); font-weight: 600; }
+.ra-grade-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+.ra-grade-table th,
+.ra-grade-table td { border: 1px solid var(--ra-border); padding: 6px 8px; text-align: left; }
+.ra-grade-table th { background: var(--ra-soft); }
+.ra-grade-table tfoot th { text-align: right; }
+.ra-grade-table td:nth-child(n+2),
+.ra-grade-table th:nth-child(n+2) { text-align: center; }
+.ra-history td:last-child { text-align: right; }
+.ra-generate-form { display: flex; gap: 6px; align-items: center; margin: 0; }
+.ra-generate-form select { max-width: 180px; }
+.ra-grade-table,
+.ra-documents { --ra-border: #e3e5eb; --ra-soft: #f6f7f9; --ra-muted: #5b616f; --ra-accent: var(--tutor-color-primary, #3e64de); }

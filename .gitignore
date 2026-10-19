@@ -2,3 +2,4 @@
 node_modules/
 vendor/
 *.zip
+!/reticula-academica/vendor/

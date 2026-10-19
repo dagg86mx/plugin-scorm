@@ -89,8 +89,8 @@ class Inscriptions {
 		}
 		if ( ! empty( $filters['search'] ) ) {
 			$like    = '%' . $wpdb->esc_like( $filters['search'] ) . '%';
-			$where[] = '(u.user_login LIKE %s OR u.user_email LIKE %s OR u.display_name LIKE %s)';
-			array_push( $args, $like, $like, $like );
+			$where[] = "(u.user_login LIKE %s OR u.user_email LIKE %s OR u.display_name LIKE %s OR i.user_id IN (SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = 'ra_matricula' AND meta_value LIKE %s))";
+			array_push( $args, $like, $like, $like, $like );
 		}
 		$sql = "SELECT SQL_CALC_FOUND_ROWS i.*, u.display_name, u.user_email FROM {$table} i LEFT JOIN {$wpdb->users} u ON u.ID = i.user_id WHERE " . implode( ' AND ', $where ) . ' ORDER BY i.updated_at DESC, i.id DESC';
 		if ( $limit ) {

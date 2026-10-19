@@ -28,6 +28,10 @@ class Plugin {
 		Gating::init();
 		Frontend::init();
 		Admin::init();
+		Settings::init();
+		Student_Id::init();
+		Grades::init();
+		Documents::init();
 		add_action( 'admin_notices', array( $this, 'dependency_notice' ) );
 	}
 

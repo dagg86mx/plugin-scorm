@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Installer {
 
-	const DB_VERSION = '1';
+	const DB_VERSION = '2';
 
 	public static function table() {
 		global $wpdb;
@@ -57,6 +57,48 @@ class Installer {
   KEY status (status)
 ) {$charset};"
 		);
+		$ids = $wpdb->prefix . 'ra_student_ids';
+		dbDelta(
+			"CREATE TABLE {$ids} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) unsigned NOT NULL,
+  number bigint(20) unsigned NOT NULL,
+  created_at datetime NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY user_id (user_id),
+  UNIQUE KEY number (number)
+) {$charset};"
+		);
+
+		$docs = $wpdb->prefix . 'ra_documents';
+		dbDelta(
+			"CREATE TABLE {$docs} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  folio varchar(40) NOT NULL DEFAULT '',
+  user_id bigint(20) unsigned NOT NULL,
+  template_id bigint(20) unsigned NOT NULL,
+  doc_type varchar(20) NOT NULL DEFAULT 'constancia',
+  program_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  term_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  status varchar(20) NOT NULL DEFAULT 'issued',
+  source varchar(20) NOT NULL DEFAULT 'free',
+  enrollment_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  file varchar(255) NOT NULL DEFAULT '',
+  data longtext NULL,
+  verify_key varchar(32) NOT NULL DEFAULT '',
+  created_at datetime NOT NULL,
+  issued_at datetime DEFAULT NULL,
+  issued_by bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY  (id),
+  KEY user_id (user_id),
+  KEY folio (folio),
+  KEY template_id (template_id),
+  KEY enrollment_id (enrollment_id),
+  KEY status (status)
+) {$charset};"
+		);
+
 		update_option( 'ra_db_version', self::DB_VERSION );
+		do_action( 'ra_installed' );
 	}
 }

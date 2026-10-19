@@ -98,6 +98,7 @@ class Post_Types {
 
 	public static function meta_boxes() {
 		add_meta_box( 'ra-program-settings', __( 'Enrollment and fees', 'reticula-academica' ), array( __CLASS__, 'render_program_settings' ), Curriculum::PROGRAM, 'side' );
+		add_meta_box( 'ra-program-official', __( 'Official data (RVOE)', 'reticula-academica' ), array( __CLASS__, 'render_program_official' ), Curriculum::PROGRAM, 'side' );
 		add_meta_box( 'ra-program-terms', __( 'Terms of this program', 'reticula-academica' ), array( __CLASS__, 'render_program_terms' ), Curriculum::PROGRAM, 'normal', 'high' );
 		add_meta_box( 'ra-term-settings', __( 'Term', 'reticula-academica' ), array( __CLASS__, 'render_term_settings' ), Curriculum::TERM, 'side', 'high' );
 		add_meta_box( 'ra-term-courses', __( 'Courses (in the order they should be taken)', 'reticula-academica' ), array( __CLASS__, 'render_term_courses' ), Curriculum::TERM, 'normal', 'high' );
@@ -137,6 +138,31 @@ class Post_Types {
 			<label><input type="checkbox" name="ra_self_enroll" value="1" <?php checked( $settings['self_enroll'] ); ?>> <?php esc_html_e( 'Students can enroll themselves', 'reticula-academica' ); ?></label>
 		</p>
 		<?php
+	}
+
+	public static function official_fields() {
+		return array(
+			'_ra_rvoe'      => array( __( 'RVOE number', 'reticula-academica' ), 'text', '' ),
+			'_ra_rvoe_date' => array( __( 'RVOE date', 'reticula-academica' ), 'date', '' ),
+			'_ra_code'      => array( __( 'Program code', 'reticula-academica' ), 'text', '' ),
+			'_ra_level'     => array( __( 'Level', 'reticula-academica' ), 'text', 'Licenciatura' ),
+			'_ra_modality'  => array( __( 'Modality', 'reticula-academica' ), 'text', 'No escolarizada' ),
+		);
+	}
+
+	public static function render_program_official( $post ) {
+		foreach ( self::official_fields() as $key => $field ) {
+			$value = (string) get_post_meta( $post->ID, $key, true );
+			printf(
+				'<p><label><strong>%1$s</strong><br><input type="%2$s" name="ra_official[%3$s]" value="%4$s" placeholder="%5$s" style="width:100%%"></label></p>',
+				esc_html( $field[0] ),
+				esc_attr( $field[1] ),
+				esc_attr( $key ),
+				esc_attr( $value ),
+				esc_attr( $field[2] )
+			);
+		}
+		echo '<p class="description">' . esc_html__( 'Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}.', 'reticula-academica' ) . '</p>';
 	}
 
 	public static function render_program_terms( $post ) {
@@ -242,6 +268,12 @@ class Post_Types {
 		update_post_meta( $post_id, '_ra_fee_course', isset( $_POST['ra_fee_course'] ) ? absint( $_POST['ra_fee_course'] ) : 0 );
 		update_post_meta( $post_id, '_ra_mode', in_array( $mode, array( Progress::MODE_ADVISORY, Progress::MODE_TERM, Progress::MODE_STRICT ), true ) ? $mode : Progress::MODE_TERM );
 		update_post_meta( $post_id, '_ra_self_enroll', empty( $_POST['ra_self_enroll'] ) ? '0' : '1' );
+		$official = isset( $_POST['ra_official'] ) ? (array) wp_unslash( $_POST['ra_official'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		foreach ( array_keys( self::official_fields() ) as $key ) {
+			if ( isset( $official[ $key ] ) ) {
+				update_post_meta( $post_id, $key, sanitize_text_field( $official[ $key ] ) );
+			}
+		}
 	}
 
 	public static function save_term( $post_id ) {

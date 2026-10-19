@@ -2,6 +2,28 @@
 (function ($) {
 	'use strict';
 	$(function () {
+		// Image pickers (logo, signatures, letterhead).
+		$(document).on('click', '.ra-pick-image', function (event) {
+			event.preventDefault();
+			var $box = $(this).closest('.ra-image-field');
+			if (!window.wp || !window.wp.media) {
+				return;
+			}
+			var frame = window.wp.media({ title: (window.RAAdmin || {}).choose || 'Choose image', library: { type: 'image' }, multiple: false });
+			frame.on('select', function () {
+				var file = frame.state().get('selection').first().toJSON();
+				$box.find('input[type=hidden]').val(file.id);
+				$box.find('img').attr('src', (file.sizes && file.sizes.medium ? file.sizes.medium.url : file.url)).show();
+			});
+			frame.open();
+		});
+		$(document).on('click', '.ra-clear-image', function (event) {
+			event.preventDefault();
+			var $box = $(this).closest('.ra-image-field');
+			$box.find('input[type=hidden]').val('0');
+			$box.find('img').attr('src', '').hide();
+		});
+
 		var $list = $('#ra-course-list');
 		var $empty = $('.ra-empty');
 		var l10n = window.RAAdmin || {};

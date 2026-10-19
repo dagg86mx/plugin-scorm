@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Reticula Academica 1.0.0\n"
+"Project-Id-Version: Reticula Academica 1.1.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,6 +13,9 @@ msgstr "Alumnos"
 
 msgid "Remove"
 msgstr "Quitar"
+
+msgid "Choose image"
+msgstr "Elegir imagen"
 
 msgid "You are not allowed to manage students."
 msgstr "No tienes permiso para gestionar alumnos."
@@ -131,11 +134,26 @@ msgstr "¿Eliminar esta inscripción? Las matrículas de los cursos en Tutor no 
 msgid "Delete inscription"
 msgstr "Eliminar inscripción"
 
+msgid "Documents"
+msgstr "Documentos"
+
+msgid "Student ID: %s"
+msgstr "Matrícula: %s"
+
+msgid "No student ID yet."
+msgstr "Aún sin matrícula."
+
+msgid "Document history"
+msgstr "Historial de documentos"
+
 msgid "What the student sees"
 msgstr "Lo que ve el alumno"
 
 msgid "Student"
 msgstr "Alumno"
+
+msgid "Student ID"
+msgstr "Matrícula"
 
 msgid "Progress"
 msgstr "Avance"
@@ -160,6 +178,356 @@ msgstr "Administrador"
 
 msgid "CSV import"
 msgstr "Importación CSV"
+
+msgid "Certificate of studies (constancia)"
+msgstr "Constancia de estudios"
+
+msgid "Report card (boleta)"
+msgstr "Boleta de calificaciones"
+
+msgid "Document templates"
+msgstr "Plantillas de documentos"
+
+msgid "Document template"
+msgstr "Plantilla de documento"
+
+msgid "Add template"
+msgstr "Añadir plantilla"
+
+msgid "Add document template"
+msgstr "Añadir plantilla de documento"
+
+msgid "Edit document template"
+msgstr "Editar plantilla de documento"
+
+msgid "No templates found."
+msgstr "No se encontraron plantillas."
+
+msgid "Institution name"
+msgstr "Nombre de la institución"
+
+msgid "Institution logo (image)"
+msgstr "Logo de la institución (imagen)"
+
+msgid "Student full name"
+msgstr "Nombre completo del alumno"
+
+msgid "First name"
+msgstr "Nombre(s)"
+
+msgid "Last name"
+msgstr "Apellidos"
+
+msgid "Email"
+msgstr "Correo"
+
+msgid "Program name"
+msgstr "Nombre de la carrera"
+
+msgid "Program code"
+msgstr "Clave de la carrera"
+
+msgid "Level (e.g. Licenciatura)"
+msgstr "Nivel (p. ej. Licenciatura)"
+
+msgid "Modality"
+msgstr "Modalidad"
+
+msgid "RVOE number"
+msgstr "Número de RVOE"
+
+msgid "RVOE date"
+msgstr "Fecha del RVOE"
+
+msgid "Term name (current or selected)"
+msgstr "Tetramestre (actual o el elegido)"
+
+msgid "Term number"
+msgstr "Número de tetramestre"
+
+msgid "Term number in words (primer, segundo…)"
+msgstr "Número de tetramestre en letra (primer, segundo…)"
+
+msgid "School period (from Settings)"
+msgstr "Periodo escolar (de Ajustes)"
+
+msgid "Inscription status"
+msgstr "Estado de la inscripción"
+
+msgid "Program progress %"
+msgstr "% de avance en la carrera"
+
+msgid "General average"
+msgstr "Promedio general"
+
+msgid "Grades table with every evaluation (boleta)"
+msgstr "Tabla de calificaciones con cada evaluación (boleta)"
+
+msgid "Grades table, one row per course"
+msgstr "Tabla de calificaciones, una fila por materia"
+
+msgid "Issue date, generated automatically (19 de octubre de 2026)"
+msgstr "Fecha de emisión, automática (19 de octubre de 2026)"
+
+msgid "Issue date (19/10/2026)"
+msgstr "Fecha de emisión (19/10/2026)"
+
+msgid "City and issue date (Ciudad de México, a 19 de octubre de 2026)"
+msgstr "Ciudad y fecha de emisión (Ciudad de México, a 19 de octubre de 2026)"
+
+msgid "Both signatures side by side"
+msgstr "Las dos firmas lado a lado"
+
+msgid "Signature 1 block (image, name, position)"
+msgstr "Bloque de firma 1 (imagen, nombre, cargo)"
+
+msgid "Signature 2 block (image, name, position)"
+msgstr "Bloque de firma 2 (imagen, nombre, cargo)"
+
+msgid "Signature 1 name"
+msgstr "Nombre de la firma 1"
+
+msgid "Signature 1 position"
+msgstr "Cargo de la firma 1"
+
+msgid "Signature 2 name"
+msgstr "Nombre de la firma 2"
+
+msgid "Signature 2 position"
+msgstr "Cargo de la firma 2"
+
+msgid "Document number"
+msgstr "Folio del documento"
+
+msgid "Public verification link"
+msgstr "Enlace público de verificación"
+
+msgid "Document settings"
+msgstr "Ajustes del documento"
+
+msgid "Available fields"
+msgstr "Campos disponibles"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "0 = free. With a price, a sale product is created automatically and each purchase allows one document."
+msgstr "0 = gratis. Con precio se crea automáticamente un producto de venta y cada compra da derecho a un documento."
+
+msgid "Sale product:"
+msgstr "Producto de venta:"
+
+msgid "Folio prefix"
+msgstr "Prefijo del folio"
+
+msgid "Paper"
+msgstr "Papel"
+
+msgid "Letter"
+msgstr "Carta"
+
+msgid "Legal"
+msgstr "Oficio"
+
+msgid "Portrait"
+msgstr "Vertical"
+
+msgid "Landscape"
+msgstr "Horizontal"
+
+msgid "Page margin"
+msgstr "Margen de página"
+
+msgid "Background image (letterhead)"
+msgstr "Imagen de fondo (hoja membretada)"
+
+msgid "Programs"
+msgstr "Carreras"
+
+msgid "None selected = every program."
+msgstr "Sin selección = todas las carreras."
+
+msgid "Preview PDF"
+msgstr "Vista previa PDF"
+
+msgid "Write these fields in the template (with braces). They are replaced with the student’s data when the PDF is generated."
+msgstr "Escribe estos campos en la plantilla (con llaves). Se reemplazan por los datos del alumno al generar el PDF."
+
+msgid "Payment for one \"%s\" document. After paying, generate and download the PDF in My documents."
+msgstr "Pago de un documento «%s». Después de pagar, genera y descarga el PDF en Mis documentos."
+
+msgid "Issued"
+msgstr "Emitido"
+
+msgid "Free"
+msgstr "Gratis"
+
+msgid "Credited"
+msgstr "Acreditado"
+
+msgid "Under review"
+msgstr "En revisión"
+
+msgid "Not taken"
+msgstr "Sin presentar"
+
+msgid "Term average"
+msgstr "Promedio del tetramestre"
+
+msgid "Course / evaluation"
+msgstr "Materia / evaluación"
+
+msgid "Weight"
+msgstr "Valor"
+
+msgid "Grade"
+msgstr "Calificación"
+
+msgid "Course"
+msgstr "Materia"
+
+msgid "The PDF library is missing from the plugin folder."
+msgstr "Falta la librería de PDF en la carpeta del plugin."
+
+msgid "The document could not be generated: invalid data."
+msgstr "No se pudo generar el documento: datos no válidos."
+
+msgid "This document is only available to students with an active program inscription."
+msgstr "Este documento solo está disponible para alumnos con inscripción activa en una carrera."
+
+msgid "This is the payment for an official document."
+msgstr "Este es el pago de un documento oficial."
+
+msgid "After paying, go to My documents to generate and download your PDF."
+msgstr "Después de pagar, ve a Mis documentos para generar y descargar tu PDF."
+
+msgid "My documents"
+msgstr "Mis documentos"
+
+msgid "You cannot generate this document."
+msgstr "No puedes generar este documento."
+
+msgid "Document not available."
+msgstr "Documento no disponible."
+
+msgid "The PDF file could not be found."
+msgstr "No se encontró el archivo PDF."
+
+msgid "Document %1$s generated. %2$s"
+msgstr "Documento %1$s generado. %2$s"
+
+msgid "Download PDF"
+msgstr "Descargar PDF"
+
+msgid "Document revoked. Its verification link now reports it as not valid."
+msgstr "Documento revocado. Su enlace de verificación ahora indica que no es válido."
+
+msgid "Document verification"
+msgstr "Verificación de documento"
+
+msgid "Valid document"
+msgstr "Documento válido"
+
+msgid "Document not valid"
+msgstr "Documento no válido"
+
+msgid "Institution"
+msgstr "Institución"
+
+msgid "Document"
+msgstr "Documento"
+
+msgid "Folio"
+msgstr "Folio"
+
+msgid "Issued on"
+msgstr "Fecha de emisión"
+
+msgid "The folio does not exist, the link is incomplete or the document was revoked."
+msgstr "El folio no existe, el enlace está incompleto o el documento fue revocado."
+
+msgid "Log in to see your documents."
+msgstr "Inicia sesión para ver tus documentos."
+
+msgid "Documents are available once your program inscription is active."
+msgstr "Los documentos están disponibles cuando tu inscripción a la carrera está activa."
+
+msgid "Paid · ready to generate"
+msgstr "Pagado · listo para generar"
+
+msgid "Buy"
+msgstr "Comprar"
+
+msgid "Term"
+msgstr "Tetramestre"
+
+msgid "Generate PDF"
+msgstr "Generar PDF"
+
+msgid "History"
+msgstr "Historial"
+
+msgid "You have not generated documents yet."
+msgstr "Aún no has generado documentos."
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Issued documents"
+msgstr "Documentos emitidos"
+
+msgid "Student (email, username, ID)"
+msgstr "Alumno (correo, usuario, ID)"
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Student’s program"
+msgstr "Carrera del alumno"
+
+msgid "Documents issued by staff are not charged."
+msgstr "Los documentos emitidos por el personal no se cobran."
+
+msgid "No documents yet."
+msgstr "Aún no hay documentos."
+
+msgid "Purchase"
+msgstr "Compra"
+
+msgid "Staff"
+msgstr "Personal"
+
+msgid "Paid, not generated"
+msgstr "Pagado, sin generar"
+
+msgid "Revoked"
+msgstr "Revocado"
+
+msgid "Verify"
+msgstr "Verificar"
+
+msgid "Revoke this document?"
+msgstr "¿Revocar este documento?"
+
+msgid "Revoke"
+msgstr "Revocar"
+
+msgid "Generate a document"
+msgstr "Generar un documento"
+
+msgid "All templates"
+msgstr "Todas las plantillas"
+
+msgid "Folio, student or ID"
+msgstr "Folio, alumno o matrícula"
+
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] "%d documento"
+msgstr[1] "%d documentos"
 
 msgid "My program"
 msgstr "Mi carrera"
@@ -221,11 +589,11 @@ msgstr "Próximo"
 msgid "Pending courses"
 msgstr "Cursos pendientes"
 
-msgid "Credited"
-msgstr "Acreditado"
-
 msgid "Current term: %s"
 msgstr "Tetramestre actual: %s"
+
+msgid "Average: %s"
+msgstr "Promedio: %s"
 
 msgid "Program progress"
 msgstr "Avance de la carrera"
@@ -278,6 +646,9 @@ msgstr "Tu siguiente paso"
 msgid "Next"
 msgstr "Siguiente"
 
+msgid "Grade: %1$s · %2$s"
+msgstr "Calificación: %1$s · %2$s"
+
 msgid "Locked"
 msgstr "Bloqueado"
 
@@ -311,6 +682,60 @@ msgstr "Tu inscripción a la carrera no está activa."
 msgid "This course is not available yet."
 msgstr "Este curso aún no está disponible."
 
+msgid "No grade yet"
+msgstr "Sin calificación"
+
+msgid "Passed"
+msgstr "Aprobada"
+
+msgid "Failed"
+msgstr "Reprobada"
+
+msgid "This course has no graded evaluations."
+msgstr "Esta materia no tiene evaluaciones calificadas."
+
+msgid "Evaluation"
+msgstr "Evaluación"
+
+msgid "Course grade"
+msgstr "Calificación de la materia"
+
+msgid "Grading"
+msgstr "Evaluación"
+
+msgid "Choose how much each evaluation of a course is worth. The course grade is the weighted average of the student’s quiz results. Without a configuration, every quiz weighs the same."
+msgstr "Define cuánto vale cada evaluación de una materia. La calificación es el promedio ponderado de los resultados de los quizzes del alumno. Sin configuración, todos los quizzes valen lo mismo."
+
+msgid "— Choose a course —"
+msgstr "— Elige una materia —"
+
+msgid "Open"
+msgstr "Abrir"
+
+msgid "This course has no quizzes yet. Add quizzes in the Tutor course builder."
+msgstr "Esta materia aún no tiene quizzes. Agrégalos en el constructor de cursos de Tutor."
+
+msgid "Weight (%)"
+msgstr "Valor (%)"
+
+msgid "Quiz"
+msgstr "Quiz"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Weights are normalized if they do not add up to 100%. Use 0 to leave an evaluation out."
+msgstr "Si los valores no suman 100% se normalizan. Usa 0 para excluir una evaluación."
+
+msgid "Save weights"
+msgstr "Guardar ponderación"
+
+msgid "Reset (all quizzes weigh the same)"
+msgstr "Restablecer (todos los quizzes valen lo mismo)"
+
+msgid "Weights saved."
+msgstr "Ponderación guardada."
+
 msgid "Pending payment"
 msgstr "Pago pendiente"
 
@@ -338,9 +763,6 @@ msgstr "La inscripción a esta carrera la gestiona la escuela. Contáctanos."
 msgid "Retícula Académica needs Tutor LMS to be installed and active."
 msgstr "Retícula Académica necesita Tutor LMS instalado y activo."
 
-msgid "Programs"
-msgstr "Carreras"
-
 msgid "Academic Grid"
 msgstr "Retícula"
 
@@ -362,9 +784,6 @@ msgstr "No se encontraron carreras."
 msgid "Terms"
 msgstr "Tetramestres"
 
-msgid "Term"
-msgstr "Tetramestre"
-
 msgid "Add term"
 msgstr "Añadir tetramestre"
 
@@ -379,6 +798,9 @@ msgstr "No se encontraron tetramestres."
 
 msgid "Enrollment and fees"
 msgstr "Inscripción y cuotas"
+
+msgid "Official data (RVOE)"
+msgstr "Datos oficiales (RVOE)"
 
 msgid "Terms of this program"
 msgstr "Tetramestres de esta carrera"
@@ -410,6 +832,12 @@ msgstr "Estricto (terminar cada curso antes del siguiente)"
 msgid "Students can enroll themselves"
 msgstr "Los alumnos pueden inscribirse solos"
 
+msgid "Level"
+msgstr "Nivel"
+
+msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
+msgstr "Se usan en los documentos: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
+
 msgid "Save the program first, then add its terms."
 msgstr "Guarda primero la carrera y después añade sus tetramestres."
 
@@ -421,9 +849,6 @@ msgstr "Cursos"
 
 msgid "Term fee"
 msgstr "Cuota del tetramestre"
-
-msgid "Term number"
-msgstr "Número de tetramestre"
 
 msgid "Term fee (optional)"
 msgstr "Cuota del tetramestre (opcional)"
@@ -463,5 +888,113 @@ msgctxt "URL slug"
 msgid "program"
 msgstr "carrera"
 
-msgid "Free"
-msgstr "Gratis"
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Academic Grid settings"
+msgstr "Ajustes de Retícula"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "City (for document dates)"
+msgstr "Ciudad (para la fecha de los documentos)"
+
+msgid "Example: Ciudad de México. Documents print \"Ciudad de México, a 19 de octubre de 2026\"."
+msgstr "Ejemplo: Ciudad de México. Los documentos imprimen «Ciudad de México, a 19 de octubre de 2026»."
+
+msgid "Student ID (matrícula)"
+msgstr "Matrícula"
+
+msgid "Prefix"
+msgstr "Prefijo"
+
+msgid "First number"
+msgstr "Número inicial"
+
+msgid "IDs are consecutive. Next ID to be assigned: %s"
+msgstr "Las matrículas son consecutivas. Siguiente matrícula a asignar: %s"
+
+msgid "Assign automatically"
+msgstr "Asignar automáticamente"
+
+msgid "When the student is enrolled in a program"
+msgstr "Cuando el alumno se inscribe a una carrera"
+
+msgid "When any user registers"
+msgstr "Cuando se registra cualquier usuario"
+
+msgid "Signatures for documents"
+msgstr "Firmas de los documentos"
+
+msgid "Signature %d"
+msgstr "Firma %d"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Position"
+msgstr "Cargo"
+
+msgid "Signature image (PNG with transparent background recommended)"
+msgstr "Imagen de la firma (se recomienda PNG con fondo transparente)"
+
+msgid "Grades"
+msgstr "Calificaciones"
+
+msgid "Grade scale"
+msgstr "Escala de calificación"
+
+msgid "Minimum passing grade"
+msgstr "Calificación mínima aprobatoria"
+
+msgid "Decimals"
+msgstr "Decimales"
+
+msgid "Quiz attempt that counts"
+msgstr "Intento del quiz que cuenta"
+
+msgid "Best attempt"
+msgstr "El mejor intento"
+
+msgid "Last attempt"
+msgstr "El último intento"
+
+msgid "SCORM evaluations"
+msgstr "Evaluaciones SCORM"
+
+msgid "Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen"
+msgstr "Ofrecer las lecciones SCORM (plugin Tutor SCORM) como evaluaciones en la pantalla de ponderación"
+
+msgid "School periods"
+msgstr "Periodos escolares"
+
+msgid "One per line: name | start date | end date. The current period fills the {periodo} field of documents."
+msgstr "Uno por línea: nombre | fecha de inicio | fecha de fin. El periodo vigente llena el campo {periodo} de los documentos."
+
+msgid "Current period: %s"
+msgstr "Periodo vigente: %s"
+
+msgid "Students without ID"
+msgstr "Alumnos sin matrícula"
+
+msgid "Assigns a consecutive ID to every student enrolled in a program that does not have one yet (in enrollment order)."
+msgstr "Asigna una matrícula consecutiva a cada alumno inscrito en una carrera que aún no la tenga (por orden de inscripción)."
+
+msgid "Assign missing IDs"
+msgstr "Asignar matrículas faltantes"
+
+msgid "%d student IDs assigned."
+msgstr "%d matrículas asignadas."
+
+msgid "Academic record"
+msgstr "Expediente académico"
+
+msgid "Leave empty and check the box to assign the next consecutive ID."
+msgstr "Déjalo vacío y marca la casilla para asignar la siguiente matrícula consecutiva."
+
+msgid "Assign the next consecutive ID"
+msgstr "Asignar la siguiente matrícula consecutiva"
+
+msgid "That student ID already belongs to another user."
+msgstr "Esa matrícula ya pertenece a otro usuario."

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Reticula Academica 1.0.0\n"
+"Project-Id-Version: Reticula Academica 1.1.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,6 +12,9 @@ msgid "Students"
 msgstr ""
 
 msgid "Remove"
+msgstr ""
+
+msgid "Choose image"
 msgstr ""
 
 msgid "You are not allowed to manage students."
@@ -131,10 +134,25 @@ msgstr ""
 msgid "Delete inscription"
 msgstr ""
 
+msgid "Documents"
+msgstr ""
+
+msgid "Student ID: %s"
+msgstr ""
+
+msgid "No student ID yet."
+msgstr ""
+
+msgid "Document history"
+msgstr ""
+
 msgid "What the student sees"
 msgstr ""
 
 msgid "Student"
+msgstr ""
+
+msgid "Student ID"
 msgstr ""
 
 msgid "Progress"
@@ -160,6 +178,356 @@ msgstr ""
 
 msgid "CSV import"
 msgstr ""
+
+msgid "Certificate of studies (constancia)"
+msgstr ""
+
+msgid "Report card (boleta)"
+msgstr ""
+
+msgid "Document templates"
+msgstr ""
+
+msgid "Document template"
+msgstr ""
+
+msgid "Add template"
+msgstr ""
+
+msgid "Add document template"
+msgstr ""
+
+msgid "Edit document template"
+msgstr ""
+
+msgid "No templates found."
+msgstr ""
+
+msgid "Institution name"
+msgstr ""
+
+msgid "Institution logo (image)"
+msgstr ""
+
+msgid "Student full name"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Program name"
+msgstr ""
+
+msgid "Program code"
+msgstr ""
+
+msgid "Level (e.g. Licenciatura)"
+msgstr ""
+
+msgid "Modality"
+msgstr ""
+
+msgid "RVOE number"
+msgstr ""
+
+msgid "RVOE date"
+msgstr ""
+
+msgid "Term name (current or selected)"
+msgstr ""
+
+msgid "Term number"
+msgstr ""
+
+msgid "Term number in words (primer, segundo…)"
+msgstr ""
+
+msgid "School period (from Settings)"
+msgstr ""
+
+msgid "Inscription status"
+msgstr ""
+
+msgid "Program progress %"
+msgstr ""
+
+msgid "General average"
+msgstr ""
+
+msgid "Grades table with every evaluation (boleta)"
+msgstr ""
+
+msgid "Grades table, one row per course"
+msgstr ""
+
+msgid "Issue date, generated automatically (19 de octubre de 2026)"
+msgstr ""
+
+msgid "Issue date (19/10/2026)"
+msgstr ""
+
+msgid "City and issue date (Ciudad de México, a 19 de octubre de 2026)"
+msgstr ""
+
+msgid "Both signatures side by side"
+msgstr ""
+
+msgid "Signature 1 block (image, name, position)"
+msgstr ""
+
+msgid "Signature 2 block (image, name, position)"
+msgstr ""
+
+msgid "Signature 1 name"
+msgstr ""
+
+msgid "Signature 1 position"
+msgstr ""
+
+msgid "Signature 2 name"
+msgstr ""
+
+msgid "Signature 2 position"
+msgstr ""
+
+msgid "Document number"
+msgstr ""
+
+msgid "Public verification link"
+msgstr ""
+
+msgid "Document settings"
+msgstr ""
+
+msgid "Available fields"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "0 = free. With a price, a sale product is created automatically and each purchase allows one document."
+msgstr ""
+
+msgid "Sale product:"
+msgstr ""
+
+msgid "Folio prefix"
+msgstr ""
+
+msgid "Paper"
+msgstr ""
+
+msgid "Letter"
+msgstr ""
+
+msgid "Legal"
+msgstr ""
+
+msgid "Portrait"
+msgstr ""
+
+msgid "Landscape"
+msgstr ""
+
+msgid "Page margin"
+msgstr ""
+
+msgid "Background image (letterhead)"
+msgstr ""
+
+msgid "Programs"
+msgstr ""
+
+msgid "None selected = every program."
+msgstr ""
+
+msgid "Preview PDF"
+msgstr ""
+
+msgid "Write these fields in the template (with braces). They are replaced with the student’s data when the PDF is generated."
+msgstr ""
+
+msgid "Payment for one \"%s\" document. After paying, generate and download the PDF in My documents."
+msgstr ""
+
+msgid "Issued"
+msgstr ""
+
+msgid "Free"
+msgstr ""
+
+msgid "Credited"
+msgstr ""
+
+msgid "Under review"
+msgstr ""
+
+msgid "Not taken"
+msgstr ""
+
+msgid "Term average"
+msgstr ""
+
+msgid "Course / evaluation"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Grade"
+msgstr ""
+
+msgid "Course"
+msgstr ""
+
+msgid "The PDF library is missing from the plugin folder."
+msgstr ""
+
+msgid "The document could not be generated: invalid data."
+msgstr ""
+
+msgid "This document is only available to students with an active program inscription."
+msgstr ""
+
+msgid "This is the payment for an official document."
+msgstr ""
+
+msgid "After paying, go to My documents to generate and download your PDF."
+msgstr ""
+
+msgid "My documents"
+msgstr ""
+
+msgid "You cannot generate this document."
+msgstr ""
+
+msgid "Document not available."
+msgstr ""
+
+msgid "The PDF file could not be found."
+msgstr ""
+
+msgid "Document %1$s generated. %2$s"
+msgstr ""
+
+msgid "Download PDF"
+msgstr ""
+
+msgid "Document revoked. Its verification link now reports it as not valid."
+msgstr ""
+
+msgid "Document verification"
+msgstr ""
+
+msgid "Valid document"
+msgstr ""
+
+msgid "Document not valid"
+msgstr ""
+
+msgid "Institution"
+msgstr ""
+
+msgid "Document"
+msgstr ""
+
+msgid "Folio"
+msgstr ""
+
+msgid "Issued on"
+msgstr ""
+
+msgid "The folio does not exist, the link is incomplete or the document was revoked."
+msgstr ""
+
+msgid "Log in to see your documents."
+msgstr ""
+
+msgid "Documents are available once your program inscription is active."
+msgstr ""
+
+msgid "Paid · ready to generate"
+msgstr ""
+
+msgid "Buy"
+msgstr ""
+
+msgid "Term"
+msgstr ""
+
+msgid "Generate PDF"
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "You have not generated documents yet."
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Issued documents"
+msgstr ""
+
+msgid "Student (email, username, ID)"
+msgstr ""
+
+msgid "Template"
+msgstr ""
+
+msgid "Student’s program"
+msgstr ""
+
+msgid "Documents issued by staff are not charged."
+msgstr ""
+
+msgid "No documents yet."
+msgstr ""
+
+msgid "Purchase"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Paid, not generated"
+msgstr ""
+
+msgid "Revoked"
+msgstr ""
+
+msgid "Verify"
+msgstr ""
+
+msgid "Revoke this document?"
+msgstr ""
+
+msgid "Revoke"
+msgstr ""
+
+msgid "Generate a document"
+msgstr ""
+
+msgid "All templates"
+msgstr ""
+
+msgid "Folio, student or ID"
+msgstr ""
+
+msgid "%d document"
+msgid_plural "%d documents"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "My program"
 msgstr ""
@@ -221,10 +589,10 @@ msgstr ""
 msgid "Pending courses"
 msgstr ""
 
-msgid "Credited"
+msgid "Current term: %s"
 msgstr ""
 
-msgid "Current term: %s"
+msgid "Average: %s"
 msgstr ""
 
 msgid "Program progress"
@@ -278,6 +646,9 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Grade: %1$s · %2$s"
+msgstr ""
+
 msgid "Locked"
 msgstr ""
 
@@ -311,6 +682,60 @@ msgstr ""
 msgid "This course is not available yet."
 msgstr ""
 
+msgid "No grade yet"
+msgstr ""
+
+msgid "Passed"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "This course has no graded evaluations."
+msgstr ""
+
+msgid "Evaluation"
+msgstr ""
+
+msgid "Course grade"
+msgstr ""
+
+msgid "Grading"
+msgstr ""
+
+msgid "Choose how much each evaluation of a course is worth. The course grade is the weighted average of the student’s quiz results. Without a configuration, every quiz weighs the same."
+msgstr ""
+
+msgid "— Choose a course —"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "This course has no quizzes yet. Add quizzes in the Tutor course builder."
+msgstr ""
+
+msgid "Weight (%)"
+msgstr ""
+
+msgid "Quiz"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Weights are normalized if they do not add up to 100%. Use 0 to leave an evaluation out."
+msgstr ""
+
+msgid "Save weights"
+msgstr ""
+
+msgid "Reset (all quizzes weigh the same)"
+msgstr ""
+
+msgid "Weights saved."
+msgstr ""
+
 msgid "Pending payment"
 msgstr ""
 
@@ -338,9 +763,6 @@ msgstr ""
 msgid "Retícula Académica needs Tutor LMS to be installed and active."
 msgstr ""
 
-msgid "Programs"
-msgstr ""
-
 msgid "Academic Grid"
 msgstr ""
 
@@ -362,9 +784,6 @@ msgstr ""
 msgid "Terms"
 msgstr ""
 
-msgid "Term"
-msgstr ""
-
 msgid "Add term"
 msgstr ""
 
@@ -378,6 +797,9 @@ msgid "No terms found."
 msgstr ""
 
 msgid "Enrollment and fees"
+msgstr ""
+
+msgid "Official data (RVOE)"
 msgstr ""
 
 msgid "Terms of this program"
@@ -410,6 +832,12 @@ msgstr ""
 msgid "Students can enroll themselves"
 msgstr ""
 
+msgid "Level"
+msgstr ""
+
+msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
+msgstr ""
+
 msgid "Save the program first, then add its terms."
 msgstr ""
 
@@ -420,9 +848,6 @@ msgid "Courses"
 msgstr ""
 
 msgid "Term fee"
-msgstr ""
-
-msgid "Term number"
 msgstr ""
 
 msgid "Term fee (optional)"
@@ -463,5 +888,113 @@ msgctxt "URL slug"
 msgid "program"
 msgstr ""
 
-msgid "Free"
+msgid "Settings"
+msgstr ""
+
+msgid "Academic Grid settings"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "City (for document dates)"
+msgstr ""
+
+msgid "Example: Ciudad de México. Documents print \"Ciudad de México, a 19 de octubre de 2026\"."
+msgstr ""
+
+msgid "Student ID (matrícula)"
+msgstr ""
+
+msgid "Prefix"
+msgstr ""
+
+msgid "First number"
+msgstr ""
+
+msgid "IDs are consecutive. Next ID to be assigned: %s"
+msgstr ""
+
+msgid "Assign automatically"
+msgstr ""
+
+msgid "When the student is enrolled in a program"
+msgstr ""
+
+msgid "When any user registers"
+msgstr ""
+
+msgid "Signatures for documents"
+msgstr ""
+
+msgid "Signature %d"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "Signature image (PNG with transparent background recommended)"
+msgstr ""
+
+msgid "Grades"
+msgstr ""
+
+msgid "Grade scale"
+msgstr ""
+
+msgid "Minimum passing grade"
+msgstr ""
+
+msgid "Decimals"
+msgstr ""
+
+msgid "Quiz attempt that counts"
+msgstr ""
+
+msgid "Best attempt"
+msgstr ""
+
+msgid "Last attempt"
+msgstr ""
+
+msgid "SCORM evaluations"
+msgstr ""
+
+msgid "Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen"
+msgstr ""
+
+msgid "School periods"
+msgstr ""
+
+msgid "One per line: name | start date | end date. The current period fills the {periodo} field of documents."
+msgstr ""
+
+msgid "Current period: %s"
+msgstr ""
+
+msgid "Students without ID"
+msgstr ""
+
+msgid "Assigns a consecutive ID to every student enrolled in a program that does not have one yet (in enrollment order)."
+msgstr ""
+
+msgid "Assign missing IDs"
+msgstr ""
+
+msgid "%d student IDs assigned."
+msgstr ""
+
+msgid "Academic record"
+msgstr ""
+
+msgid "Leave empty and check the box to assign the next consecutive ID."
+msgstr ""
+
+msgid "Assign the next consecutive ID"
+msgstr ""
+
+msgid "That student ID already belongs to another user."
 msgstr ""
