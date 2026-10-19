@@ -14,6 +14,9 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
+msgid "Code"
+msgstr ""
+
 msgid "Choose image"
 msgstr ""
 
@@ -143,6 +146,9 @@ msgstr ""
 msgid "No student ID yet."
 msgstr ""
 
+msgid "Grades and extraordinary exams"
+msgstr ""
+
 msgid "Document history"
 msgstr ""
 
@@ -260,6 +266,36 @@ msgstr ""
 msgid "General average"
 msgstr ""
 
+msgid "Cycle average (current term, or the term chosen for the report card)"
+msgstr ""
+
+msgid "Official grades table of the cycle: CODE, COURSE, F, EXT, CF"
+msgstr ""
+
+msgid "Student name in capitals, last names first"
+msgstr ""
+
+msgid "Program name in capitals"
+msgstr ""
+
+msgid "Grade level (term number)"
+msgstr ""
+
+msgid "School cycle (same as the period)"
+msgstr ""
+
+msgid "CCT (work center code)"
+msgstr ""
+
+msgid "Institutional seal (image)"
+msgstr ""
+
+msgid "QR code (link from Settings, or the verification page)"
+msgstr ""
+
+msgid "Comments written by staff when issuing"
+msgstr ""
+
 msgid "Grades table with every evaluation (boleta)"
 msgstr ""
 
@@ -338,6 +374,24 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
+msgid "Show quizzes in the grades table"
+msgstr ""
+
+msgid "Unchecked: {tabla_calificaciones} shows only the final grade (average) of each course."
+msgstr ""
+
+msgid "University name"
+msgstr ""
+
+msgid "Empty = the name in Settings. Printed with {institucion}."
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Empty = the logo in Settings. Printed with {logo}."
+msgstr ""
+
 msgid "Page margin"
 msgstr ""
 
@@ -387,6 +441,12 @@ msgid "Grade"
 msgstr ""
 
 msgid "Course"
+msgstr ""
+
+msgid "CODE"
+msgstr ""
+
+msgid "COURSE"
 msgstr ""
 
 msgid "The PDF library is missing from the plugin folder."
@@ -488,6 +548,12 @@ msgstr ""
 msgid "Student’s program"
 msgstr ""
 
+msgid "Term (report cards)"
+msgstr ""
+
+msgid "Comments (optional, {comentarios})"
+msgstr ""
+
 msgid "Documents issued by staff are not charged."
 msgstr ""
 
@@ -560,6 +626,12 @@ msgid "You will be taken to pay the inscription fee after enrolling."
 msgstr ""
 
 msgid "Enroll in this program"
+msgstr ""
+
+msgid "RVOE %1$s, %2$s"
+msgstr ""
+
+msgid "RVOE %s"
 msgstr ""
 
 msgid "Curriculum"
@@ -646,10 +718,10 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-msgid "Grade: %1$s · %2$s"
+msgid "Locked"
 msgstr ""
 
-msgid "Locked"
+msgid "Grade: %1$s · %2$s"
 msgstr ""
 
 msgid "%1$s · %2$s · Course %3$d of %4$d"
@@ -682,6 +754,15 @@ msgstr ""
 msgid "This course is not available yet."
 msgstr ""
 
+msgid "F: ordinary grade (weighted average of quizzes). EXT: extraordinary exam, replaces F when filled. CF: official final grade (integer)."
+msgstr ""
+
+msgid "Save extraordinary grades"
+msgstr ""
+
+msgid "Extraordinary grades saved."
+msgstr ""
+
 msgid "No grade yet"
 msgstr ""
 
@@ -698,6 +779,9 @@ msgid "Evaluation"
 msgstr ""
 
 msgid "Course grade"
+msgstr ""
+
+msgid "Extraordinary exam"
 msgstr ""
 
 msgid "Grading"
@@ -835,7 +919,7 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
-msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
+msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {cct}, {nivel}, {modalidad}."
 msgstr ""
 
 msgid "Save the program first, then add its terms."
@@ -859,6 +943,9 @@ msgstr ""
 msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
 msgstr ""
 
+msgid "Course code"
+msgstr ""
+
 msgid "No courses yet."
 msgstr ""
 
@@ -869,6 +956,15 @@ msgid "Add course"
 msgstr ""
 
 msgid "Drag to reorder. Students see this order as the path to follow, and the program setting decides whether it is enforced."
+msgstr ""
+
+msgid "Code: the official key of each course (e.g. MAT-101). It belongs to the course, so it is the same in every program, and it is printed in report cards."
+msgstr ""
+
+msgid "RVOE"
+msgstr ""
+
+msgid "Missing"
 msgstr ""
 
 msgid "Recommended"
@@ -894,13 +990,28 @@ msgstr ""
 msgid "Academic Grid settings"
 msgstr ""
 
-msgid "Logo"
+msgid "Printed in documents with {logo}. Each template can use its own logo and university name."
 msgstr ""
 
 msgid "City (for document dates)"
 msgstr ""
 
 msgid "Example: Ciudad de México. Documents print \"Ciudad de México, a 19 de octubre de 2026\"."
+msgstr ""
+
+msgid "Default for {cct}. Each program can have its own."
+msgstr ""
+
+msgid "Institutional seal"
+msgstr ""
+
+msgid "Printed with {sello}."
+msgstr ""
+
+msgid "QR code link"
+msgstr ""
+
+msgid "Where the {qr} code of documents points, e.g. the WhatsApp of School Services. {folio} is replaced with the document number. Empty = the public verification page of the document."
 msgstr ""
 
 msgid "Student ID (matrícula)"
@@ -958,6 +1069,12 @@ msgid "Best attempt"
 msgstr ""
 
 msgid "Last attempt"
+msgstr ""
+
+msgid "Quiz breakdown for students"
+msgstr ""
+
+msgid "Show each quiz, its weight and grade in \"My program\" and on course pages. Unchecked: only the final grade of each course."
 msgstr ""
 
 msgid "SCORM evaluations"

@@ -156,6 +156,22 @@ check( 'scorm configured', $g['grade'], 5.0 );
 check( 'average of final grades', GC::average( array( array( 'status' => 'passed', 'grade' => 9.0 ), array( 'status' => 'failed', 'grade' => 6.0 ), array( 'status' => 'in_progress', 'grade' => 1.0 ) ) ), 7.5 );
 check( 'format', array( GC::format( 8, 1 ), GC::format( null, 1 ) ), array( '8.0', '—' ) );
 
+// Final grade (CF) and extraordinary exams.
+$f = function ( $grade, $status = 'passed' ) { return array( 'grade' => $grade, 'status' => $status, 'items' => array() ); };
+check( 'CF rounds passing grades', GC::with_final( $f( 9.8 ), null, 7 )['cf'], 10 );
+check( 'CF keeps 9', GC::with_final( $f( 9.0 ), null, 7 )['cf'], 9 );
+check( 'CF 6.0 with passing 6', GC::with_final( $f( 6.0 ), null, 6 )['cf'], 6 );
+check( 'CF never rounds a failing grade up', GC::with_final( $f( 6.8, 'failed' ), null, 7 )['cf'], 6 );
+check( 'CF 6.5 fails with passing 7', GC::with_final( $f( 6.5, 'failed' ), null, 7 )['cf'], 6 );
+$x = GC::with_final( $f( 5.0, 'failed' ), 8, 7 );
+check( 'EXT replaces F', array( $x['final'], $x['cf'], $x['status'], $x['grade'] ), array( 8.0, 8, 'passed', 5.0 ) );
+check( 'no grade, no CF', GC::with_final( $f( null, 'none' ), null, 7 )['cf'], null );
+check( 'average uses EXT', GC::average( array( $x, GC::with_final( $f( 9.0 ), null, 7 ) ) ), 8.5 );
+// Reference report card: 9.00, 9.80, 6.00 → cycle average 8.3, CF 9, 10, 6 (passing 6).
+$ref = array_map( function ( $g ) use ( $f ) { return GC::with_final( $f( $g ), null, 6 ); }, array( 9.0, 9.8, 6.0 ) );
+check( 'reference CFs', array_column( $ref, 'cf' ), array( 9, 10, 6 ) );
+check( 'reference cycle average', GC::average( $ref ), 8.3 );
+
 // ---------------- Templates ----------------
 check( 'render', TR::render( 'Hola {alumno}, {matricula}. {desconocido}', array( 'alumno' => 'Ana', 'matricula' => 'UNTGU-10000' ) ), 'Hola Ana, UNTGU-10000. {desconocido}' );
 check( 'block placeholder unwrapped', TR::render( "<p>{tabla_calificaciones}</p>\n<p>x</p>", array( 'tabla_calificaciones' => '<table></table>' ) ), "<table></table>\n<p>x</p>" );

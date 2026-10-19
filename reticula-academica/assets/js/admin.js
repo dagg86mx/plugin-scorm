@@ -45,6 +45,7 @@
 			var title = $select.find('option:selected').text();
 			var $item = $('<li class="ra-course-item"/>').attr('data-id', id)
 				.append('<span class="dashicons dashicons-menu ra-handle" aria-hidden="true"></span>')
+				.append($('<input type="text" class="ra-course-code"/>').attr('name', 'ra_codes[' + id + ']').attr('placeholder', l10n.code || 'Code'))
 				.append($('<span class="ra-course-title"/>').text(title))
 				.append($('<input type="hidden" name="ra_courses[]"/>').val(id))
 				.append($('<button type="button" class="button-link ra-remove"/>').attr('aria-label', l10n.remove || 'Remove').html('<span class="dashicons dashicons-no-alt"></span>'));

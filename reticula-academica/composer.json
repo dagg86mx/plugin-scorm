@@ -5,6 +5,12 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "php": ">=7.4",
-        "dompdf/dompdf": "^3.0"
+        "dompdf/dompdf": "^3.0",
+        "chillerlan/php-qrcode": "^4.4"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.33"
+        }
     }
 }

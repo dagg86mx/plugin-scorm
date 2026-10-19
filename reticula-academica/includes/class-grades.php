@@ -11,7 +11,8 @@ defined( 'ABSPATH' ) || exit;
 
 class Grades {
 
-	const META = '_ra_weights';
+	const META     = '_ra_weights';
+	const EXT_META = 'ra_ext_grades';
 	const PAGE = 'ra-grading';
 
 	private static $cache = array();
@@ -19,6 +20,7 @@ class Grades {
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ), 20 );
 		add_action( 'admin_post_ra_save_weights', array( __CLASS__, 'handle_save' ) );
+		add_action( 'admin_post_ra_save_ext', array( __CLASS__, 'handle_save_ext' ) );
 	}
 
 	public static function options( $final = false ) {
@@ -160,6 +162,7 @@ class Grades {
 			);
 		}
 		$result = Grade_Calculator::course( $items, self::weights( $course_id ), self::options( Tutor::is_completed( $course_id, $user_id ) ) );
+		$result = Grade_Calculator::with_final( $result, self::ext( $course_id, $user_id ), (float) Settings::get( 'grade_passing' ) );
 		self::$cache[ $key ] = apply_filters( 'ra_course_grade', $result, $course_id, $user_id );
 		return self::$cache[ $key ];
 	}
@@ -177,6 +180,75 @@ class Grades {
 			}
 		}
 		return Grade_Calculator::average( $grades, (int) Settings::get( 'grade_decimals' ) );
+	}
+
+	/**
+	 * Extraordinary exam grade (EXT) captured by staff, or null.
+	 */
+	public static function ext( $course_id, $user_id ) {
+		$all = get_user_meta( $user_id, self::EXT_META, true );
+		return ( is_array( $all ) && isset( $all[ $course_id ] ) && '' !== $all[ $course_id ] ) ? (float) $all[ $course_id ] : null;
+	}
+
+	/**
+	 * Staff form: extraordinary grades of a student in a program.
+	 */
+	public static function ext_form( array $inscription ) {
+		$user_id = (int) $inscription['user_id'];
+		$scale   = (int) Settings::get( 'grade_scale' );
+		?>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<?php wp_nonce_field( 'ra_save_ext_' . $user_id ); ?>
+			<input type="hidden" name="action" value="ra_save_ext">
+			<input type="hidden" name="user" value="<?php echo esc_attr( $user_id ); ?>">
+			<table class="widefat striped">
+				<thead><tr><th><?php esc_html_e( 'Code', 'reticula-academica' ); ?></th><th><?php esc_html_e( 'Course', 'reticula-academica' ); ?></th><th>F</th><th>EXT</th><th>CF</th></tr></thead>
+				<tbody>
+					<?php foreach ( Inscriptions::progress( $inscription )['terms'] as $term ) : ?>
+						<?php
+						if ( 'exempt' === $term['status'] ) {
+							continue;
+						}
+						?>
+						<tr><th colspan="5"><?php echo esc_html( $term['title'] ); ?></th></tr>
+						<?php foreach ( $term['courses'] as $course ) : ?>
+							<?php $grade = self::course( $course['id'], $user_id ); ?>
+							<tr>
+								<td><code><?php echo esc_html( Curriculum::course_code( $course['id'] ) ); ?></code></td>
+								<td><?php echo esc_html( get_the_title( $course['id'] ) ); ?></td>
+								<td><?php echo esc_html( self::format( $grade['grade'] ) ); ?></td>
+								<td><input type="number" step="0.01" min="0" max="<?php echo esc_attr( $scale ); ?>" name="ext[<?php echo esc_attr( $course['id'] ); ?>]" value="<?php echo esc_attr( null === $grade['ext'] ? '' : $grade['ext'] ); ?>" class="small-text"></td>
+								<td><strong><?php echo esc_html( null === $grade['cf'] ? '—' : (string) $grade['cf'] ); ?></strong></td>
+							</tr>
+						<?php endforeach; ?>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<p class="description"><?php esc_html_e( 'F: ordinary grade (weighted average of quizzes). EXT: extraordinary exam, replaces F when filled. CF: official final grade (integer).', 'reticula-academica' ); ?></p>
+			<?php submit_button( __( 'Save extraordinary grades', 'reticula-academica' ), 'secondary', 'submit', false ); ?>
+		</form>
+		<?php
+	}
+
+	public static function handle_save_ext() {
+		$user_id = isset( $_POST['user'] ) ? absint( $_POST['user'] ) : 0;
+		check_admin_referer( 'ra_save_ext_' . $user_id );
+		if ( ! current_user_can( Post_Types::capability() ) ) {
+			wp_die( '', 403 );
+		}
+		$scale = (float) Settings::get( 'grade_scale' );
+		$ext   = array();
+		foreach ( (array) ( isset( $_POST['ext'] ) ? wp_unslash( $_POST['ext'] ) : array() ) as $course_id => $value ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			$value = trim( (string) $value );
+			if ( '' !== $value && is_numeric( $value ) ) {
+				$ext[ absint( $course_id ) ] = max( 0, min( $scale, (float) $value ) );
+			}
+		}
+		update_user_meta( $user_id, self::EXT_META, $ext );
+		do_action( 'ra_ext_grades_saved', $user_id, $ext );
+		set_transient( 'ra_notice_' . get_current_user_id(), array( 'success', esc_html__( 'Extraordinary grades saved.', 'reticula-academica' ) ), 120 );
+		wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url() );
+		exit;
 	}
 
 	public static function status_label( $status ) {
@@ -209,7 +281,11 @@ class Grades {
 			$score = null === $item['score'] ? ( isset( $states[ $item['state'] ] ) ? $states[ $item['state'] ] : '—' ) : self::format( $item['score'] );
 			$html .= '<tr><td>' . esc_html( $item['title'] ) . '</td><td>' . esc_html( rtrim( rtrim( number_format( $item['weight'], 2, '.', '' ), '0' ), '.' ) . '%' ) . '</td><td>' . esc_html( $score ) . '</td></tr>';
 		}
-		$html .= '</tbody><tfoot><tr><th colspan="2">' . esc_html__( 'Course grade', 'reticula-academica' ) . '</th><th>' . esc_html( self::format( $grade['grade'] ) ) . '</th></tr></tfoot></table>';
+		$html .= '</tbody><tfoot><tr><th colspan="2">' . esc_html__( 'Course grade', 'reticula-academica' ) . '</th><th>' . esc_html( self::format( $grade['grade'] ) ) . '</th></tr>';
+		if ( isset( $grade['ext'] ) && null !== $grade['ext'] ) {
+			$html .= '<tr><th colspan="2">' . esc_html__( 'Extraordinary exam', 'reticula-academica' ) . '</th><th>' . esc_html( self::format( $grade['ext'] ) ) . '</th></tr>';
+		}
+		$html .= '</tfoot></table>';
 		return $html;
 	}
 

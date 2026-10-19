@@ -48,7 +48,7 @@ class Admin {
 		$screen = get_current_screen();
 		if ( $screen && Curriculum::TERM === $screen->post_type && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
 			wp_enqueue_script( 'ra-admin', RA_URL . 'assets/js/admin.js', array( 'jquery', 'jquery-ui-sortable' ), RA_VERSION, true );
-			wp_localize_script( 'ra-admin', 'RAAdmin', array( 'remove' => __( 'Remove', 'reticula-academica' ) ) );
+			wp_localize_script( 'ra-admin', 'RAAdmin', array( 'remove' => __( 'Remove', 'reticula-academica' ), 'code' => __( 'Code', 'reticula-academica' ) ) );
 			wp_enqueue_style( 'ra-admin', RA_URL . 'assets/css/admin.css', array(), RA_VERSION );
 		}
 		if ( $screen && Documents::TEMPLATE === $screen->post_type && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
@@ -538,6 +538,10 @@ luis@example.com,Ingeniería en Software,3,activo</pre>
 						?>
 					</p>
 					<?php Documents::issue_form( (int) $row['user_id'] ); ?>
+				</div>
+				<div class="ra-panel ra-panel-wide">
+					<h2><?php esc_html_e( 'Grades and extraordinary exams', 'reticula-academica' ); ?></h2>
+					<?php Grades::ext_form( $row ); ?>
 				</div>
 				<div class="ra-panel ra-panel-wide">
 					<h2><?php esc_html_e( 'Document history', 'reticula-academica' ); ?></h2>

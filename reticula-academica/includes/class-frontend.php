@@ -199,6 +199,17 @@ class Frontend {
 				<?php endif; ?>
 			</div>
 
+			<?php $rvoe = (string) get_post_meta( $program_id, '_ra_rvoe', true ); ?>
+			<?php if ( '' !== $rvoe ) : ?>
+				<p class="ra-meta ra-rvoe">
+					<?php
+					$rvoe_date = (string) get_post_meta( $program_id, '_ra_rvoe_date', true );
+					$rvoe_date = preg_match( '/^\d{4}-\d{2}-\d{2}$/', $rvoe_date ) ? $rvoe_date : '';
+					/* translators: 1: RVOE number, 2: RVOE date. */
+					echo esc_html( $rvoe_date ? sprintf( __( 'RVOE %1$s, %2$s', 'reticula-academica' ), $rvoe, Template_Renderer::long_date( strtotime( $rvoe_date . ' 12:00:00 UTC' ) ) ) : sprintf( __( 'RVOE %s', 'reticula-academica' ), $rvoe ) );
+					?>
+				</p>
+			<?php endif; ?>
 			<h2 class="ra-heading"><?php esc_html_e( 'Curriculum', 'reticula-academica' ); ?></h2>
 			<?php foreach ( $terms as $term ) : ?>
 				<section class="ra-term">
@@ -209,6 +220,10 @@ class Frontend {
 					<ol class="ra-courses">
 						<?php foreach ( $term['courses'] as $course_id ) : ?>
 							<li class="ra-course">
+								<?php $code = Curriculum::course_code( $course_id ); ?>
+								<?php if ( '' !== $code ) : ?>
+									<span class="ra-code"><?php echo esc_html( $code ); ?></span>
+								<?php endif; ?>
 								<a class="ra-course-title" href="<?php echo esc_url( get_permalink( $course_id ) ); ?>"><?php echo esc_html( get_the_title( $course_id ) ); ?></a>
 								<?php $price = Tutor::price_label( $course_id ); ?>
 								<?php if ( $price ) : ?>
@@ -389,6 +404,10 @@ class Frontend {
 		<li class="<?php echo esc_attr( $classes ); ?>">
 			<span class="ra-course-icon" aria-hidden="true"><?php echo wp_kses_post( self::icon( $course['status'] ) ); ?></span>
 			<div class="ra-course-main">
+				<?php $code = Curriculum::course_code( $course_id ); ?>
+				<?php if ( '' !== $code ) : ?>
+					<span class="ra-code"><?php echo esc_html( $code ); ?></span>
+				<?php endif; ?>
 				<a class="ra-course-title" href="<?php echo esc_url( get_permalink( $course_id ) ); ?>"><?php echo esc_html( get_the_title( $course_id ) ); ?></a>
 				<?php if ( $course['is_next'] ) : ?>
 					<span class="ra-badge ra-badge-next"><?php esc_html_e( 'Next', 'reticula-academica' ); ?></span>
@@ -399,15 +418,7 @@ class Frontend {
 					<p class="ra-lock"><?php echo esc_html( Gating::message( $course['lock_reason'] ) ); ?></p>
 				<?php endif; ?>
 				<?php if ( $grade && $grade['items'] ) : ?>
-					<details class="ra-grade-details">
-						<summary>
-							<?php
-							/* translators: 1: grade, 2: status. */
-							echo esc_html( sprintf( __( 'Grade: %1$s · %2$s', 'reticula-academica' ), Grades::format( $grade['grade'] ), Grades::status_label( $grade['status'] ) ) );
-							?>
-						</summary>
-						<?php echo Grades::breakdown_html( $grade ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					</details>
+					<?php echo self::grade_html( $grade, false ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				<?php endif; ?>
 			</div>
 			<div class="ra-course-side">
@@ -433,6 +444,18 @@ class Frontend {
 			</div>
 		</li>
 		<?php
+	}
+
+	/**
+	 * Course grade for students: with the quiz breakdown, or only the final grade (Settings).
+	 */
+	private static function grade_html( array $grade, $open ) {
+		/* translators: 1: grade, 2: status. */
+		$label = esc_html( sprintf( __( 'Grade: %1$s · %2$s', 'reticula-academica' ), Grades::format( isset( $grade['final'] ) ? $grade['final'] : $grade['grade'] ), Grades::status_label( $grade['status'] ) ) );
+		if ( ! Settings::get( 'grade_show_items' ) ) {
+			return '<p class="ra-grade-final">' . $label . '</p>';
+		}
+		return '<details class="ra-grade-details"' . ( $open ? ' open' : '' ) . '><summary>' . $label . '</summary>' . Grades::breakdown_html( $grade ) . '</details>';
 	}
 
 	private static function icon( $status ) {
@@ -485,15 +508,7 @@ class Frontend {
 				<?php if ( in_array( $course['status'], array( 'in_progress', 'completed' ), true ) ) : ?>
 					<?php $grade = Grades::course( $course_id, $user_id ); ?>
 					<?php if ( $grade['items'] ) : ?>
-						<details class="ra-grade-details" open>
-							<summary>
-								<?php
-								/* translators: 1: grade, 2: status. */
-								echo esc_html( sprintf( __( 'Grade: %1$s · %2$s', 'reticula-academica' ), Grades::format( $grade['grade'] ), Grades::status_label( $grade['status'] ) ) );
-								?>
-							</summary>
-							<?php echo Grades::breakdown_html( $grade ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-						</details>
+						<?php echo self::grade_html( $grade, true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php endif; ?>
 				<?php endif; ?>
 				<a class="ra-link" href="<?php echo esc_url( Inscriptions::my_program_url( $inscription['program_id'] ) ); ?>"><?php esc_html_e( 'See my program', 'reticula-academica' ); ?> &rarr;</a>

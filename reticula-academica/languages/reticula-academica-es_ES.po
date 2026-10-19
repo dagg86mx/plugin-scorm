@@ -14,6 +14,9 @@ msgstr "Alumnos"
 msgid "Remove"
 msgstr "Quitar"
 
+msgid "Code"
+msgstr "Clave"
+
 msgid "Choose image"
 msgstr "Elegir imagen"
 
@@ -143,6 +146,9 @@ msgstr "Matrícula: %s"
 msgid "No student ID yet."
 msgstr "Aún sin matrícula."
 
+msgid "Grades and extraordinary exams"
+msgstr "Calificaciones y extraordinarios"
+
 msgid "Document history"
 msgstr "Historial de documentos"
 
@@ -260,6 +266,36 @@ msgstr "% de avance en la carrera"
 msgid "General average"
 msgstr "Promedio general"
 
+msgid "Cycle average (current term, or the term chosen for the report card)"
+msgstr "Promedio del ciclo (tetramestre actual o el elegido para la boleta)"
+
+msgid "Official grades table of the cycle: CODE, COURSE, F, EXT, CF"
+msgstr "Tabla oficial de calificaciones del ciclo: CLAVE, MATERIA, F, EXT, CF"
+
+msgid "Student name in capitals, last names first"
+msgstr "Nombre del alumno en mayúsculas, apellidos primero"
+
+msgid "Program name in capitals"
+msgstr "Nombre de la carrera en mayúsculas"
+
+msgid "Grade level (term number)"
+msgstr "Grado (número de tetramestre)"
+
+msgid "School cycle (same as the period)"
+msgstr "Ciclo escolar (igual que el periodo)"
+
+msgid "CCT (work center code)"
+msgstr "CCT (clave de centro de trabajo)"
+
+msgid "Institutional seal (image)"
+msgstr "Sello institucional (imagen)"
+
+msgid "QR code (link from Settings, or the verification page)"
+msgstr "Código QR (enlace de Ajustes o la página de verificación)"
+
+msgid "Comments written by staff when issuing"
+msgstr "Comentarios que escribe el personal al emitir"
+
 msgid "Grades table with every evaluation (boleta)"
 msgstr "Tabla de calificaciones con cada evaluación (boleta)"
 
@@ -338,6 +374,24 @@ msgstr "Vertical"
 msgid "Landscape"
 msgstr "Horizontal"
 
+msgid "Show quizzes in the grades table"
+msgstr "Mostrar los quizzes en la tabla de calificaciones"
+
+msgid "Unchecked: {tabla_calificaciones} shows only the final grade (average) of each course."
+msgstr "Sin marcar: {tabla_calificaciones} muestra solo la calificación final (promedio) de cada materia."
+
+msgid "University name"
+msgstr "Nombre de la universidad"
+
+msgid "Empty = the name in Settings. Printed with {institucion}."
+msgstr "Vacío = el nombre de Ajustes. Se imprime con {institucion}."
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Empty = the logo in Settings. Printed with {logo}."
+msgstr "Vacío = el logo de Ajustes. Se imprime con {logo}."
+
 msgid "Page margin"
 msgstr "Margen de página"
 
@@ -388,6 +442,12 @@ msgstr "Calificación"
 
 msgid "Course"
 msgstr "Materia"
+
+msgid "CODE"
+msgstr "CLAVE"
+
+msgid "COURSE"
+msgstr "MATERIA"
 
 msgid "The PDF library is missing from the plugin folder."
 msgstr "Falta la librería de PDF en la carpeta del plugin."
@@ -488,6 +548,12 @@ msgstr "Plantilla"
 msgid "Student’s program"
 msgstr "Carrera del alumno"
 
+msgid "Term (report cards)"
+msgstr "Tetramestre (boletas)"
+
+msgid "Comments (optional, {comentarios})"
+msgstr "Comentarios (opcional, {comentarios})"
+
 msgid "Documents issued by staff are not charged."
 msgstr "Los documentos emitidos por el personal no se cobran."
 
@@ -561,6 +627,12 @@ msgstr "Después de inscribirte irás a pagar la cuota de inscripción."
 
 msgid "Enroll in this program"
 msgstr "Inscribirme a esta carrera"
+
+msgid "RVOE %1$s, %2$s"
+msgstr "RVOE %1$s, %2$s"
+
+msgid "RVOE %s"
+msgstr "RVOE %s"
 
 msgid "Curriculum"
 msgstr "Retícula"
@@ -646,11 +718,11 @@ msgstr "Tu siguiente paso"
 msgid "Next"
 msgstr "Siguiente"
 
-msgid "Grade: %1$s · %2$s"
-msgstr "Calificación: %1$s · %2$s"
-
 msgid "Locked"
 msgstr "Bloqueado"
+
+msgid "Grade: %1$s · %2$s"
+msgstr "Calificación: %1$s · %2$s"
 
 msgid "%1$s · %2$s · Course %3$d of %4$d"
 msgstr "%1$s · %2$s · Curso %3$d de %4$d"
@@ -682,6 +754,15 @@ msgstr "Tu inscripción a la carrera no está activa."
 msgid "This course is not available yet."
 msgstr "Este curso aún no está disponible."
 
+msgid "F: ordinary grade (weighted average of quizzes). EXT: extraordinary exam, replaces F when filled. CF: official final grade (integer)."
+msgstr "F: calificación ordinaria (promedio ponderado de los quizzes). EXT: examen extraordinario, sustituye a F cuando se captura. CF: calificación final oficial (entera)."
+
+msgid "Save extraordinary grades"
+msgstr "Guardar extraordinarios"
+
+msgid "Extraordinary grades saved."
+msgstr "Calificaciones extraordinarias guardadas."
+
 msgid "No grade yet"
 msgstr "Sin calificación"
 
@@ -699,6 +780,9 @@ msgstr "Evaluación"
 
 msgid "Course grade"
 msgstr "Calificación de la materia"
+
+msgid "Extraordinary exam"
+msgstr "Examen extraordinario"
 
 msgid "Grading"
 msgstr "Evaluación"
@@ -835,8 +919,8 @@ msgstr "Los alumnos pueden inscribirse solos"
 msgid "Level"
 msgstr "Nivel"
 
-msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
-msgstr "Se usan en los documentos: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}."
+msgid "Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {cct}, {nivel}, {modalidad}."
+msgstr "Se usan en los documentos: {rvoe}, {rvoe_fecha}, {clave_carrera}, {cct}, {nivel}, {modalidad}."
 
 msgid "Save the program first, then add its terms."
 msgstr "Guarda primero la carrera y después añade sus tetramestres."
@@ -859,6 +943,9 @@ msgstr "— Sin cuota —"
 msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
 msgstr "Curso de pago de Tutor (p. ej. reinscripción). Los cursos de este tetramestre siguen bloqueados hasta que el alumno lo compre."
 
+msgid "Course code"
+msgstr "Clave de la materia"
+
 msgid "No courses yet."
 msgstr "Aún no hay cursos."
 
@@ -870,6 +957,15 @@ msgstr "Añadir curso"
 
 msgid "Drag to reorder. Students see this order as the path to follow, and the program setting decides whether it is enforced."
 msgstr "Arrastra para ordenar. Los alumnos ven este orden como la ruta a seguir; el ajuste de la carrera decide si es obligatorio."
+
+msgid "Code: the official key of each course (e.g. MAT-101). It belongs to the course, so it is the same in every program, and it is printed in report cards."
+msgstr "Clave: la clave oficial de cada materia (p. ej. MAT-101). Pertenece al curso, así que es la misma en todas las carreras, y se imprime en las boletas."
+
+msgid "RVOE"
+msgstr "RVOE"
+
+msgid "Missing"
+msgstr "Falta"
 
 msgid "Recommended"
 msgstr "Recomendado"
@@ -894,14 +990,29 @@ msgstr "Ajustes"
 msgid "Academic Grid settings"
 msgstr "Ajustes de Retícula"
 
-msgid "Logo"
-msgstr "Logo"
+msgid "Printed in documents with {logo}. Each template can use its own logo and university name."
+msgstr "Se imprime en los documentos con {logo}. Cada plantilla puede usar su propio logo y nombre de universidad."
 
 msgid "City (for document dates)"
 msgstr "Ciudad (para la fecha de los documentos)"
 
 msgid "Example: Ciudad de México. Documents print \"Ciudad de México, a 19 de octubre de 2026\"."
 msgstr "Ejemplo: Ciudad de México. Los documentos imprimen «Ciudad de México, a 19 de octubre de 2026»."
+
+msgid "Default for {cct}. Each program can have its own."
+msgstr "Valor general de {cct}. Cada carrera puede tener el suyo."
+
+msgid "Institutional seal"
+msgstr "Sello institucional"
+
+msgid "Printed with {sello}."
+msgstr "Se imprime con {sello}."
+
+msgid "QR code link"
+msgstr "Enlace del código QR"
+
+msgid "Where the {qr} code of documents points, e.g. the WhatsApp of School Services. {folio} is replaced with the document number. Empty = the public verification page of the document."
+msgstr "A dónde lleva el código {qr} de los documentos, p. ej. el WhatsApp de Servicios Escolares. {folio} se reemplaza por el folio del documento. Vacío = la página pública de verificación del documento."
 
 msgid "Student ID (matrícula)"
 msgstr "Matrícula"
@@ -959,6 +1070,12 @@ msgstr "El mejor intento"
 
 msgid "Last attempt"
 msgstr "El último intento"
+
+msgid "Quiz breakdown for students"
+msgstr "Desglose de quizzes para el alumno"
+
+msgid "Show each quiz, its weight and grade in \"My program\" and on course pages. Unchecked: only the final grade of each course."
+msgstr "Mostrar cada quiz con su valor y calificación en «Mi carrera» y en la página del curso. Sin marcar: solo la calificación final de cada materia."
 
 msgid "SCORM evaluations"
 msgstr "Evaluaciones SCORM"

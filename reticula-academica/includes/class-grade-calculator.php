@@ -115,6 +115,34 @@ class Grade_Calculator {
 	}
 
 	/**
+	 * Apply an extraordinary exam (EXT) and compute the official final grade (CF).
+	 *
+	 * F is the ordinary grade (weighted average). When an EXT grade exists it replaces F.
+	 * CF is an integer: passing grades are rounded half up (9.8 → 10), failing grades are
+	 * truncated so rounding can never turn a failing grade into a passing one (6.8 → 6 when 7 passes).
+	 *
+	 * @param array      $result  Result of course().
+	 * @param float|null $ext     Extraordinary grade in scale units, or null.
+	 * @param float      $passing Minimum passing grade.
+	 * @return array $result with ext, final and cf keys (status updated when EXT exists).
+	 */
+	public static function with_final( array $result, $ext, $passing ) {
+		$result['ext']   = ( null === $ext || '' === $ext ) ? null : (float) $ext;
+		$result['final'] = null !== $result['ext'] ? $result['ext'] : $result['grade'];
+		if ( null !== $result['ext'] ) {
+			$result['status'] = $result['ext'] >= (float) $passing ? self::STATUS_PASSED : self::STATUS_FAILED;
+		}
+		if ( null === $result['final'] ) {
+			$result['cf'] = null;
+		} elseif ( $result['final'] >= (float) $passing ) {
+			$result['cf'] = (int) floor( $result['final'] + 0.5 );
+		} else {
+			$result['cf'] = (int) min( floor( $result['final'] ), ceil( (float) $passing ) - 1 );
+		}
+		return $result;
+	}
+
+	/**
 	 * Average of course grades (only courses with a final status).
 	 *
 	 * @param array $grades List of results from course().
@@ -124,7 +152,7 @@ class Grade_Calculator {
 		$values = array();
 		foreach ( $grades as $grade ) {
 			if ( isset( $grade['status'] ) && in_array( $grade['status'], array( self::STATUS_PASSED, self::STATUS_FAILED ), true ) ) {
-				$values[] = (float) $grade['grade'];
+				$values[] = (float) ( isset( $grade['final'] ) && null !== $grade['final'] ? $grade['final'] : $grade['grade'] );
 			}
 		}
 		return $values ? round( array_sum( $values ) / count( $values ), $decimals ) : null;

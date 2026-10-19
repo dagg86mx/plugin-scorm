@@ -14,6 +14,8 @@ class Curriculum {
 	const PROGRAM = 'ra_program';
 	const TERM    = 'ra_term';
 
+	const CODE_META = '_ra_course_code';
+
 	private static $cache = array();
 
 	public static function flush_cache() {
@@ -56,6 +58,13 @@ class Curriculum {
 		}
 		self::$cache[ $key ] = $terms;
 		return $terms;
+	}
+
+	/**
+	 * Official key of a course (materia), e.g. MAT-101.
+	 */
+	public static function course_code( $course_id ) {
+		return (string) get_post_meta( $course_id, self::CODE_META, true );
 	}
 
 	/**

@@ -58,7 +58,7 @@ El bloqueo se aplica en Tutor con los filtros `tutor_can_purchase_course` (carri
 Menú **Retícula**:
 
 1. **Carreras** → crear la carrera, elegir la cuota de inscripción, el modo de orden y si los alumnos pueden inscribirse solos.
-2. **Tetramestres** → desde la carrera, *Añadir tetramestre*: número, cuota opcional y cursos (lista con arrastrar y soltar).
+2. **Tetramestres** → desde la carrera, *Añadir tetramestre*: número, cuota opcional y cursos (lista con arrastrar y soltar). Cada materia lleva su **clave** (p. ej. `MGYPP-2C-GLG`), que se captura en esa misma lista y se imprime en las boletas.
 3. **Alumnos**:
    - Asignar un alumno a una carrera y al tetramestre en el que **inicia**. Los anteriores cuentan como *acreditados* (revalidación). El estado puede ser *Automático* (pendiente hasta pagar) o *Activo* (sin cobrar la inscripción, útil para becas).
    - Importar alumnos por **CSV**: `alumno,carrera,tetramestre,estado`, con separador `,` o `;`.
@@ -79,20 +79,31 @@ Menú **Retícula**:
 - Cuenta el **mejor intento** o el **último** (ajuste). Un quiz **en revisión** (preguntas abiertas) no cuenta como cero: la materia queda *En curso* hasta que el profesor lo califica. Un quiz no presentado cuenta como 0 cuando el curso ya está terminado.
 - Opcional: las lecciones **SCORM** (plugin Tutor SCORM) pueden entrar en la ponderación.
 - Escala 0–10 o 0–100, calificación mínima aprobatoria (7 por defecto) y decimales en *Ajustes*.
-- El alumno ve la calificación y el desglose en *Mi carrera* (por materia) y en la página de cada curso.
+- El alumno ve la calificación y el desglose en *Mi carrera* (por materia) y en la página de cada curso. En *Ajustes* se puede ocultar el desglose para mostrar solo la calificación final de cada materia.
+- **Extraordinarios (EXT):** en la ficha del alumno (*Alumnos → Editar*) el personal captura la calificación extraordinaria de cualquier materia; sustituye a la ordinaria.
+- **F, EXT y CF:** F es la calificación ordinaria (promedio ponderado, 2 decimales), EXT la extraordinaria y **CF la calificación final entera**: las aprobatorias se redondean (9.8 → 10) y las reprobatorias se truncan para que el redondeo nunca apruebe (6.8 → 6 si se aprueba con 7).
+- **Promedio del ciclo** (`{promedio_ciclo}`): promedio del tetramestre de la boleta (el actual o el elegido al generarla). **Promedio general** (`{promedio_general}`): toda la carrera.
 
 ## Documentos: boletas y constancias en PDF
 
 ### Configuración (una vez)
 
 1. *Retícula → Ajustes*: nombre de la institución, **logo**, **ciudad**, **dos firmas** (nombre, cargo e imagen de la firma) y **periodos escolares** (`Septiembre-Diciembre 2026 | 2026-09-01 | 2026-12-31`).
-2. En cada **carrera**, el cuadro *Datos oficiales (RVOE)*: número y fecha de RVOE, clave, nivel y modalidad.
-3. *Retícula → Plantillas de documentos*: se crean dos plantillas de ejemplo (*Constancia de estudios* y *Boleta de calificaciones*) en borrador. Edítalas y publícalas.
+   También: **CCT**, **sello institucional** (imagen) y **enlace del código QR** (por ejemplo `https://wa.me/52155…?text=Verificar%20{folio}` para que el QR abra WhatsApp de Servicios Escolares con el folio; vacío = página de verificación del documento).
+2. En cada **carrera**, el cuadro *Datos oficiales (RVOE)*: número y fecha de RVOE, clave, CCT, nivel y modalidad. El listado de carreras muestra la columna RVOE.
+3. *Retícula → Plantillas de documentos*: se crean plantillas de ejemplo en borrador (*Constancia de estudios*, *Boleta de calificaciones* y **Boleta oficial**). Edítalas y publícalas.
+
+### Boleta oficial
+
+![Boleta oficial](docs/boleta-oficial.png)
+
+Reproduce el formato institucional: logo y nombre de la universidad, *Nombre del alumno* (mayúsculas, apellidos primero), *Matrícula*, *Fecha*, *Ciclo escolar*, *Grado*, *Oferta*, *CCT*, *RVOE* y *Promedio del ciclo*; tabla **CLAVE | MATERIA | F | EXT | CF** del ciclo; *Comentarios* (los escribe el personal al emitirla); sello, código QR y avisos legales al pie. Hoja A4, una página.
 
 ### Plantillas
 
 - El contenido es HTML (editor clásico) con campos entre llaves que se reemplazan al generar el PDF: `{alumno}`, `{matricula}`, `{carrera}`, `{rvoe}`, `{rvoe_fecha}`, `{tetramestre}`, `{tetramestre_ordinal}`, `{periodo}`, `{promedio_general}`, `{tabla_calificaciones}`, `{fecha_emision}`, `{lugar_fecha}`, `{firmas}`, `{firma_1}`, `{firma_2}`, `{folio}`, `{verificacion_url}`… (la lista completa aparece en la pantalla de la plantilla).
-- Ajustes por plantilla: tipo (constancia/boleta), **precio**, prefijo del folio, papel (carta, A4, oficio) y orientación, margen, **imagen de fondo** (hoja membretada) y carreras en las que está disponible.
+- Ajustes por plantilla: tipo (constancia/boleta), **precio**, prefijo del folio, papel (carta, A4, oficio) y orientación, margen, **imagen de fondo** (hoja membretada), carreras en las que está disponible, **logo y nombre de la universidad propios** (si se dejan vacíos se usan los de Ajustes) y **mostrar o no los quizzes** en la tabla de calificaciones (sin quizzes, cada materia muestra solo su calificación final).
+- Campos adicionales: `{tabla_boleta}` (CLAVE, MATERIA, F, EXT, CF), `{promedio_ciclo}`, `{alumno_mayusculas}`, `{oferta}`, `{grado}`, `{ciclo_escolar}`, `{cct}`, `{sello}`, `{qr}`, `{comentarios}`.
 - **Vista previa PDF** con los datos del alumno más reciente.
 - La **fecha de emisión se genera automáticamente** al momento de crear el documento.
 
@@ -119,7 +130,7 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 - El personal puede **emitir documentos sin cobro** para cualquier alumno (también desde la ficha del alumno).
 - Cada PDF lleva un **enlace público de verificación** (`{verificacion_url}`) que muestra si el folio es válido; si se revoca, deja de serlo.
 - Los PDF se guardan en `wp-content/uploads/ra-documentos/` (protegido con `.htaccess`; en Nginx conviene bloquear esa carpeta). Solo el alumno dueño y el personal pueden descargarlos.
-- Los PDF se generan con [dompdf](https://github.com/dompdf/dompdf) (incluido en `vendor/`, licencia LGPL).
+- Los PDF se generan con [dompdf](https://github.com/dompdf/dompdf) (licencia LGPL) y los códigos QR con [php-qrcode](https://github.com/chillerlan/php-qrcode) (licencia MIT), ambos incluidos en `vendor/`.
 
 ## Shortcodes
 
@@ -147,6 +158,7 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 | `ra_document_vars` | filtro | Añadir o cambiar campos de las plantillas. |
 | `ra_document_purchased` | acción | Cuando se paga un documento. |
 | `ra_document_issued` | acción | Cuando se genera un documento (p. ej. para enviarlo por correo). |
+| `ra_ext_grades_saved` | acción | Al guardar calificaciones extraordinarias de un alumno. |
 
 Con estos hooks puedes, por ejemplo, enviar un correo cuando el alumno cambia de tetramestre o emitir una constancia al egresar.
 

@@ -14,7 +14,7 @@ class Template_Renderer {
 	/**
 	 * Placeholders whose value is block-level HTML (tables, signature blocks…).
 	 */
-	const BLOCK_KEYS = array( 'tabla_calificaciones', 'tabla_calificaciones_resumen', 'firmas', 'firma_1', 'firma_2' );
+	const BLOCK_KEYS = array( 'tabla_calificaciones', 'tabla_calificaciones_resumen', 'tabla_boleta', 'firmas', 'firma_1', 'firma_2' );
 
 	const MONTHS = array( 1 => 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' );
 

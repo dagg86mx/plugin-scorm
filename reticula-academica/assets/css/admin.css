@@ -12,3 +12,4 @@
 .ra-panel-wide { max-width: none; flex: 2 1 560px; }
 .ra-panel select { max-width: 100%; }
 .ra-code { background: #f6f7f7; padding: 8px; font-size: 12px; overflow: auto; }
+.ra-course-code { width: 110px; text-transform: uppercase; font-family: monospace; }

@@ -117,6 +117,9 @@ class Documents {
 			'programs'    => is_array( $progs ) ? array_map( 'absint', $progs ) : array(),
 			'product'     => absint( get_post_meta( $template_id, '_ra_product_course', true ) ),
 			'margin'      => (string) get_post_meta( $template_id, '_ra_margin', true ),
+			'show_items'  => '0' !== (string) get_post_meta( $template_id, '_ra_show_items', true ),
+			'logo'        => absint( get_post_meta( $template_id, '_ra_logo', true ) ),
+			'institution' => (string) get_post_meta( $template_id, '_ra_institution', true ),
 		);
 	}
 
@@ -158,6 +161,16 @@ class Documents {
 			'estatus'                      => __( 'Inscription status', 'reticula-academica' ),
 			'avance'                       => __( 'Program progress %', 'reticula-academica' ),
 			'promedio_general'             => __( 'General average', 'reticula-academica' ),
+			'promedio_ciclo'               => __( 'Cycle average (current term, or the term chosen for the report card)', 'reticula-academica' ),
+			'tabla_boleta'                 => __( 'Official grades table of the cycle: CODE, COURSE, F, EXT, CF', 'reticula-academica' ),
+			'alumno_mayusculas'            => __( 'Student name in capitals, last names first', 'reticula-academica' ),
+			'oferta'                       => __( 'Program name in capitals', 'reticula-academica' ),
+			'grado'                        => __( 'Grade level (term number)', 'reticula-academica' ),
+			'ciclo_escolar'                => __( 'School cycle (same as the period)', 'reticula-academica' ),
+			'cct'                          => __( 'CCT (work center code)', 'reticula-academica' ),
+			'sello'                        => __( 'Institutional seal (image)', 'reticula-academica' ),
+			'qr'                           => __( 'QR code (link from Settings, or the verification page)', 'reticula-academica' ),
+			'comentarios'                  => __( 'Comments written by staff when issuing', 'reticula-academica' ),
 			'tabla_calificaciones'         => __( 'Grades table with every evaluation (boleta)', 'reticula-academica' ),
 			'tabla_calificaciones_resumen' => __( 'Grades table, one row per course', 'reticula-academica' ),
 			'fecha_emision'                => __( 'Issue date, generated automatically (19 de octubre de 2026)', 'reticula-academica' ),
@@ -208,6 +221,20 @@ class Documents {
 				<option value="portrait" <?php selected( $s['orientation'], 'portrait' ); ?>><?php esc_html_e( 'Portrait', 'reticula-academica' ); ?></option>
 				<option value="landscape" <?php selected( $s['orientation'], 'landscape' ); ?>><?php esc_html_e( 'Landscape', 'reticula-academica' ); ?></option>
 			</select></label></p>
+		<p><label><input type="checkbox" name="ra_show_items" value="1" <?php checked( $s['show_items'] ); ?>> <strong><?php esc_html_e( 'Show quizzes in the grades table', 'reticula-academica' ); ?></strong></label>
+			<br><span class="description"><?php esc_html_e( 'Unchecked: {tabla_calificaciones} shows only the final grade (average) of each course.', 'reticula-academica' ); ?></span></p>
+		<p><label><strong><?php esc_html_e( 'University name', 'reticula-academica' ); ?></strong><br>
+			<input type="text" name="ra_institution" value="<?php echo esc_attr( $s['institution'] ); ?>" style="width:100%" placeholder="<?php echo esc_attr( (string) Settings::get( 'institution' ) ); ?>"></label>
+			<br><span class="description"><?php esc_html_e( 'Empty = the name in Settings. Printed with {institucion}.', 'reticula-academica' ); ?></span></p>
+		<p><strong><?php esc_html_e( 'Logo', 'reticula-academica' ); ?></strong></p>
+		<div class="ra-image-field">
+			<input type="hidden" name="ra_logo" value="<?php echo esc_attr( $s['logo'] ); ?>">
+			<?php $logo_url = $s['logo'] ? wp_get_attachment_image_url( $s['logo'], 'medium' ) : ''; ?>
+			<img src="<?php echo esc_url( (string) $logo_url ); ?>" style="max-width:100%;max-height:80px;<?php echo $logo_url ? '' : 'display:none'; ?>" alt="">
+			<button type="button" class="button ra-pick-image"><?php esc_html_e( 'Choose image', 'reticula-academica' ); ?></button>
+			<button type="button" class="button-link ra-clear-image"><?php esc_html_e( 'Remove', 'reticula-academica' ); ?></button>
+		</div>
+		<p class="description"><?php esc_html_e( 'Empty = the logo in Settings. Printed with {logo}.', 'reticula-academica' ); ?></p>
 		<p><label><strong><?php esc_html_e( 'Page margin', 'reticula-academica' ); ?></strong><br>
 			<input type="text" name="ra_margin" value="<?php echo esc_attr( $s['margin'] ); ?>" class="small-text" placeholder="2cm"></label></p>
 		<p><strong><?php esc_html_e( 'Background image (letterhead)', 'reticula-academica' ); ?></strong></p>
@@ -255,7 +282,29 @@ class Documents {
 		update_post_meta( $post_id, '_ra_margin', isset( $_POST['ra_margin'] ) ? preg_replace( '/[^0-9a-z.\s]/', '', sanitize_text_field( wp_unslash( $_POST['ra_margin'] ) ) ) : '' );
 		update_post_meta( $post_id, '_ra_background', isset( $_POST['ra_background'] ) ? absint( $_POST['ra_background'] ) : 0 );
 		update_post_meta( $post_id, '_ra_programs', isset( $_POST['ra_programs'] ) ? array_map( 'absint', (array) $_POST['ra_programs'] ) : array() );
+		update_post_meta( $post_id, '_ra_show_items', empty( $_POST['ra_show_items'] ) ? '0' : '1' );
+		update_post_meta( $post_id, '_ra_logo', isset( $_POST['ra_logo'] ) ? absint( $_POST['ra_logo'] ) : 0 );
+		update_post_meta( $post_id, '_ra_institution', isset( $_POST['ra_institution'] ) ? sanitize_text_field( wp_unslash( $_POST['ra_institution'] ) ) : '' );
 		self::sync_product( $post_id );
+	}
+
+	/**
+	 * Apply the template's own options to the document fields: logo, university name and
+	 * whether the grades table lists every quiz or only the final grade of each course.
+	 */
+	public static function template_vars( $template_id, array $vars ) {
+		$s = self::template_settings( $template_id );
+		if ( $s['logo'] ) {
+			$logo         = self::image_data_uri( $s['logo'] );
+			$vars['logo'] = $logo ? '<img src="' . esc_attr( $logo ) . '" style="max-height:80px" alt="">' : $vars['logo'];
+		}
+		if ( '' !== $s['institution'] ) {
+			$vars['institucion'] = esc_html( $s['institution'] );
+		}
+		if ( ! $s['show_items'] && isset( $vars['tabla_calificaciones_resumen'] ) ) {
+			$vars['tabla_calificaciones'] = $vars['tabla_calificaciones_resumen'];
+		}
+		return $vars;
 	}
 
 	/**
@@ -351,40 +400,42 @@ class Documents {
 	 * Create the two starter templates once.
 	 */
 	public static function maybe_create_defaults() {
-		if ( get_option( 'ra_default_templates' ) || ! is_admin() ) {
+		$version = (int) get_option( 'ra_default_templates' );
+		if ( $version >= 2 || ! is_admin() ) {
 			return;
 		}
-		update_option( 'ra_default_templates', 1 );
+		update_option( 'ra_default_templates', 2 );
 		$defaults = array(
-			array(
-				'title'  => 'Constancia de estudios',
-				'type'   => 'constancia',
-				'prefix' => 'CON',
-				'price'  => 0,
-				'file'   => 'constancia.html',
+			1 => array(
+				array( 'Constancia de estudios', 'constancia', 'CON', 'constancia.html', 'letter' ),
+				array( 'Boleta de calificaciones', 'boleta', 'BOL', 'boleta.html', 'letter' ),
 			),
-			array(
-				'title'  => 'Boleta de calificaciones',
-				'type'   => 'boleta',
-				'prefix' => 'BOL',
-				'price'  => 0,
-				'file'   => 'boleta.html',
+			2 => array(
+				array( 'Boleta oficial', 'boleta', 'BOL', 'boleta-oficial.html', 'a4' ),
 			),
 		);
-		foreach ( $defaults as $default ) {
-			$id = wp_insert_post(
-				array(
-					'post_type'    => self::TEMPLATE,
-					'post_status'  => 'draft',
-					'post_title'   => $default['title'],
-					'post_content' => (string) file_get_contents( RA_DIR . 'templates/' . $default['file'] ), // phpcs:ignore WordPress.WP.AlternativeFunctions
-				)
-			);
-			update_post_meta( $id, '_ra_type', $default['type'] );
-			update_post_meta( $id, '_ra_prefix', $default['prefix'] );
-			update_post_meta( $id, '_ra_price', $default['price'] );
-			update_post_meta( $id, '_ra_paper', 'letter' );
-			update_post_meta( $id, '_ra_orientation', 'portrait' );
+		foreach ( $defaults as $since => $templates ) {
+			if ( $version >= $since ) {
+				continue;
+			}
+			foreach ( $templates as $default ) {
+				$id = wp_insert_post(
+					array(
+						'post_type'    => self::TEMPLATE,
+						'post_status'  => 'draft',
+						'post_title'   => $default[0],
+						'post_content' => (string) file_get_contents( RA_DIR . 'templates/' . $default[3] ), // phpcs:ignore WordPress.WP.AlternativeFunctions
+					)
+				);
+				update_post_meta( $id, '_ra_type', $default[1] );
+				update_post_meta( $id, '_ra_prefix', $default[2] );
+				update_post_meta( $id, '_ra_price', 0 );
+				update_post_meta( $id, '_ra_paper', $default[4] );
+				update_post_meta( $id, '_ra_orientation', 'portrait' );
+				if ( 'boleta-oficial.html' === $default[3] ) {
+					update_post_meta( $id, '_ra_margin', '1.3cm' );
+				}
+			}
 		}
 	}
 
@@ -421,7 +472,7 @@ class Documents {
 	 *
 	 * @param array $inscription Inscription row.
 	 * @param int   $term_id     Only this term (0 = every term started so far).
-	 * @return array [ detailed HTML, summary HTML, general average ]
+	 * @return array [ detailed HTML, summary HTML, general average, term_id => term average ]
 	 */
 	public static function grades_tables( array $inscription, $term_id = 0 ) {
 		$progress = Inscriptions::progress( $inscription );
@@ -438,6 +489,7 @@ class Documents {
 		$summary  = '';
 		$all      = array();
 
+		$term_avgs = array();
 		foreach ( $progress['terms'] as $term ) {
 			if ( $term_id ? (int) $term['id'] !== (int) $term_id : 'upcoming' === $term['status'] ) {
 				continue;
@@ -447,42 +499,118 @@ class Documents {
 			$rows_s      = '';
 			foreach ( $term['courses'] as $course ) {
 				$title = esc_html( get_the_title( $course['id'] ) );
+				$code  = esc_html( Curriculum::course_code( $course['id'] ) );
 				if ( 'exempt' === $course['status'] ) {
 					$label   = esc_html__( 'Credited', 'reticula-academica' );
-					$rows_s .= '<tr>' . $cell( $title ) . $cell( '—', 'text-align:center' ) . $cell( $label, 'text-align:center' ) . '</tr>';
-					$rows_d .= '<tr>' . $cell( '<strong>' . $title . '</strong>', '', 'td', 2 ) . $cell( $label, 'text-align:center' ) . '</tr>';
+					$rows_s .= '<tr>' . $cell( $code, 'text-align:center' ) . $cell( $title ) . $cell( '—', 'text-align:center' ) . $cell( $label, 'text-align:center' ) . '</tr>';
+					$rows_d .= '<tr>' . $cell( '<strong>' . $code . '</strong>', 'text-align:center' ) . $cell( '<strong>' . $title . '</strong>', '', 'td', 2 ) . $cell( $label, 'text-align:center' ) . '</tr>';
 					continue;
 				}
 				$grade         = Grades::course( $course['id'], $user_id );
 				$term_grades[] = $grade;
 				$all[]         = $grade;
-				$value         = esc_html( Grades::format( $grade['grade'] ) );
+				$value         = esc_html( Grades::format( $grade['final'] ) );
 				$status        = esc_html( Grades::status_label( $grade['status'] ) );
-				$rows_s       .= '<tr>' . $cell( $title ) . $cell( $value, 'text-align:center' ) . $cell( $status, 'text-align:center' ) . '</tr>';
-				$rows_d       .= '<tr>' . $cell( '<strong>' . $title . '</strong>', '', 'td', 2 ) . $cell( '<strong>' . $value . '</strong> · ' . $status, 'text-align:center' ) . '</tr>';
+				$rows_s       .= '<tr>' . $cell( $code, 'text-align:center' ) . $cell( $title ) . $cell( $value, 'text-align:center' ) . $cell( $status, 'text-align:center' ) . '</tr>';
+				$rows_d       .= '<tr>' . $cell( '<strong>' . $code . '</strong>', 'text-align:center' ) . $cell( '<strong>' . $title . '</strong>', '', 'td', 2 ) . $cell( '<strong>' . $value . '</strong> · ' . $status, 'text-align:center' ) . '</tr>';
 				foreach ( $grade['items'] as $item ) {
 					if ( null === $item['score'] ) {
 						$score = 'pending_review' === $item['state'] ? __( 'Under review', 'reticula-academica' ) : __( 'Not taken', 'reticula-academica' );
 					} else {
 						$score = Grades::format( $item['score'] );
 					}
-					$rows_d .= '<tr>' . $cell( esc_html( $item['title'] ), 'padding-left:18px;font-size:90%' ) . $cell( esc_html( $pct( $item['weight'] ) ), 'text-align:center;font-size:90%' ) . $cell( esc_html( $score ), 'text-align:center;font-size:90%' ) . '</tr>';
+					$rows_d .= '<tr>' . $cell( '' ) . $cell( esc_html( $item['title'] ), 'padding-left:14px;font-size:90%' ) . $cell( esc_html( $pct( $item['weight'] ) ), 'text-align:center;font-size:90%' ) . $cell( esc_html( $score ), 'text-align:center;font-size:90%' ) . '</tr>';
 				}
 			}
-			$avg     = Grade_Calculator::average( $term_grades, (int) Settings::get( 'grade_decimals' ) );
-			$avg_row = '<tr>' . $cell( '<strong>' . esc_html__( 'Term average', 'reticula-academica' ) . '</strong>', 'text-align:right', 'td', 2 ) . $cell( '<strong>' . esc_html( Grades::format( $avg ) ) . '</strong>', 'text-align:center' ) . '</tr>';
-			$head    = '<tr><th colspan="3" style="background:#1f3a68;color:#fff;padding:6px;text-align:left">' . esc_html( $term['title'] ) . '</th></tr>';
-			$detail .= $head . '<tr>' . $cell( esc_html__( 'Course / evaluation', 'reticula-academica' ), $head_bg . 'text-align:left', 'th' ) . $cell( esc_html__( 'Weight', 'reticula-academica' ), $head_bg . 'text-align:center;width:80px', 'th' ) . $cell( esc_html__( 'Grade', 'reticula-academica' ), $head_bg . 'text-align:center;width:150px', 'th' ) . '</tr>' . $rows_d . $avg_row;
-			$summary .= $head . '<tr>' . $cell( esc_html__( 'Course', 'reticula-academica' ), $head_bg . 'text-align:left', 'th' ) . $cell( esc_html__( 'Grade', 'reticula-academica' ), $head_bg . 'text-align:center;width:90px', 'th' ) . $cell( esc_html__( 'Status', 'reticula-academica' ), $head_bg . 'text-align:center;width:120px', 'th' ) . '</tr>' . $rows_s . $avg_row;
+			$avg                         = Grade_Calculator::average( $term_grades, (int) Settings::get( 'grade_decimals' ) );
+			$term_avgs[ (int) $term['id'] ] = $avg;
+			$avg_row = '<tr>' . $cell( '<strong>' . esc_html__( 'Term average', 'reticula-academica' ) . '</strong>', 'text-align:right', 'td', 3 ) . $cell( '<strong>' . esc_html( Grades::format( $avg ) ) . '</strong>', 'text-align:center' ) . '</tr>';
+			$head    = '<tr><th colspan="4" style="background:#1f3a68;color:#fff;padding:6px;text-align:left">' . esc_html( $term['title'] ) . '</th></tr>';
+			$code_th = $cell( esc_html__( 'Code', 'reticula-academica' ), $head_bg . 'text-align:center;width:75px', 'th' );
+			$detail .= $head . '<tr>' . $code_th . $cell( esc_html__( 'Course / evaluation', 'reticula-academica' ), $head_bg . 'text-align:left', 'th' ) . $cell( esc_html__( 'Weight', 'reticula-academica' ), $head_bg . 'text-align:center;width:60px', 'th' ) . $cell( esc_html__( 'Grade', 'reticula-academica' ), $head_bg . 'text-align:center;width:140px', 'th' ) . '</tr>' . $rows_d . $avg_row;
+			$summary .= $head . '<tr>' . $code_th . $cell( esc_html__( 'Course', 'reticula-academica' ), $head_bg . 'text-align:left', 'th' ) . $cell( esc_html__( 'Grade', 'reticula-academica' ), $head_bg . 'text-align:center;width:90px', 'th' ) . $cell( esc_html__( 'Status', 'reticula-academica' ), $head_bg . 'text-align:center;width:120px', 'th' ) . '</tr>' . $rows_s . $avg_row;
 		}
 		$general = Grade_Calculator::average( $all, (int) Settings::get( 'grade_decimals' ) );
 		$open    = '<table style="width:100%;border-collapse:collapse;font-size:10pt">';
-		return array( $open . $detail . '</table>', $open . $summary . '</table>', $general );
+		return array( $open . $detail . '</table>', $open . $summary . '</table>', $general, $term_avgs );
 	}
 
 	/**
 	 * Values of every placeholder for a student in a program.
 	 */
+	/**
+	 * Official report-card table of one term: CLAVE | MATERIA | F | EXT | CF.
+	 */
+	public static function official_table( array $inscription, $term_id ) {
+		$user_id = (int) $inscription['user_id'];
+		$border  = 'border:1px solid #222;';
+		$th      = 'background:#d9d9d9;padding:4px 8px;font-weight:bold;font-size:9pt;text-align:left;';
+		$html    = '<table style="width:100%;border-collapse:collapse;font-size:9pt"><tr>'
+			. '<th style="' . $th . 'width:95px">' . esc_html__( 'CODE', 'reticula-academica' ) . '</th>'
+			. '<th style="' . $th . '">' . esc_html__( 'COURSE', 'reticula-academica' ) . '</th>'
+			. '<th style="' . $th . 'width:95px;text-align:center">F</th>'
+			. '<th style="' . $th . 'width:95px;text-align:center">EXT</th>'
+			. '<th style="' . $th . 'width:95px;text-align:center">CF</th></tr>';
+		$two     = static function ( $value ) {
+			return null === $value ? '' : number_format( (float) $value, 2, '.', '' );
+		};
+		$rows    = 0;
+		foreach ( Inscriptions::progress( $inscription )['terms'] as $term ) {
+			if ( (int) $term['id'] !== (int) $term_id ) {
+				continue;
+			}
+			foreach ( $term['courses'] as $course ) {
+				if ( 'exempt' === $course['status'] ) {
+					continue;
+				}
+				$grade = Grades::course( $course['id'], $user_id );
+				$td    = 'style="' . $border . 'padding:8px;vertical-align:middle"';
+				$html .= '<tr><td ' . $td . '>' . esc_html( Curriculum::course_code( $course['id'] ) ) . '</td>'
+					. '<td ' . $td . '>' . esc_html( mb_strtoupper( get_the_title( $course['id'] ), 'UTF-8' ) ) . '</td>'
+					. '<td style="' . $border . 'padding:8px;text-align:center">' . esc_html( $two( $grade['grade'] ) ) . '</td>'
+					. '<td style="' . $border . 'padding:8px;text-align:center">' . esc_html( $two( $grade['ext'] ) ) . '</td>'
+					. '<td style="' . $border . 'padding:8px;text-align:center;font-weight:bold">' . esc_html( null === $grade['cf'] ? '' : (string) $grade['cf'] ) . '</td></tr>';
+				++$rows;
+			}
+		}
+		if ( ! $rows ) {
+			$html .= '<tr><td colspan="5" style="' . $border . 'padding:8px;text-align:center">—</td></tr>';
+		}
+		return $html . '</table>';
+	}
+
+	private static function qr_image( $url ) {
+		if ( '' === $url || ! self::pdf_available() ) {
+			return '';
+		}
+		require_once RA_DIR . 'vendor/autoload.php';
+		if ( ! class_exists( '\chillerlan\QRCode\QRCode' ) ) {
+			return '';
+		}
+		$options = new \chillerlan\QRCode\QROptions(
+			array(
+				'outputType'       => \chillerlan\QRCode\QRCode::OUTPUT_IMAGE_PNG,
+				'eccLevel'         => \chillerlan\QRCode\QRCode::ECC_M,
+				'scale'            => 6,
+				'imageBase64'      => true,
+				'imageTransparent' => false,
+			)
+		);
+		$uri = ( new \chillerlan\QRCode\QRCode( $options ) )->render( $url );
+		return '<img src="' . esc_attr( $uri ) . '" style="width:95px;height:95px" alt="QR">';
+	}
+
+	/**
+	 * Link encoded in the {qr} code.
+	 */
+	public static function qr_url( $folio, $verify_url ) {
+		$url = (string) Settings::get( 'qr_url' );
+		if ( '' === $url ) {
+			return $verify_url;
+		}
+		return str_replace( array( 'RAFOLIO', 'RAVERIFY' ), array( rawurlencode( $folio ), rawurlencode( $verify_url ) ), $url );
+	}
+
 	/**
 	 * @param int    $user_id     Student.
 	 * @param int    $program_id  Program.
@@ -492,7 +620,7 @@ class Documents {
 	 * @param string $verify_url  Verification URL.
 	 * @param int    $grades_term Restrict grade tables to one term (0 = all).
 	 */
-	public static function vars( $user_id, $program_id, $term_id = 0, $timestamp = 0, $folio = '', $verify_url = '', $grades_term = 0 ) {
+	public static function vars( $user_id, $program_id, $term_id = 0, $timestamp = 0, $folio = '', $verify_url = '', $grades_term = 0, $comments = '' ) {
 		$user        = get_userdata( $user_id );
 		$inscription = Inscriptions::find( $user_id, $program_id );
 		$timestamp   = $timestamp ? $timestamp : current_time( 'timestamp' ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
@@ -506,11 +634,21 @@ class Documents {
 		$name        = $user ? trim( $user->first_name . ' ' . $user->last_name ) : '';
 		$name        = '' !== $name ? $name : ( $user ? $user->display_name : '' );
 
-		list( $detail, $summary, $general ) = $inscription ? self::grades_tables( $inscription, $grades_term ) : array( '', '', null );
+		list( $detail, $summary, $general, $term_avgs ) = $inscription ? self::grades_tables( $inscription, $grades_term ) : array( '', '', null, array() );
 		if ( $inscription && $grades_term ) {
 			// The general average always covers the whole program.
 			$general = self::grades_tables( $inscription, 0 )[2];
 		}
+		// Cycle average: the term the report card is about (the selected one, otherwise the current term).
+		$cycle_term = $grades_term ? $grades_term : $term_id;
+		if ( $inscription && $cycle_term && ! array_key_exists( $cycle_term, $term_avgs ) ) {
+			$term_avgs = self::grades_tables( $inscription, $cycle_term )[3];
+		}
+		$cycle_avg = isset( $term_avgs[ $cycle_term ] ) ? $term_avgs[ $cycle_term ] : null;
+		$caps_name = $user ? trim( $user->last_name . ' ' . $user->first_name ) : '';
+		$caps_name = mb_strtoupper( '' !== $caps_name ? $caps_name : $name, 'UTF-8' );
+		$cct       = (string) get_post_meta( $program_id, '_ra_cct', true );
+		$seal      = self::image_data_uri( (int) Settings::get( 'seal_image' ) );
 
 		$sign1 = self::signature_block( 1 );
 		$sign2 = self::signature_block( 2 );
@@ -536,6 +674,16 @@ class Documents {
 			'estatus'                      => esc_html( $inscription && isset( $statuses[ $inscription['status'] ] ) ? $statuses[ $inscription['status'] ] : '' ),
 			'avance'                       => esc_html( $progress ? $progress['percent'] . '%' : '' ),
 			'promedio_general'             => esc_html( Grades::format( $general ) ),
+			'promedio_ciclo'               => esc_html( Grades::format( $cycle_avg ) ),
+			'tabla_boleta'                 => $inscription && $cycle_term ? self::official_table( $inscription, $cycle_term ) : '',
+			'alumno_mayusculas'            => esc_html( $caps_name ),
+			'oferta'                       => esc_html( mb_strtoupper( get_the_title( $program_id ), 'UTF-8' ) ),
+			'grado'                        => esc_html( $cycle_term ? (string) (int) get_post_field( 'menu_order', $cycle_term ) : '' ),
+			'ciclo_escolar'                => esc_html( Settings::current_period( gmdate( 'Y-m-d', $timestamp ) ) ),
+			'cct'                          => esc_html( '' !== $cct ? $cct : (string) Settings::get( 'cct' ) ),
+			'sello'                        => $seal ? '<img src="' . esc_attr( $seal ) . '" style="width:110px" alt="">' : '',
+			'qr'                           => $folio ? self::qr_image( self::qr_url( $folio, $verify_url ) ) : '',
+			'comentarios'                  => nl2br( esc_html( (string) $comments ) ),
 			'tabla_calificaciones'         => $detail,
 			'tabla_calificaciones_resumen' => $summary,
 			'fecha_emision'                => esc_html( $date_long ),
@@ -664,7 +812,7 @@ class Documents {
 	 */
 	public static function issue( array $args ) {
 		global $wpdb;
-		$args        = wp_parse_args( $args, array( 'term_id' => 0, 'source' => 'free', 'credit_id' => 0, 'issued_by' => get_current_user_id() ) );
+		$args        = wp_parse_args( $args, array( 'term_id' => 0, 'source' => 'free', 'credit_id' => 0, 'issued_by' => get_current_user_id(), 'comments' => '' ) );
 		$template_id = absint( $args['template_id'] );
 		$user_id     = absint( $args['user_id'] );
 		$program_id  = absint( $args['program_id'] );
@@ -699,7 +847,7 @@ class Documents {
 		$folio     = Template_Renderer::folio( '' !== $s['prefix'] ? $s['prefix'] : strtoupper( substr( $s['type'], 0, 3 ) ), gmdate( 'Y', $timestamp ), $id );
 		$doc       = array( 'folio' => $folio, 'verify_key' => $key );
 		$term_id   = absint( $args['term_id'] );
-		$vars      = self::vars( $user_id, $program_id, $term_id, $timestamp, $folio, self::verify_url( $doc ), 'boleta' === $s['type'] ? $term_id : 0 );
+		$vars      = self::template_vars( $template_id, self::vars( $user_id, $program_id, $term_id, $timestamp, $folio, self::verify_url( $doc ), 'boleta' === $s['type'] ? $term_id : 0, $args['comments'] ) );
 		$pdf       = self::pdf( self::html( $template_id, $vars ), $s['paper'], $s['orientation'] );
 		if ( is_wp_error( $pdf ) ) {
 			if ( ! $args['credit_id'] ) {
@@ -712,7 +860,7 @@ class Documents {
 		wp_mkdir_p( dirname( $path ) );
 		file_put_contents( $path, $pdf ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 
-		$snapshot = array_map( 'wp_strip_all_tags', array_diff_key( $vars, array_flip( array( 'logo', 'tabla_calificaciones', 'tabla_calificaciones_resumen', 'firmas', 'firma_1', 'firma_2' ) ) ) );
+		$snapshot = array_map( 'wp_strip_all_tags', array_diff_key( $vars, array_flip( array( 'logo', 'tabla_calificaciones', 'tabla_calificaciones_resumen', 'tabla_boleta', 'firmas', 'firma_1', 'firma_2', 'sello', 'qr' ) ) ) );
 		$wpdb->update( // phpcs:ignore WordPress.DB
 			$table,
 			array(
@@ -923,6 +1071,7 @@ class Documents {
 		if ( $rows ) {
 			$vars = self::vars( (int) $rows[0]['user_id'], (int) $rows[0]['program_id'], 0, 0, 'VISTA-PREVIA', home_url( '/' ) );
 		}
+		$vars = self::template_vars( $template_id, $vars );
 		$pdf = self::pdf( self::html( $template_id, $vars ), $s['paper'], $s['orientation'] );
 		if ( is_wp_error( $pdf ) ) {
 			wp_die( esc_html( $pdf->get_error_message() ) );
@@ -960,6 +1109,7 @@ class Documents {
 				'program_id'  => $program_id,
 				'term_id'     => isset( $_POST['ra_term'] ) ? absint( $_POST['ra_term'] ) : 0,
 				'source'      => 'admin',
+				'comments'    => isset( $_POST['ra_comments'] ) ? sanitize_textarea_field( wp_unslash( $_POST['ra_comments'] ) ) : '',
 			)
 		);
 		if ( is_wp_error( $doc ) ) {
@@ -1182,6 +1332,18 @@ class Documents {
 						<option value="<?php echo esc_attr( $program->ID ); ?>"><?php echo esc_html( get_the_title( $program ) ); ?></option>
 					<?php endforeach; ?>
 				</select></label></p>
+			<p><label><?php esc_html_e( 'Term (report cards)', 'reticula-academica' ); ?><br>
+				<select name="ra_term">
+					<option value="0"><?php esc_html_e( 'Current term', 'reticula-academica' ); ?></option>
+					<?php foreach ( Curriculum::programs( true ) as $program ) : ?>
+						<optgroup label="<?php echo esc_attr( get_the_title( $program ) ); ?>">
+							<?php foreach ( Curriculum::terms( $program->ID, true ) as $term ) : ?>
+								<option value="<?php echo esc_attr( $term['id'] ); ?>"><?php echo esc_html( $term['title'] ); ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					<?php endforeach; ?>
+				</select></label></p>
+			<p><label><?php esc_html_e( 'Comments (optional, {comentarios})', 'reticula-academica' ); ?><br><textarea name="ra_comments" rows="2" class="large-text"></textarea></label></p>
 			<p class="description"><?php esc_html_e( 'Documents issued by staff are not charged.', 'reticula-academica' ); ?></p>
 			<?php submit_button( __( 'Generate PDF', 'reticula-academica' ), 'secondary', 'submit', false ); ?>
 		</form>

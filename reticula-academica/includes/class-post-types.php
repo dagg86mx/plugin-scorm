@@ -145,6 +145,7 @@ class Post_Types {
 			'_ra_rvoe'      => array( __( 'RVOE number', 'reticula-academica' ), 'text', '' ),
 			'_ra_rvoe_date' => array( __( 'RVOE date', 'reticula-academica' ), 'date', '' ),
 			'_ra_code'      => array( __( 'Program code', 'reticula-academica' ), 'text', '' ),
+			'_ra_cct'       => array( __( 'CCT (work center code)', 'reticula-academica' ), 'text', '' ),
 			'_ra_level'     => array( __( 'Level', 'reticula-academica' ), 'text', 'Licenciatura' ),
 			'_ra_modality'  => array( __( 'Modality', 'reticula-academica' ), 'text', 'No escolarizada' ),
 		);
@@ -162,7 +163,7 @@ class Post_Types {
 				esc_attr( $field[2] )
 			);
 		}
-		echo '<p class="description">' . esc_html__( 'Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {nivel}, {modalidad}.', 'reticula-academica' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Used in documents: {rvoe}, {rvoe_fecha}, {clave_carrera}, {cct}, {nivel}, {modalidad}.', 'reticula-academica' ) . '</p>';
 	}
 
 	public static function render_program_terms( $post ) {
@@ -236,6 +237,7 @@ class Post_Types {
 			<?php foreach ( $courses as $course_id ) : ?>
 				<li class="ra-course-item" data-id="<?php echo esc_attr( $course_id ); ?>">
 					<span class="dashicons dashicons-menu ra-handle" aria-hidden="true"></span>
+					<input type="text" class="ra-course-code" name="ra_codes[<?php echo esc_attr( $course_id ); ?>]" value="<?php echo esc_attr( Curriculum::course_code( $course_id ) ); ?>" placeholder="<?php esc_attr_e( 'Code', 'reticula-academica' ); ?>" aria-label="<?php esc_attr_e( 'Course code', 'reticula-academica' ); ?>">
 					<span class="ra-course-title"><?php echo esc_html( get_the_title( $course_id ) . ' #' . $course_id ); ?></span>
 					<input type="hidden" name="ra_courses[]" value="<?php echo esc_attr( $course_id ); ?>">
 					<button type="button" class="button-link ra-remove" aria-label="<?php esc_attr_e( 'Remove', 'reticula-academica' ); ?>"><span class="dashicons dashicons-no-alt"></span></button>
@@ -249,6 +251,7 @@ class Post_Types {
 		</div>
 		<input type="hidden" name="ra_courses_present" value="1">
 		<p class="description"><?php esc_html_e( 'Drag to reorder. Students see this order as the path to follow, and the program setting decides whether it is enforced.', 'reticula-academica' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Code: the official key of each course (e.g. MAT-101). It belongs to the course, so it is the same in every program, and it is printed in report cards.', 'reticula-academica' ); ?></p>
 		<?php
 	}
 
@@ -302,6 +305,12 @@ class Post_Types {
 			$courses = isset( $_POST['ra_courses'] ) ? array_map( 'absint', (array) $_POST['ra_courses'] ) : array();
 			$courses = array_values( array_unique( array_filter( $courses ) ) );
 			update_post_meta( $post_id, '_ra_courses', $courses );
+			$codes = isset( $_POST['ra_codes'] ) ? (array) wp_unslash( $_POST['ra_codes'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			foreach ( $courses as $course_id ) {
+				if ( isset( $codes[ $course_id ] ) ) {
+					update_post_meta( $course_id, Curriculum::CODE_META, strtoupper( sanitize_text_field( $codes[ $course_id ] ) ) );
+				}
+			}
 		}
 		Curriculum::flush_cache();
 	}
@@ -309,6 +318,7 @@ class Post_Types {
 	public static function program_columns( $columns ) {
 		$date = $columns['date'];
 		unset( $columns['date'] );
+		$columns['ra_rvoe']     = __( 'RVOE', 'reticula-academica' );
 		$columns['ra_terms']    = __( 'Terms', 'reticula-academica' );
 		$columns['ra_courses']  = __( 'Courses', 'reticula-academica' );
 		$columns['ra_students'] = __( 'Students', 'reticula-academica' );
@@ -320,6 +330,12 @@ class Post_Types {
 	public static function program_column( $column, $post_id ) {
 		$terms = Curriculum::terms( $post_id, true );
 		switch ( $column ) {
+			case 'ra_rvoe':
+				$rvoe = (string) get_post_meta( $post_id, '_ra_rvoe', true );
+				$code = (string) get_post_meta( $post_id, '_ra_code', true );
+				echo '' !== $rvoe ? '<code>' . esc_html( $rvoe ) . '</code>' : '<span style="color:#b32d2e">' . esc_html__( 'Missing', 'reticula-academica' ) . '</span>';
+				echo '' !== $code ? '<br><span class="description">' . esc_html( $code ) . '</span>' : '';
+				break;
 			case 'ra_terms':
 				echo (int) count( $terms );
 				break;

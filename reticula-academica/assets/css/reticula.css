@@ -118,6 +118,7 @@
 .ra-average { font-size: 13px; color: var(--ra-muted); }
 .ra-average { font-weight: 600; color: inherit; }
 .ra-grade-details { margin-top: 6px; font-size: 13px; }
+.ra-grade-final { margin: 4px 0 0; font-size: 13px; font-weight: 600; color: var(--ra-accent); }
 .ra-grade-details summary { cursor: pointer; color: var(--ra-accent); font-weight: 600; }
 .ra-grade-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 13px; }
 .ra-grade-table th,
@@ -131,3 +132,4 @@
 .ra-generate-form select { max-width: 180px; }
 .ra-grade-table,
 .ra-documents { --ra-border: #e3e5eb; --ra-soft: #f6f7f9; --ra-muted: #5b616f; --ra-accent: var(--tutor-color-primary, #3e64de); }
+.ra-code { display: inline-block; font-family: ui-monospace, monospace; font-size: 12px; padding: 1px 6px; margin-right: 6px; border-radius: 4px; background: var(--ra-soft); border: 1px solid var(--ra-border); color: var(--ra-muted); vertical-align: middle; }

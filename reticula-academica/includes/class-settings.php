@@ -26,6 +26,9 @@ class Settings {
 			'institution'      => get_bloginfo( 'name' ),
 			'logo_id'          => 0,
 			'city'             => '',
+			'cct'              => '',
+			'seal_image'       => 0,
+			'qr_url'           => '',
 			'id_prefix'        => 'UNTGU-',
 			'id_start'         => 10000,
 			'id_assign'        => 'inscription',
@@ -41,6 +44,7 @@ class Settings {
 			'grade_attempt'    => 'best',
 			'grade_scorm'      => 1,
 			'periods'          => '',
+			'grade_show_items' => 1,
 		);
 	}
 
@@ -78,6 +82,9 @@ class Settings {
 			'institution'    => $text( 'institution' ),
 			'logo_id'        => absint( isset( $input['logo_id'] ) ? $input['logo_id'] : 0 ),
 			'city'           => $text( 'city' ),
+			'cct'            => strtoupper( $text( 'cct' ) ),
+			'seal_image'     => absint( isset( $input['seal_image'] ) ? $input['seal_image'] : 0 ),
+			'qr_url'         => isset( $input['qr_url'] ) ? esc_url_raw( str_replace( array( '{folio}', '{verificacion_url}' ), array( 'RAFOLIO', 'RAVERIFY' ), wp_unslash( $input['qr_url'] ) ) ) : '',
 			'id_prefix'      => preg_replace( '/[^A-Za-z0-9\-_\/\.]/', '', $text( 'id_prefix' ) ),
 			'id_start'       => max( 1, absint( isset( $input['id_start'] ) ? $input['id_start'] : $d['id_start'] ) ),
 			'id_assign'      => ( isset( $input['id_assign'] ) && 'registration' === $input['id_assign'] ) ? 'registration' : 'inscription',
@@ -93,6 +100,7 @@ class Settings {
 			'grade_attempt'  => ( isset( $input['grade_attempt'] ) && 'last' === $input['grade_attempt'] ) ? 'last' : 'best',
 			'grade_scorm'    => empty( $input['grade_scorm'] ) ? 0 : 1,
 			'periods'        => isset( $input['periods'] ) ? sanitize_textarea_field( wp_unslash( $input['periods'] ) ) : '',
+			'grade_show_items' => empty( $input['grade_show_items'] ) ? 0 : 1,
 		);
 	}
 
@@ -175,8 +183,14 @@ class Settings {
 				<h2><?php esc_html_e( 'Institution', 'reticula-academica' ); ?></h2>
 				<table class="form-table" role="presentation">
 					<tr><th><label for="ra-institution"><?php esc_html_e( 'Institution name', 'reticula-academica' ); ?></label></th><td><?php $f( 'institution' ); ?></td></tr>
-					<tr><th><?php esc_html_e( 'Logo', 'reticula-academica' ); ?></th><td><?php self::image_field( 'logo_id', $s['logo_id'] ); ?></td></tr>
+					<tr><th><?php esc_html_e( 'Logo', 'reticula-academica' ); ?></th><td><?php self::image_field( 'logo_id', $s['logo_id'] ); ?><p class="description"><?php esc_html_e( 'Printed in documents with {logo}. Each template can use its own logo and university name.', 'reticula-academica' ); ?></p></td></tr>
 					<tr><th><label for="ra-city"><?php esc_html_e( 'City (for document dates)', 'reticula-academica' ); ?></label></th><td><?php $f( 'city' ); ?> <p class="description"><?php esc_html_e( 'Example: Ciudad de México. Documents print "Ciudad de México, a 19 de octubre de 2026".', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-cct"><?php esc_html_e( 'CCT (work center code)', 'reticula-academica' ); ?></label></th><td><?php $f( 'cct', 'text', 'regular-text' ); ?><p class="description"><?php esc_html_e( 'Default for {cct}. Each program can have its own.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><?php esc_html_e( 'Institutional seal', 'reticula-academica' ); ?></th><td><?php self::image_field( 'seal_image', $s['seal_image'] ); ?><p class="description"><?php esc_html_e( 'Printed with {sello}.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-qr_url"><?php esc_html_e( 'QR code link', 'reticula-academica' ); ?></label></th><td>
+						<input type="url" name="<?php echo esc_attr( $n ); ?>[qr_url]" id="ra-qr_url" value="<?php echo esc_attr( str_replace( array( 'RAFOLIO', 'RAVERIFY' ), array( '{folio}', '{verificacion_url}' ), $s['qr_url'] ) ); ?>" class="large-text" placeholder="https://wa.me/5215512345678?text=Verificar%20{folio}">
+						<p class="description"><?php esc_html_e( 'Where the {qr} code of documents points, e.g. the WhatsApp of School Services. {folio} is replaced with the document number. Empty = the public verification page of the document.', 'reticula-academica' ); ?></p>
+					</td></tr>
 				</table>
 
 				<h2><?php esc_html_e( 'Student ID (matrícula)', 'reticula-academica' ); ?></h2>
@@ -228,6 +242,7 @@ class Settings {
 						<label><input type="radio" name="<?php echo esc_attr( $n ); ?>[grade_attempt]" value="best" <?php checked( $s['grade_attempt'], 'best' ); ?>> <?php esc_html_e( 'Best attempt', 'reticula-academica' ); ?></label><br>
 						<label><input type="radio" name="<?php echo esc_attr( $n ); ?>[grade_attempt]" value="last" <?php checked( $s['grade_attempt'], 'last' ); ?>> <?php esc_html_e( 'Last attempt', 'reticula-academica' ); ?></label>
 					</td></tr>
+					<tr><th><?php esc_html_e( 'Quiz breakdown for students', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_show_items]" value="1" <?php checked( $s['grade_show_items'], 1 ); ?>> <?php esc_html_e( 'Show each quiz, its weight and grade in "My program" and on course pages. Unchecked: only the final grade of each course.', 'reticula-academica' ); ?></label></td></tr>
 					<tr><th><?php esc_html_e( 'SCORM evaluations', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_scorm]" value="1" <?php checked( $s['grade_scorm'], 1 ); ?>> <?php esc_html_e( 'Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen', 'reticula-academica' ); ?></label></td></tr>
 				</table>
 
