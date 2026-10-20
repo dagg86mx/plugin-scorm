@@ -3,7 +3,7 @@ Tags: scorm, tutor lms, lms, elearning, xapi
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ Usage: upload a package in Tutor LMS > SCORM Packages, then attach it to lessons
 3. Configure it in Tutor LMS > SCORM Settings.
 
 == Changelog ==
+
+= 1.1.1 =
+* Spanish translation now also loads on es_MX, es_CO, es_AR and other Spanish locales.
 
 = 1.1.0 =
 * Course bundle import: create a Tutor LMS course, topics and lessons from a ZIP with an outline file and attach a SCORM package to each lesson.

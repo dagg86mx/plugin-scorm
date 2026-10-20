@@ -22,6 +22,11 @@ class Plugin {
 
 	private function __construct() {
 		load_plugin_textdomain( 'reticula-academica', false, dirname( plugin_basename( RA_FILE ) ) . '/languages' );
+		// Only es_ES is bundled: use it for the other Spanish locales too (es_MX, es_CO, es_AR…).
+		$locale = determine_locale();
+		if ( 0 === strpos( $locale, 'es_' ) && ! file_exists( RA_DIR . 'languages/reticula-academica-' . $locale . '.mo' ) ) {
+			load_textdomain( 'reticula-academica', RA_DIR . 'languages/reticula-academica-es_ES.mo', $locale );
+		}
 		Installer::maybe_upgrade();
 		Post_Types::init();
 		Inscriptions::init();

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Retícula Académica
  * Description:       Organiza cursos de Tutor LMS en carreras y tetramestres. Los alumnos se inscriben a una carrera, pagan sus cuotas con el checkout de Tutor, ven qué curso sigue avanzan de tetramestre automáticamente, tienen matrícula consecutiva, calificaciones ponderadas, boletas y constancias en PDF.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            The Future Institute
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RA_VERSION', '1.2.0' );
+define( 'RA_VERSION', '1.2.1' );
 define( 'RA_FILE', __FILE__ );
 define( 'RA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RA_URL', plugin_dir_url( __FILE__ ) );

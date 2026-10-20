@@ -24,6 +24,11 @@ class Plugin {
 
 	private function __construct() {
 		load_plugin_textdomain( 'tutor-scorm', false, dirname( plugin_basename( TUTOR_SCORM_FILE ) ) . '/languages' );
+		// Only es_ES is bundled: use it for the other Spanish locales too (es_MX, es_CO, es_AR…).
+		$locale = determine_locale();
+		if ( 0 === strpos( $locale, 'es_' ) && ! file_exists( TUTOR_SCORM_DIR . 'languages/tutor-scorm-' . $locale . '.mo' ) ) {
+			load_textdomain( 'tutor-scorm', TUTOR_SCORM_DIR . 'languages/tutor-scorm-es_ES.mo', $locale );
+		}
 
 		Installer::maybe_upgrade();
 		Package_Manager::init();
