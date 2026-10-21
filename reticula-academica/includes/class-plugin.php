@@ -37,6 +37,7 @@ class Plugin {
 		Student_Id::init();
 		Grades::init();
 		Documents::init();
+		Records::init();
 		add_action( 'admin_notices', array( $this, 'dependency_notice' ) );
 	}
 

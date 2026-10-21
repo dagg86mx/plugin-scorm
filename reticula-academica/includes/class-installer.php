@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Installer {
 
-	const DB_VERSION = '2';
+	const DB_VERSION = '3';
 
 	public static function table() {
 		global $wpdb;
@@ -27,6 +27,8 @@ class Installer {
 	public static function maybe_upgrade() {
 		if ( get_option( 'ra_db_version' ) !== self::DB_VERSION ) {
 			self::create_tables();
+			// New versions may add Tutor dashboard tabs: rebuild the rewrite rules.
+			update_option( 'ra_flush_rewrite', 1 );
 		}
 	}
 
@@ -94,6 +96,28 @@ class Installer {
   KEY folio (folio),
   KEY template_id (template_id),
   KEY enrollment_id (enrollment_id),
+  KEY status (status)
+) {$charset};"
+		);
+
+		$files = $wpdb->prefix . 'ra_record_files';
+		dbDelta(
+			"CREATE TABLE {$files} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) unsigned NOT NULL,
+  requirement_id bigint(20) unsigned NOT NULL,
+  file varchar(255) NOT NULL DEFAULT '',
+  original_name varchar(255) NOT NULL DEFAULT '',
+  mime varchar(100) NOT NULL DEFAULT '',
+  size bigint(20) unsigned NOT NULL DEFAULT 0,
+  status varchar(20) NOT NULL DEFAULT 'pending',
+  note text NULL,
+  uploaded_by bigint(20) unsigned NOT NULL DEFAULT 0,
+  created_at datetime NOT NULL,
+  reviewed_at datetime DEFAULT NULL,
+  reviewed_by bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY  (id),
+  KEY user_requirement (user_id,requirement_id),
   KEY status (status)
 ) {$charset};"
 		);

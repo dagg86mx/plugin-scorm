@@ -133,3 +133,30 @@
 .ra-grade-table,
 .ra-documents { --ra-border: #e3e5eb; --ra-soft: #f6f7f9; --ra-muted: #5b616f; --ra-accent: var(--tutor-color-primary, #3e64de); }
 .ra-code { display: inline-block; font-family: ui-monospace, monospace; font-size: 12px; padding: 1px 6px; margin-right: 6px; border-radius: 4px; background: var(--ra-soft); border: 1px solid var(--ra-border); color: var(--ra-muted); vertical-align: middle; }
+
+/* Student file (expediente) */
+.ra-badge-rec-pending { background: #fff4e5; border-color: #f5c27a; color: var(--ra-warning, #b26200); }
+.ra-badge-rec-approved { background: var(--ra-success, #1c7d43); border-color: var(--ra-success, #1c7d43); color: #fff; }
+.ra-badge-rec-rejected { background: #fdecec; border-color: #f3b4b4; color: #a12626; }
+.ra-badge-rec-missing,
+.ra-badge-rec-replaced { background: #f6f7f9; border-color: #e3e5eb; color: #5b616f; }
+.ra-records .ra-course { align-items: flex-start; }
+.ra-rec-approved .ra-course-icon { color: var(--ra-success); font-weight: 700; }
+.ra-rec-rejected .ra-course-icon { color: #a12626; }
+.ra-rec-reason { margin: 4px 0 0; font-size: 13px; color: #a12626; }
+.ra-rec-upload,
+.ra-rec-review { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end; margin: 0; max-width: 360px; }
+.ra-rec-upload input[type="file"] { max-width: 220px; font-size: 13px; }
+.ra-rec-upload .ra-lock { width: 100%; text-align: right; }
+.ra-rec-review input[type="text"] { min-width: 160px; flex: 1; }
+.ra-records .ra-course-side { flex-direction: column; align-items: flex-end; }
+.ra-rec-alert { border-left-color: var(--ra-warning); }
+.ra-rec-notice { margin: 0; padding: 10px 14px; border-radius: 8px; border: 1px solid; font-size: 14px; }
+.ra-rec-notice.is-success { background: #edf7f0; border-color: #a6d8b5; color: #1c5e33; }
+.ra-rec-notice.is-error { background: #fdecec; border-color: #f3b4b4; color: #a12626; }
+@media (max-width: 600px) {
+	.ra-records .ra-course-side { align-items: flex-start; }
+	.ra-rec-upload,
+	.ra-rec-review { justify-content: flex-start; }
+	.ra-rec-upload .ra-lock { text-align: left; }
+}

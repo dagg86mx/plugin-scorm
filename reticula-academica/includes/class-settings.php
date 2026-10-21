@@ -45,6 +45,11 @@ class Settings {
 			'grade_scorm'      => 1,
 			'periods'          => '',
 			'grade_show_items' => 1,
+			'records_reminder_days' => 30,
+			'records_notify'   => get_option( 'admin_email' ),
+			'records_review_emails' => 1,
+			'records_subject'  => __( 'Pending documents in your student file', 'reticula-academica' ),
+			'records_body'     => __( "Hello {nombre},\n\nYour student file at {institucion} is still missing these documents:\n\n{documentos}\n\nUpload them here: {enlace}\n\nThank you.", 'reticula-academica' ),
 		);
 	}
 
@@ -101,6 +106,11 @@ class Settings {
 			'grade_scorm'    => empty( $input['grade_scorm'] ) ? 0 : 1,
 			'periods'        => isset( $input['periods'] ) ? sanitize_textarea_field( wp_unslash( $input['periods'] ) ) : '',
 			'grade_show_items' => empty( $input['grade_show_items'] ) ? 0 : 1,
+			'records_reminder_days' => min( 365, absint( isset( $input['records_reminder_days'] ) ? $input['records_reminder_days'] : $d['records_reminder_days'] ) ),
+			'records_notify'   => implode( ', ', array_filter( array_map( 'sanitize_email', explode( ',', isset( $input['records_notify'] ) ? wp_unslash( $input['records_notify'] ) : '' ) ) ) ),
+			'records_review_emails' => empty( $input['records_review_emails'] ) ? 0 : 1,
+			'records_subject'  => $text( 'records_subject' ),
+			'records_body'     => isset( $input['records_body'] ) ? sanitize_textarea_field( wp_unslash( $input['records_body'] ) ) : $d['records_body'],
 		);
 	}
 
@@ -244,6 +254,19 @@ class Settings {
 					</td></tr>
 					<tr><th><?php esc_html_e( 'Quiz breakdown for students', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_show_items]" value="1" <?php checked( $s['grade_show_items'], 1 ); ?>> <?php esc_html_e( 'Show each quiz, its weight and grade in "My program" and on course pages. Unchecked: only the final grade of each course.', 'reticula-academica' ); ?></label></td></tr>
 					<tr><th><?php esc_html_e( 'SCORM evaluations', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_scorm]" value="1" <?php checked( $s['grade_scorm'], 1 ); ?>> <?php esc_html_e( 'Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen', 'reticula-academica' ); ?></label></td></tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Student files', 'reticula-academica' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr><th><label for="ra-records_reminder_days"><?php esc_html_e( 'Reminder every (days)', 'reticula-academica' ); ?></label></th><td><?php $f( 'records_reminder_days', 'number', 'small-text' ); ?>
+						<p class="description"><?php esc_html_e( 'Students with required documents missing or rejected get an email every this many days, counted from their inscription. 0 = no reminders. Documents being validated count as delivered.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-records_subject"><?php esc_html_e( 'Reminder subject', 'reticula-academica' ); ?></label></th><td><?php $f( 'records_subject', 'text', 'large-text' ); ?></td></tr>
+					<tr><th><label for="ra-records_body"><?php esc_html_e( 'Reminder message', 'reticula-academica' ); ?></label></th><td>
+						<textarea name="<?php echo esc_attr( $n ); ?>[records_body]" id="ra-records_body" rows="8" class="large-text"><?php echo esc_textarea( $s['records_body'] ); ?></textarea>
+						<p class="description"><?php esc_html_e( 'Fields: {nombre}, {matricula}, {institucion}, {documentos} (list of pending documents), {enlace} (link to the student file).', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-records_notify"><?php esc_html_e( 'Notify new uploads to', 'reticula-academica' ); ?></label></th><td><?php $f( 'records_notify', 'text', 'large-text' ); ?>
+						<p class="description"><?php esc_html_e( 'Emails separated by commas that receive a notice when a student uploads a document. Empty = no notices.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><?php esc_html_e( 'Review result', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[records_review_emails]" value="1" <?php checked( $s['records_review_emails'], 1 ); ?>> <?php esc_html_e( 'Email the student when a document is validated or rejected (with the reason)', 'reticula-academica' ); ?></label></td></tr>
 				</table>
 
 				<h2><?php esc_html_e( 'School periods', 'reticula-academica' ); ?></h2>

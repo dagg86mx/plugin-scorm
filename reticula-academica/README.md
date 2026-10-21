@@ -132,6 +132,42 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 - Los PDF se guardan en `wp-content/uploads/ra-documentos/` (protegido con `.htaccess`; en Nginx conviene bloquear esa carpeta). Solo el alumno dueño y el personal pueden descargarlos.
 - Los PDF se generan con [dompdf](https://github.com/dompdf/dompdf) (licencia LGPL) y los códigos QR con [php-qrcode](https://github.com/chillerlan/php-qrcode) (licencia MIT), ambos incluidos en `vendor/`.
 
+## Expediente del alumno (documentos que entrega)
+
+Cada alumno tiene un **expediente** con los documentos que pide la escuela (acta de nacimiento, certificado de preparatoria, CURP…), con todo su historial.
+
+1. **El admin crea los documentos solicitados** en *Retícula → Documentos solicitados → Añadir*. Para cada uno define:
+   - el nombre;
+   - las instrucciones para el alumno (en el editor);
+   - si es **obligatorio** u opcional;
+   - en qué **carreras** se pide (ninguna marcada = todas);
+   - los **archivos aceptados** (PDF, JPG, PNG, WEBP, DOC, DOCX);
+   - el **tamaño máximo**;
+   - el orden.
+2. **El alumno los sube** en la pestaña **Mi expediente** de su panel de Tutor (o con `[reticula_expediente]`). Al subir uno, queda en estado **Validando** y Servicios Escolares recibe un aviso por correo.
+3. **El admin los valida** en *Retícula → Expedientes*:
+   - Muestra la cola de documentos **Validando**, con filtros por carrera, documento y alumno.
+   - Abre o descarga el archivo y pulsa **Validar** o **Rechazar** (escribe el motivo).
+   - El alumno recibe un correo con el resultado.
+   - Si fue rechazado, ve el motivo y puede subirlo de nuevo.
+   - Un documento validado ya no lo puede cambiar el alumno.
+4. **Recordatorios automáticos:** cada 30 días (configurable en *Ajustes → Expedientes*), el alumno con documentos obligatorios faltantes o rechazados recibe un correo con la lista de lo que le falta.
+   - El primero sale a los 30 días de su inscripción.
+   - Los documentos en validación cuentan como entregados.
+   - El asunto y el mensaje se editan en Ajustes (campos `{nombre}`, `{matricula}`, `{institucion}`, `{documentos}`, `{enlace}`).
+
+El expediente de cada alumno (*Expedientes → clic en el alumno*, o **Abrir expediente** desde su ficha en *Alumnos*) muestra lo que se le pide, el estado de cada documento y el **historial** completo: cada archivo subido, reemplazado, validado o rechazado, con quién lo revisó y cuándo. Desde ahí el personal también puede:
+- **subir un documento por el alumno** (por ejemplo, uno que entregó en papel), que queda validado de inmediato;
+- **enviar un recordatorio** en ese momento.
+
+La lista de *Alumnos* tiene la columna **Expediente** con los documentos validados de cada alumno (p. ej. 2/3).
+
+Los archivos se guardan en `wp-content/uploads/ra-expedientes/<id del alumno>/` con nombres aleatorios:
+- La carpeta está protegida con `.htaccess`; **en Nginx bloquea esa carpeta** en la configuración del servidor.
+- Solo el alumno dueño y el personal pueden abrirlos.
+- Se valida el tipo real del archivo: un PDF que no es PDF se rechaza.
+- Al eliminar un usuario se borran sus archivos.
+
 ## Shortcodes
 
 | Shortcode | Uso |
@@ -140,6 +176,7 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 | `[reticula_carrera id="123"]` | Retícula de una carrera con botón de inscripción (o el avance si el alumno ya está inscrito). |
 | `[reticula_mi_carrera]` | Avance del alumno en sus carreras (`program="123"` para mostrar solo una). |
 | `[reticula_documentos]` | Mis documentos: generar boleta/constancia y su historial. |
+| `[reticula_expediente]` | Mi expediente: subir los documentos solicitados y ver su estado. |
 
 ## Hooks
 
@@ -159,6 +196,9 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 | `ra_document_purchased` | acción | Cuando se paga un documento. |
 | `ra_document_issued` | acción | Cuando se genera un documento (p. ej. para enviarlo por correo). |
 | `ra_ext_grades_saved` | acción | Al guardar calificaciones extraordinarias de un alumno. |
+| `ra_record_uploaded` | acción | Cuando se sube un documento al expediente. |
+| `ra_record_reviewed` | acción | Cuando un documento se valida o se rechaza. |
+| `ra_records_reminders_per_run` | filtro | Máximo de recordatorios por ejecución diaria (100). |
 
 Con estos hooks puedes, por ejemplo, enviar un correo cuando el alumno cambia de tetramestre o emitir una constancia al egresar.
 
@@ -171,5 +211,5 @@ Con estos hooks puedes, por ejemplo, enviar un correo cuando el alumno cambia de
 ## Pruebas
 
 ```bash
-php tests/run-tests.php   # avance (bloqueos, cuotas, orden, egreso), calificaciones ponderadas y plantillas
+php tests/run-tests.php   # avance (bloqueos, cuotas, orden, egreso), calificaciones ponderadas, plantillas y reglas del expediente
 ```

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Reticula Academica 1.1.0\n"
+"Project-Id-Version: Reticula Academica 1.3.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,6 +146,15 @@ msgstr ""
 msgid "No student ID yet."
 msgstr ""
 
+msgid "Student file"
+msgstr ""
+
+msgid "The school has not requested any documents."
+msgstr ""
+
+msgid "Open file"
+msgstr ""
+
 msgid "Grades and extraordinary exams"
 msgstr ""
 
@@ -184,6 +193,11 @@ msgstr ""
 
 msgid "CSV import"
 msgstr ""
+
+msgid "%d to validate"
+msgid_plural "%d to validate"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Certificate of studies (constancia)"
 msgstr ""
@@ -598,6 +612,9 @@ msgstr[1] ""
 msgid "My program"
 msgstr ""
 
+msgid "My file"
+msgstr ""
+
 msgid "There are no programs available yet."
 msgstr ""
 
@@ -984,6 +1001,265 @@ msgctxt "URL slug"
 msgid "program"
 msgstr ""
 
+msgid "Not uploaded"
+msgstr ""
+
+msgid "Validating"
+msgstr ""
+
+msgid "Validated"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Replaced"
+msgstr ""
+
+msgid "Requested documents"
+msgstr ""
+
+msgid "Requested document"
+msgstr ""
+
+msgid "Add requested document"
+msgstr ""
+
+msgid "Edit requested document"
+msgstr ""
+
+msgid "Search requested documents"
+msgstr ""
+
+msgid "No requested documents yet."
+msgstr ""
+
+msgid "Requirement settings"
+msgstr ""
+
+msgid "Required (students get reminders until it is covered)"
+msgstr ""
+
+msgid "Requested in"
+msgstr ""
+
+msgid "None checked = every program."
+msgstr ""
+
+msgid "Accepted files"
+msgstr ""
+
+msgid "Maximum size (MB)"
+msgstr ""
+
+msgid "Server limit: %s"
+msgstr ""
+
+msgid "The description written in the editor is shown to the student as instructions. Order: \"Order\" field in Page attributes."
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Optional"
+msgstr ""
+
+msgid "Document uploaded. Its status is \"Validating\" until the school reviews it."
+msgstr ""
+
+msgid "Choose a file to upload."
+msgstr ""
+
+msgid "The file is larger than the allowed size."
+msgstr ""
+
+msgid "This type of file is not accepted for this document."
+msgstr ""
+
+msgid "The file could not be saved. Please try again."
+msgstr ""
+
+msgid "This document is already validated."
+msgstr ""
+
+msgid "This document is not requested in your file."
+msgstr ""
+
+msgid "Uploaded by the school."
+msgstr ""
+
+msgid "Document validated."
+msgstr ""
+
+msgid "Document rejected. The student was asked to upload it again."
+msgstr ""
+
+msgid "The file could not be found."
+msgstr ""
+
+msgid "Reminder sent."
+msgstr ""
+
+msgid "No reminder was sent: the file is complete or the email could not be sent."
+msgstr ""
+
+msgid "rejected, upload it again"
+msgstr ""
+
+msgid "Your document \"%s\" was validated"
+msgstr ""
+
+msgid "Hello {nombre}, your document \"%s\" was reviewed and validated."
+msgstr ""
+
+msgid "Your document \"%s\" was rejected"
+msgstr ""
+
+msgid "Hello {nombre}, your document \"%s\" was reviewed and rejected. Please upload it again."
+msgstr ""
+
+msgid "Reason: %s"
+msgstr ""
+
+msgid "See your file: {enlace}"
+msgstr ""
+
+msgid "New document to validate: %1$s of %2$s"
+msgstr ""
+
+msgid "%1$s (%2$s) uploaded \"%3$s\"."
+msgstr ""
+
+msgid "Validate it here:"
+msgstr ""
+
+msgid "%1$d of %2$d documents validated"
+msgstr ""
+
+msgid "Log in to see your file."
+msgstr ""
+
+msgid "Your file is available once you are enrolled in a program."
+msgstr ""
+
+msgid "Upload them below. The school reviews each one and you will receive an email with the result."
+msgstr ""
+
+msgid "Your documents are being validated"
+msgstr ""
+
+msgid "You will receive an email when the school reviews them."
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
+msgid "Uploaded on %s"
+msgstr ""
+
+msgid "Upload for the student"
+msgstr ""
+
+msgid "Upload again"
+msgstr ""
+
+msgid "Replace file"
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "%1$s · up to %2$s"
+msgstr ""
+
+msgid "Reason (if rejected)"
+msgstr ""
+
+msgid "Validate"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Student files"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "All documents"
+msgstr ""
+
+msgid "Start by creating the documents you will request (birth certificate, high school certificate…)."
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Uploaded"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "There are no documents waiting for validation."
+msgstr ""
+
+msgid "No documents found."
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "File of %s"
+msgstr ""
+
+msgid "Back to student files"
+msgstr ""
+
+msgid "The student is not enrolled in any program."
+msgstr ""
+
+msgid "Send reminder now"
+msgstr ""
+
+msgid "Last reminder: %s"
+msgstr ""
+
+msgid "No reminders sent yet."
+msgstr ""
+
+msgid "Reviewed"
+msgstr ""
+
+msgid "The student has not uploaded documents yet."
+msgstr ""
+
+msgid "You have %d required document to deliver"
+msgid_plural "You have %d required documents to deliver"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Pending documents in your student file"
+msgstr ""
+
+msgid "Hello {nombre},
+
+Your student file at {institucion} is still missing these documents:
+
+{documentos}
+
+Upload them here: {enlace}
+
+Thank you."
+msgstr ""
+
 msgid "Settings"
 msgstr ""
 
@@ -1081,6 +1357,33 @@ msgid "SCORM evaluations"
 msgstr ""
 
 msgid "Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen"
+msgstr ""
+
+msgid "Reminder every (days)"
+msgstr ""
+
+msgid "Students with required documents missing or rejected get an email every this many days, counted from their inscription. 0 = no reminders. Documents being validated count as delivered."
+msgstr ""
+
+msgid "Reminder subject"
+msgstr ""
+
+msgid "Reminder message"
+msgstr ""
+
+msgid "Fields: {nombre}, {matricula}, {institucion}, {documentos} (list of pending documents), {enlace} (link to the student file)."
+msgstr ""
+
+msgid "Notify new uploads to"
+msgstr ""
+
+msgid "Emails separated by commas that receive a notice when a student uploads a document. Empty = no notices."
+msgstr ""
+
+msgid "Review result"
+msgstr ""
+
+msgid "Email the student when a document is validated or rejected (with the reason)"
 msgstr ""
 
 msgid "School periods"

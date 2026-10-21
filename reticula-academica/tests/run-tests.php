@@ -6,10 +6,12 @@ define( 'RA_TESTING', true );
 require dirname( __DIR__ ) . '/includes/class-progress.php';
 require dirname( __DIR__ ) . '/includes/class-grade-calculator.php';
 require dirname( __DIR__ ) . '/includes/class-template-renderer.php';
+require dirname( __DIR__ ) . '/includes/class-record-rules.php';
 
 use ReticulaAcademica\Progress;
 use ReticulaAcademica\Grade_Calculator as GC;
 use ReticulaAcademica\Template_Renderer as TR;
+use ReticulaAcademica\Record_Rules as RR;
 
 $failures = 0;
 $count    = 0;
@@ -178,6 +180,27 @@ check( 'block placeholder unwrapped', TR::render( "<p>{tabla_calificaciones}</p>
 check( 'long date', TR::long_date( gmmktime( 12, 0, 0, 10, 19, 2026 ) ), '19 de octubre de 2026' );
 check( 'ordinal', array( TR::ordinal( 1 ), TR::ordinal( 3 ), TR::ordinal( 15 ) ), array( 'primer', 'tercer', '15º' ) );
 check( 'folio', TR::folio( 'con', 2026, 42 ), 'CON-2026-000042' );
+
+// ---------------- Student file ----------------
+check( 'requirement for every program', RR::applies( array(), array( 5 ) ), true );
+check( 'requirement of another program', RR::applies( array( 7 ), array( 5 ) ), false );
+check( 'requirement of the program', RR::applies( array( '5', 7 ), array( 5 ) ), true );
+// 10 acta (required), 11 certificado (required), 12 foto (optional), 13 CURP (required).
+$reqs = array( 10 => true, 11 => true, 12 => false, 13 => true );
+$sum  = RR::summary( $reqs, array( 10 => RR::APPROVED, 11 => RR::PENDING, 13 => RR::REJECTED ) );
+check( 'summary counts', array( $sum['total'], $sum['approved'], $sum['pending'], $sum['rejected'], $sum['missing'] ), array( 4, 1, 1, 1, 1 ) );
+check( 'rejected required is outstanding, optional missing is not', $sum['outstanding'], array( 13 ) );
+check( 'incomplete', $sum['complete'], false );
+check( 'validating counts as delivered', RR::summary( $reqs, array( 10 => RR::APPROVED, 11 => RR::PENDING, 13 => RR::PENDING ) )['complete'], true );
+check( 'nothing uploaded', RR::summary( $reqs, array() )['outstanding'], array( 10, 11, 13 ) );
+check( 'validated documents are locked for the student', array( RR::can_upload( RR::APPROVED ), RR::can_upload( RR::REJECTED ), RR::can_upload( RR::PENDING ), RR::can_upload( RR::MISSING ) ), array( false, true, true, true ) );
+$day = 86400;
+$t0  = 1700000000;
+check( 'first reminder 30 days after inscription', array( RR::reminder_due( $t0, 0, 30, $t0 + 29 * $day ), RR::reminder_due( $t0, 0, 30, $t0 + 30 * $day ) ), array( false, true ) );
+check( 'next reminder 30 days after the last one', array( RR::reminder_due( $t0, $t0 + 30 * $day, 30, $t0 + 59 * $day ), RR::reminder_due( $t0, $t0 + 30 * $day, 30, $t0 + 60 * $day ) ), array( false, true ) );
+check( 'reminders off', RR::reminder_due( $t0, 0, 0, $t0 + 900 * $day ), false );
+check( 'extensions are limited to safe types', RR::extensions( 'PDF, jpg, php, svg' ), array( 'pdf', 'jpg', 'jpeg' ) );
+check( 'default extensions', RR::extensions( '' ), array( 'pdf', 'jpg', 'jpeg', 'png' ) );
 
 echo ( $failures ? "\n{$failures} of {$count} checks failed.\n" : "All {$count} checks passed.\n" );
 exit( $failures ? 1 : 0 );

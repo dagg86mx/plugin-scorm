@@ -56,7 +56,7 @@ class Admin {
 			wp_enqueue_script( 'ra-admin', RA_URL . 'assets/js/admin.js', array( 'jquery', 'jquery-ui-sortable' ), RA_VERSION, true );
 			wp_localize_script( 'ra-admin', 'RAAdmin', array( 'remove' => __( 'Remove', 'reticula-academica' ), 'choose' => __( 'Choose image', 'reticula-academica' ) ) );
 		}
-		if ( $hook === self::$hook || false !== strpos( (string) $hook, Documents::PAGE ) ) {
+		if ( $hook === self::$hook || false !== strpos( (string) $hook, Documents::PAGE ) || false !== strpos( (string) $hook, Records::PAGE ) ) {
 			wp_enqueue_style( 'ra-admin', RA_URL . 'assets/css/admin.css', array(), RA_VERSION );
 			wp_enqueue_style( 'reticula-academica', RA_URL . 'assets/css/reticula.css', array(), RA_VERSION );
 		}
@@ -539,6 +539,12 @@ luis@example.com,Ingeniería en Software,3,activo</pre>
 					</p>
 					<?php Documents::issue_form( (int) $row['user_id'] ); ?>
 				</div>
+				<div class="ra-panel">
+					<h2><?php esc_html_e( 'Student file', 'reticula-academica' ); ?></h2>
+					<?php $record = Records::file_of( (int) $row['user_id'] ); ?>
+					<p><?php echo $record['items'] ? esc_html( Records::summary_text( $record['summary'] ) ) : esc_html__( 'The school has not requested any documents.', 'reticula-academica' ); ?></p>
+					<p><a class="button" href="<?php echo esc_url( Records::admin_url( array( 'user' => (int) $row['user_id'] ) ) ); ?>"><?php esc_html_e( 'Open file', 'reticula-academica' ); ?></a></p>
+				</div>
 				<div class="ra-panel ra-panel-wide">
 					<h2><?php esc_html_e( 'Grades and extraordinary exams', 'reticula-academica' ); ?></h2>
 					<?php Grades::ext_form( $row ); ?>
@@ -581,6 +587,7 @@ class Students_Table extends \WP_List_Table {
 			'progress' => __( 'Progress', 'reticula-academica' ),
 			'next'     => __( 'Next course', 'reticula-academica' ),
 			'status'   => __( 'Status', 'reticula-academica' ),
+			'record'   => __( 'Student file', 'reticula-academica' ),
 			'source'   => __( 'Origin', 'reticula-academica' ),
 		);
 	}
@@ -637,6 +644,18 @@ class Students_Table extends \WP_List_Table {
 	protected function column_status( $item ) {
 		$statuses = Inscriptions::statuses();
 		return '<span class="ra-badge ra-badge-' . esc_attr( $item['status'] ) . '">' . esc_html( isset( $statuses[ $item['status'] ] ) ? $statuses[ $item['status'] ] : $item['status'] ) . '</span>';
+	}
+
+	protected function column_record( $item ) {
+		$file = Records::file_of( (int) $item['user_id'] );
+		if ( ! $file['items'] ) {
+			return '&mdash;';
+		}
+		$s     = $file['summary'];
+		$badge = $s['outstanding'] ? 'rejected' : ( $s['pending'] ? 'pending' : 'approved' );
+		return '<a href="' . esc_url( Records::admin_url( array( 'user' => $item['user_id'] ) ) ) . '"><span class="ra-badge ra-badge-rec-' . esc_attr( $badge ) . '">' . esc_html( $s['approved'] . '/' . $s['total'] ) . '</span></a>'
+			/* translators: %d: number of documents. */
+			. ( $s['pending'] ? '<br><span class="description">' . esc_html( sprintf( _n( '%d to validate', '%d to validate', $s['pending'], 'reticula-academica' ), $s['pending'] ) ) . '</span>' : '' );
 	}
 
 	protected function column_source( $item ) {

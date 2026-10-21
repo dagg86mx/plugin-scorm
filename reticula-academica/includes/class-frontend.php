@@ -14,6 +14,7 @@ class Frontend {
 
 	const DASHBOARD_SLUG = 'mi-carrera';
 	const DOCUMENTS_SLUG = 'mis-documentos';
+	const RECORDS_SLUG   = 'mi-expediente';
 
 	public static function init() {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
@@ -79,6 +80,11 @@ class Frontend {
 					'icon'        => 'certificate',
 					'active_icon' => 'certificate',
 				);
+				$with_docs[ self::RECORDS_SLUG ]   = array(
+					'title'       => __( 'My file', 'reticula-academica' ),
+					'icon'        => 'document',
+					'active_icon' => 'document',
+				);
 			}
 		}
 		return $with_docs;
@@ -91,6 +97,10 @@ class Frontend {
 		if ( self::DOCUMENTS_SLUG === get_query_var( 'tutor_dashboard_page' ) ) {
 			self::assets();
 			return RA_DIR . 'includes/dashboard-my-documents.php';
+		}
+		if ( self::RECORDS_SLUG === get_query_var( 'tutor_dashboard_page' ) ) {
+			self::assets();
+			return RA_DIR . 'includes/dashboard-my-file.php';
 		}
 		return $location;
 	}
@@ -321,6 +331,10 @@ class Frontend {
 						}
 						?>
 						<a class="ra-link" href="<?php echo esc_url( Documents::documents_url() ); ?>"><?php esc_html_e( 'My documents', 'reticula-academica' ); ?> &rarr;</a>
+						<?php $record = Records::file_of( (int) $inscription['user_id'] ); ?>
+						<?php if ( $record['items'] ) : ?>
+							<a class="ra-link" href="<?php echo esc_url( Records::my_file_url() ); ?>"><?php esc_html_e( 'My file', 'reticula-academica' ); ?><?php echo $record['summary']['outstanding'] ? ' <span class="ra-badge ra-badge-rec-rejected">' . esc_html( (string) count( $record['summary']['outstanding'] ) ) . '</span>' : ''; ?> &rarr;</a>
+						<?php endif; ?>
 					</p>
 				</div>
 				<div class="ra-overall" aria-label="<?php esc_attr_e( 'Program progress', 'reticula-academica' ); ?>">
