@@ -1184,6 +1184,7 @@ class Documents {
 	}
 
 	public static function render_my_documents() {
+		Frontend::no_cache();
 		if ( ! is_user_logged_in() ) {
 			return '<p>' . esc_html__( 'Log in to see your documents.', 'reticula-academica' ) . '</p>';
 		}

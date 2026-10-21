@@ -26,6 +26,32 @@ class Frontend {
 		add_filter( 'load_dashboard_template_part_from_other_location', array( __CLASS__, 'dashboard_template' ) );
 		add_action( 'tutor_course/single/before/inner-wrap', array( __CLASS__, 'course_notice' ), 5 );
 		add_action( 'init', array( __CLASS__, 'maybe_flush_rewrite' ), 99 );
+		add_action( 'template_redirect', array( __CLASS__, 'maybe_no_cache' ), 1 );
+	}
+
+	/**
+	 * Student pages show live data (file status, documents, progress): keep them out of page caches.
+	 */
+	public static function maybe_no_cache() {
+		$tab  = (string) get_query_var( 'tutor_dashboard_page' );
+		$post = is_singular() ? get_post() : null;
+		$live = in_array( $tab, array( self::DASHBOARD_SLUG, self::DOCUMENTS_SLUG, self::RECORDS_SLUG ), true );
+		foreach ( array( 'reticula_expediente', 'reticula_documentos', 'reticula_mi_carrera' ) as $shortcode ) {
+			$live = $live || ( $post && has_shortcode( (string) $post->post_content, $shortcode ) );
+		}
+		if ( $live ) {
+			self::no_cache();
+		}
+	}
+
+	public static function no_cache() {
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true ); // WP Rocket, W3 Total Cache, WP Super Cache, WP Fastest Cache…
+		}
+		do_action( 'litespeed_control_set_nocache', 'Retícula Académica: student data' );
+		if ( ! headers_sent() ) {
+			nocache_headers();
+		}
 	}
 
 	public static function register_assets() {
@@ -254,6 +280,7 @@ class Frontend {
 	 * ------------------------------------------------------------------ */
 
 	public static function render_my_programs( $program_id = 0 ) {
+		self::no_cache();
 		self::assets();
 		if ( ! is_user_logged_in() ) {
 			return '<p>' . esc_html__( 'Log in to see your program.', 'reticula-academica' ) . ' <a href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . esc_html__( 'Log in', 'reticula-academica' ) . '</a></p>';

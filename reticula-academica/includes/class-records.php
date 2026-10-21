@@ -473,7 +473,15 @@ class Records {
 
 	private static function redirect_back( $fallback, $code ) {
 		$back = wp_get_referer() ? wp_get_referer() : $fallback;
-		wp_safe_redirect( add_query_arg( 'ra_rec', $code, remove_query_arg( 'ra_rec', $back ) ) . '#ra-records' );
+		// A unique URL so no cache can show the page as it was before the upload.
+		$url = add_query_arg(
+			array(
+				'ra_rec' => $code,
+				'ra_t'   => time(),
+			),
+			remove_query_arg( array( 'ra_rec', 'ra_t' ), $back )
+		);
+		wp_safe_redirect( $url . '#ra-records' );
 		exit;
 	}
 
@@ -764,6 +772,7 @@ class Records {
 	}
 
 	public static function render_my_file() {
+		Frontend::no_cache();
 		if ( ! is_user_logged_in() ) {
 			return '<p>' . esc_html__( 'Log in to see your file.', 'reticula-academica' ) . '</p>';
 		}
@@ -771,6 +780,8 @@ class Records {
 		$file    = self::file_of( $user_id );
 		ob_start();
 		echo '<div class="ra-program ra-documents ra-records" id="ra-records">';
+		// Coming back with the browser's back button must not show an old copy of the statuses.
+		echo '<script>window.addEventListener("pageshow",function(e){if(e.persisted){location.reload();}});</script>';
 		echo '<header class="ra-program-header"><div><p class="ra-eyebrow">' . esc_html__( 'My file', 'reticula-academica' ) . '</p>';
 		$matricula = Student_Id::get( $user_id );
 		if ( $matricula ) {
