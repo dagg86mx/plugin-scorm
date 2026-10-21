@@ -49,6 +49,13 @@ class Settings {
 			'records_notify'   => get_option( 'admin_email' ),
 			'records_review_emails' => 1,
 			'records_subject'  => __( 'Pending documents in your student file', 'reticula-academica' ),
+			'tuition_cutoff_day'  => 15,
+			'tuition_grace_days'  => 5,
+			'tuition_late_fee'    => 500,
+			'tuition_block'       => 1,
+			'tuition_notice_days' => 3,
+			'tuition_emails'      => 1,
+			'profile_required'    => 1,
 			'records_body'     => __( "Hello {nombre},\n\nYour student file at {institucion} is still missing these documents:\n\n{documentos}\n\nUpload them here: {enlace}\n\nThank you.", 'reticula-academica' ),
 		);
 	}
@@ -110,6 +117,13 @@ class Settings {
 			'records_notify'   => implode( ', ', array_filter( array_map( 'sanitize_email', explode( ',', isset( $input['records_notify'] ) ? wp_unslash( $input['records_notify'] ) : '' ) ) ) ),
 			'records_review_emails' => empty( $input['records_review_emails'] ) ? 0 : 1,
 			'records_subject'  => $text( 'records_subject' ),
+			'tuition_cutoff_day'  => max( 1, min( 28, absint( isset( $input['tuition_cutoff_day'] ) ? $input['tuition_cutoff_day'] : $d['tuition_cutoff_day'] ) ) ),
+			'tuition_grace_days'  => min( 60, absint( isset( $input['tuition_grace_days'] ) ? $input['tuition_grace_days'] : $d['tuition_grace_days'] ) ),
+			'tuition_late_fee'    => round( max( 0, (float) ( isset( $input['tuition_late_fee'] ) ? $input['tuition_late_fee'] : $d['tuition_late_fee'] ) ), 2 ),
+			'tuition_block'       => empty( $input['tuition_block'] ) ? 0 : 1,
+			'tuition_notice_days' => min( 30, absint( isset( $input['tuition_notice_days'] ) ? $input['tuition_notice_days'] : $d['tuition_notice_days'] ) ),
+			'tuition_emails'      => empty( $input['tuition_emails'] ) ? 0 : 1,
+			'profile_required'    => empty( $input['profile_required'] ) ? 0 : 1,
 			'records_body'     => isset( $input['records_body'] ) ? sanitize_textarea_field( wp_unslash( $input['records_body'] ) ) : $d['records_body'],
 		);
 	}
@@ -255,6 +269,24 @@ class Settings {
 					<tr><th><?php esc_html_e( 'Quiz breakdown for students', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_show_items]" value="1" <?php checked( $s['grade_show_items'], 1 ); ?>> <?php esc_html_e( 'Show each quiz, its weight and grade in "My program" and on course pages. Unchecked: only the final grade of each course.', 'reticula-academica' ); ?></label></td></tr>
 					<tr><th><?php esc_html_e( 'SCORM evaluations', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[grade_scorm]" value="1" <?php checked( $s['grade_scorm'], 1 ); ?>> <?php esc_html_e( 'Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen', 'reticula-academica' ); ?></label></td></tr>
 				</table>
+
+				<h2><?php esc_html_e( 'Tuition', 'reticula-academica' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr><th><label for="ra-tuition_cutoff_day"><?php esc_html_e( 'Cutoff day', 'reticula-academica' ); ?></label></th><td><?php $f( 'tuition_cutoff_day', 'number', 'small-text' ); ?>
+						<p class="description"><?php esc_html_e( 'Inscribed up to this day: payments every month on that same day, starting immediately. After it: on day 1 of each month, starting next month. So payments always fall in the first days of the month.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-tuition_grace_days"><?php esc_html_e( 'Grace days', 'reticula-academica' ); ?></label></th><td><?php $f( 'tuition_grace_days', 'number', 'small-text' ); ?>
+						<p class="description"><?php esc_html_e( 'Days after the due date to pay without late fee.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><label for="ra-tuition_late_fee"><?php esc_html_e( 'Late fee', 'reticula-academica' ); ?></label></th><td><?php $f( 'tuition_late_fee', 'number', 'small-text' ); ?>
+						<p class="description"><?php esc_html_e( 'Added once to each payment not made within the grace days. Staff can waive it.', 'reticula-academica' ); ?></p></td></tr>
+					<tr><th><?php esc_html_e( 'Lock courses', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[tuition_block]" value="1" <?php checked( $s['tuition_block'], 1 ); ?>> <?php esc_html_e( 'With an overdue payment (grace days over), the courses of the program are locked until it is paid', 'reticula-academica' ); ?></label></td></tr>
+					<tr><th><label for="ra-tuition_notice_days"><?php esc_html_e( 'Reminder before the due date (days)', 'reticula-academica' ); ?></label></th><td><?php $f( 'tuition_notice_days', 'number', 'small-text' ); ?></td></tr>
+					<tr><th><?php esc_html_e( 'Emails', 'reticula-academica' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[tuition_emails]" value="1" <?php checked( $s['tuition_emails'], 1 ); ?>> <?php esc_html_e( 'Email the student before each due date and when a late fee is added', 'reticula-academica' ); ?></label></td></tr>
+				</table>
+				<p class="description"><?php esc_html_e( 'The months and the monthly amount are set in each term. Online payments use WooCommerce with any installed payment gateway; staff can also record payments by hand.', 'reticula-academica' ); ?></p>
+
+				<h2><?php esc_html_e( 'General data of the student', 'reticula-academica' ); ?></h2>
+				<p><label><input type="checkbox" name="<?php echo esc_attr( $n ); ?>[profile_required]" value="1" <?php checked( $s['profile_required'], 1 ); ?>> <?php esc_html_e( 'Ask enrolled students for their general data before using the platform (first step after paying the inscription)', 'reticula-academica' ); ?></label></p>
+				<?php Profile::render_settings(); ?>
 
 				<h2><?php esc_html_e( 'Student files', 'reticula-academica' ); ?></h2>
 				<table class="form-table" role="presentation">

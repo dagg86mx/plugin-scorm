@@ -37,6 +37,7 @@ class Progress {
 	 *     @type int    $inscription_fee  Course ID that represents the inscription fee (0 = none).
 	 *     @type string $mode             Ordering mode.
 	 *     @type array  $courses          course_id => [ enrolled => bool, completed => bool, percent => int ].
+	 *     @type bool   $tuition_blocked  A monthly payment is overdue: courses stay locked until it is paid.
 	 * }
 	 * @return array
 	 */
@@ -50,6 +51,7 @@ class Progress {
 				'inscription_fee' => 0,
 				'mode'            => self::MODE_ADVISORY,
 				'courses'         => array(),
+				'tuition_blocked' => false,
 			),
 			$args
 		);
@@ -147,6 +149,8 @@ class Progress {
 				} else {
 					if ( $blocked_by_status ) {
 						$lock = self::STATUS_PENDING === $status ? 'inscription' : 'status';
+					} elseif ( $args['tuition_blocked'] ) {
+						$lock = 'tuition';
 					} elseif ( ! $fee_paid ) {
 						$lock = 'fee';
 					} elseif ( self::MODE_TERM === $args['mode'] && $index > $current_index ) {
@@ -201,6 +205,12 @@ class Progress {
 				'course_id' => (int) $args['inscription_fee'],
 				'term_id'   => 0,
 			);
+		} elseif ( ! $blocked_by_status && ! $finished && $args['tuition_blocked'] ) {
+			$next = array(
+				'action'    => 'pay_tuition',
+				'course_id' => 0,
+				'term_id'   => 0,
+			);
 		} elseif ( ! $blocked_by_status && ! $finished ) {
 			foreach ( $out_terms as $t_index => $term ) {
 				if ( 'exempt' === $term['status'] ) {
@@ -238,6 +248,7 @@ class Progress {
 			'total'           => $total,
 			'completed'       => $completed_count,
 			'percent'         => $total ? (int) floor( $completed_count * 100 / $total ) : 0,
+			'tuition_blocked' => (bool) $args['tuition_blocked'],
 		);
 	}
 

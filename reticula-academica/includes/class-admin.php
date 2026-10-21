@@ -545,6 +545,14 @@ luis@example.com,Ingeniería en Software,3,activo</pre>
 					<p><?php echo $record['items'] ? esc_html( Records::summary_text( $record['summary'] ) ) : esc_html__( 'The school has not requested any documents.', 'reticula-academica' ); ?></p>
 					<p><a class="button" href="<?php echo esc_url( Records::admin_url( array( 'user' => (int) $row['user_id'] ) ) ); ?>"><?php esc_html_e( 'Open file', 'reticula-academica' ); ?></a></p>
 				</div>
+				<div class="ra-panel ra-panel-wide" id="ra-tuition">
+					<h2><?php esc_html_e( 'Tuition', 'reticula-academica' ); ?></h2>
+					<?php Tuition::render_inscription_panel( $row ); ?>
+				</div>
+				<div class="ra-panel">
+					<h2><?php esc_html_e( 'General data', 'reticula-academica' ); ?></h2>
+					<?php Profile::render_admin_panel( (int) $row['user_id'] ); ?>
+				</div>
 				<div class="ra-panel ra-panel-wide">
 					<h2><?php esc_html_e( 'Grades and extraordinary exams', 'reticula-academica' ); ?></h2>
 					<?php Grades::ext_form( $row ); ?>

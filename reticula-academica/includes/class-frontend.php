@@ -15,6 +15,8 @@ class Frontend {
 	const DASHBOARD_SLUG = 'mi-carrera';
 	const DOCUMENTS_SLUG = 'mis-documentos';
 	const RECORDS_SLUG   = 'mi-expediente';
+	const PAYMENTS_SLUG  = 'mis-pagos';
+	const PROFILE_SLUG   = 'mis-datos';
 
 	public static function init() {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
@@ -35,8 +37,8 @@ class Frontend {
 	public static function maybe_no_cache() {
 		$tab  = (string) get_query_var( 'tutor_dashboard_page' );
 		$post = is_singular() ? get_post() : null;
-		$live = in_array( $tab, array( self::DASHBOARD_SLUG, self::DOCUMENTS_SLUG, self::RECORDS_SLUG ), true );
-		foreach ( array( 'reticula_expediente', 'reticula_documentos', 'reticula_mi_carrera' ) as $shortcode ) {
+		$live = in_array( $tab, array( self::DASHBOARD_SLUG, self::DOCUMENTS_SLUG, self::RECORDS_SLUG, self::PAYMENTS_SLUG, self::PROFILE_SLUG ), true );
+		foreach ( array( 'reticula_expediente', 'reticula_documentos', 'reticula_mi_carrera', 'reticula_pagos', 'reticula_mis_datos' ) as $shortcode ) {
 			$live = $live || ( $post && has_shortcode( (string) $post->post_content, $shortcode ) );
 		}
 		if ( $live ) {
@@ -111,6 +113,16 @@ class Frontend {
 					'icon'        => 'document',
 					'active_icon' => 'document',
 				);
+				$with_docs[ self::PAYMENTS_SLUG ]  = array(
+					'title'       => __( 'My payments', 'reticula-academica' ),
+					'icon'        => 'billing',
+					'active_icon' => 'billing',
+				);
+				$with_docs[ self::PROFILE_SLUG ]   = array(
+					'title'       => __( 'My data', 'reticula-academica' ),
+					'icon'        => 'profile',
+					'active_icon' => 'profile',
+				);
 			}
 		}
 		return $with_docs;
@@ -127,6 +139,14 @@ class Frontend {
 		if ( self::RECORDS_SLUG === get_query_var( 'tutor_dashboard_page' ) ) {
 			self::assets();
 			return RA_DIR . 'includes/dashboard-my-file.php';
+		}
+		if ( self::PAYMENTS_SLUG === get_query_var( 'tutor_dashboard_page' ) ) {
+			self::assets();
+			return RA_DIR . 'includes/dashboard-my-payments.php';
+		}
+		if ( self::PROFILE_SLUG === get_query_var( 'tutor_dashboard_page' ) ) {
+			self::assets();
+			return RA_DIR . 'includes/dashboard-my-data.php';
 		}
 		return $location;
 	}
@@ -218,6 +238,16 @@ class Frontend {
 			<div class="ra-enroll-box">
 				<?php if ( ! $settings['self_enroll'] ) : ?>
 					<p><?php esc_html_e( 'Enrollment in this program is managed by the school. Please contact us to join.', 'reticula-academica' ); ?></p>
+				<?php elseif ( ! $user_id && Inscriptions::checkout_url( $program_id ) ) : ?>
+					<p>
+						<?php
+						$price = Tutor::price_label( $settings['fee_course'] );
+						/* translators: %s: price. */
+						echo esc_html( $price ? sprintf( __( 'Inscription fee: %s. Pay it and create your account in the same step.', 'reticula-academica' ), $price ) : __( 'Pay the inscription and create your account in the same step.', 'reticula-academica' ) );
+						?>
+					</p>
+					<a class="ra-btn ra-btn-primary" href="<?php echo esc_url( Inscriptions::checkout_url( $program_id ) ); ?>"><?php esc_html_e( 'Enroll in this program', 'reticula-academica' ); ?></a>
+					<a class="ra-btn ra-btn-secondary" href="<?php echo esc_url( wp_login_url( get_permalink( $program_id ) ) ); ?>"><?php esc_html_e( 'I already have an account', 'reticula-academica' ); ?></a>
 				<?php elseif ( ! $user_id ) : ?>
 					<p><?php esc_html_e( 'Log in or create an account to enroll in this program.', 'reticula-academica' ); ?></p>
 					<a class="ra-btn" href="<?php echo esc_url( wp_login_url( get_permalink( $program_id ) ) ); ?>"><?php esc_html_e( 'Log in to enroll', 'reticula-academica' ); ?></a>
@@ -362,6 +392,10 @@ class Frontend {
 						<?php if ( $record['items'] ) : ?>
 							<a class="ra-link" href="<?php echo esc_url( Records::my_file_url() ); ?>"><?php esc_html_e( 'My file', 'reticula-academica' ); ?><?php echo $record['summary']['outstanding'] ? ' <span class="ra-badge ra-badge-rec-rejected">' . esc_html( (string) count( $record['summary']['outstanding'] ) ) . '</span>' : ''; ?> &rarr;</a>
 						<?php endif; ?>
+						<?php if ( ! empty( $inscription['billing_start'] ) ) : ?>
+							<?php $tuition = Tuition::summary( (int) $inscription['id'] ); ?>
+							<a class="ra-link" href="<?php echo esc_url( Tuition::my_payments_url() ); ?>"><?php esc_html_e( 'My payments', 'reticula-academica' ); ?><?php echo ( $tuition['overdue'] || $tuition['due'] ) ? ' <span class="ra-badge ' . ( $tuition['overdue'] ? 'ra-badge-pay-overdue' : 'ra-badge-pay-due' ) . '">' . esc_html( Tuition::money( $tuition['balance'] ) ) . '</span>' : ''; ?> &rarr;</a>
+						<?php endif; ?>
 					</p>
 				</div>
 				<div class="ra-overall" aria-label="<?php esc_attr_e( 'Program progress', 'reticula-academica' ); ?>">
@@ -418,6 +452,11 @@ class Frontend {
 			echo '<p class="ra-next-title">' . esc_html__( 'You have completed every course of your program.', 'reticula-academica' ) . '</p>';
 		} elseif ( in_array( $progress['status'], array( Progress::STATUS_PAUSED, Progress::STATUS_DROPPED ), true ) ) {
 			echo '<p class="ra-next-title">' . esc_html__( 'Your inscription is not active. Please contact the school to continue.', 'reticula-academica' ) . '</p>';
+		} elseif ( $next && 'pay_tuition' === $next['action'] ) {
+			$tuition = Tuition::summary( (int) $inscription['id'] );
+			echo '<p class="ra-next-label">' . esc_html__( 'Your next step', 'reticula-academica' ) . ' &middot; ' . esc_html__( 'Pay your overdue tuition', 'reticula-academica' ) . '</p>';
+			echo '<p class="ra-next-title">' . esc_html( Tuition::money( $tuition['balance'] ) ) . ' <span class="ra-lock">' . esc_html__( 'Your courses are locked until you pay.', 'reticula-academica' ) . '</span></p>';
+			echo '<a class="ra-btn ra-btn-primary" href="' . esc_url( Tuition::my_payments_url() ) . '">' . esc_html__( 'Pay now', 'reticula-academica' ) . '</a>';
 		} elseif ( $next ) {
 			$course_id = (int) $next['course_id'];
 			$labels    = array(
@@ -537,7 +576,13 @@ class Frontend {
 					?>
 				</p>
 				<?php if ( 'locked' === $course['status'] ) : ?>
-					<p><strong><?php echo esc_html( Gating::message( $course['lock_reason'] ) ); ?></strong></p>
+					<p><strong><?php echo esc_html( Gating::message( $course['lock_reason'] ) ); ?></strong>
+						<?php if ( 'tuition' === $course['lock_reason'] ) : ?>
+							<a class="ra-link" href="<?php echo esc_url( Tuition::my_payments_url() ); ?>"><?php esc_html_e( 'Pay now', 'reticula-academica' ); ?> &rarr;</a>
+						<?php endif; ?>
+					</p>
+				<?php elseif ( ! empty( $progress['tuition_blocked'] ) && 'in_progress' === $course['status'] ) : ?>
+					<p><strong><?php echo esc_html( Gating::message( 'tuition' ) ); ?></strong> <a class="ra-link" href="<?php echo esc_url( Tuition::my_payments_url() ); ?>"><?php esc_html_e( 'Pay now', 'reticula-academica' ); ?> &rarr;</a></p>
 				<?php elseif ( $course['is_next'] ) : ?>
 					<p><strong><?php esc_html_e( 'This is your next course.', 'reticula-academica' ); ?></strong></p>
 				<?php elseif ( 'completed' === $course['status'] && $progress['next'] && (int) $progress['next']['course_id'] !== $course_id ) : ?>

@@ -38,6 +38,8 @@ class Plugin {
 		Grades::init();
 		Documents::init();
 		Records::init();
+		Tuition::init();
+		Profile::init();
 		add_action( 'admin_notices', array( $this, 'dependency_notice' ) );
 	}
 

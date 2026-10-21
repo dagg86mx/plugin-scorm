@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Reticula Academica 1.3.0\n"
+"Project-Id-Version: Reticula Academica 1.4.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -154,6 +154,12 @@ msgstr "La escuela no ha solicitado documentos."
 
 msgid "Open file"
 msgstr "Abrir expediente"
+
+msgid "Tuition"
+msgstr "Colegiaturas"
+
+msgid "General data"
+msgstr "Datos generales"
 
 msgid "Grades and extraordinary exams"
 msgstr "Calificaciones y extraordinarios"
@@ -615,6 +621,12 @@ msgstr "Mi carrera"
 msgid "My file"
 msgstr "Mi expediente"
 
+msgid "My payments"
+msgstr "Mis pagos"
+
+msgid "My data"
+msgstr "Mis datos"
+
 msgid "There are no programs available yet."
 msgstr "Aún no hay carreras disponibles."
 
@@ -630,6 +642,18 @@ msgstr "Mi avance"
 msgid "Enrollment in this program is managed by the school. Please contact us to join."
 msgstr "La inscripción a esta carrera la gestiona la escuela. Contáctanos para inscribirte."
 
+msgid "Inscription fee: %s. Pay it and create your account in the same step."
+msgstr "Cuota de inscripción: %s. Págala y crea tu cuenta en el mismo paso."
+
+msgid "Pay the inscription and create your account in the same step."
+msgstr "Paga la inscripción y crea tu cuenta en el mismo paso."
+
+msgid "Enroll in this program"
+msgstr "Inscribirme a esta carrera"
+
+msgid "I already have an account"
+msgstr "Ya tengo cuenta"
+
 msgid "Log in or create an account to enroll in this program."
 msgstr "Inicia sesión o crea una cuenta para inscribirte en esta carrera."
 
@@ -641,9 +665,6 @@ msgstr "Cuota de inscripción: %s. Después de inscribirte irás al pago."
 
 msgid "You will be taken to pay the inscription fee after enrolling."
 msgstr "Después de inscribirte irás a pagar la cuota de inscripción."
-
-msgid "Enroll in this program"
-msgstr "Inscribirme a esta carrera"
 
 msgid "RVOE %1$s, %2$s"
 msgstr "RVOE %1$s, %2$s"
@@ -705,11 +726,20 @@ msgstr "Completaste todos los cursos de tu carrera."
 msgid "Your inscription is not active. Please contact the school to continue."
 msgstr "Tu inscripción no está activa. Contacta a la escuela para continuar."
 
-msgid "Pay your inscription"
-msgstr "Paga tu inscripción"
+msgid "Your next step"
+msgstr "Tu siguiente paso"
+
+msgid "Pay your overdue tuition"
+msgstr "Paga tu colegiatura vencida"
+
+msgid "Your courses are locked until you pay."
+msgstr "Tus cursos están bloqueados hasta que pagues."
 
 msgid "Pay now"
 msgstr "Pagar ahora"
+
+msgid "Pay your inscription"
+msgstr "Paga tu inscripción"
 
 msgid "Pay the fee of %s"
 msgstr "Paga la cuota de %s"
@@ -728,9 +758,6 @@ msgstr "Inscribirme"
 
 msgid "View course"
 msgstr "Ver curso"
-
-msgid "Your next step"
-msgstr "Tu siguiente paso"
 
 msgid "Next"
 msgstr "Siguiente"
@@ -758,6 +785,9 @@ msgstr "Paga tu inscripción a la carrera para desbloquear este curso."
 
 msgid "Pay the term fee to unlock the courses of this term."
 msgstr "Paga la cuota del tetramestre para desbloquear sus cursos."
+
+msgid "You have an overdue tuition payment. Pay it to unlock your courses."
+msgstr "Tienes una colegiatura vencida. Págala para desbloquear tus cursos."
 
 msgid "This course belongs to a later term of your program."
 msgstr "Este curso pertenece a un tetramestre posterior de tu carrera."
@@ -960,6 +990,15 @@ msgstr "— Sin cuota —"
 msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
 msgstr "Curso de pago de Tutor (p. ej. reinscripción). Los cursos de este tetramestre siguen bloqueados hasta que el alumno lo compre."
 
+msgid "Months of tuition"
+msgstr "Meses de colegiatura"
+
+msgid "Monthly tuition"
+msgstr "Colegiatura mensual"
+
+msgid "Charged every month of the term (e.g. 4 months × 2,500). 0 months = no tuition. The next term continues the next month."
+msgstr "Se cobra cada mes del tetramestre (p. ej. 4 meses × 2,500). 0 meses = sin colegiatura. El siguiente tetramestre continúa al mes siguiente."
+
 msgid "Course code"
 msgstr "Clave de la materia"
 
@@ -993,6 +1032,9 @@ msgstr "Por tetramestre"
 msgid "Strict"
 msgstr "Estricto"
 
+msgid "%1$d × %2$s"
+msgstr "%1$d × %2$s"
+
 msgctxt "URL slug"
 msgid "programs"
 msgstr "carreras"
@@ -1000,6 +1042,114 @@ msgstr "carreras"
 msgctxt "URL slug"
 msgid "program"
 msgstr "carrera"
+
+msgid "First name(s)"
+msgstr "Nombre(s)"
+
+msgid "First last name"
+msgstr "Apellido paterno"
+
+msgid "Second last name"
+msgstr "Apellido materno"
+
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+msgid "Sex"
+msgstr "Sexo"
+
+msgid "Female, Male"
+msgstr "Mujer, Hombre"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "City and state"
+msgstr "Ciudad y estado"
+
+msgid "Postal code"
+msgstr "Código postal"
+
+msgid "Previous school"
+msgstr "Escuela de procedencia"
+
+msgid "Emergency contact"
+msgstr "Contacto de emergencia"
+
+msgid "Emergency phone"
+msgstr "Teléfono de emergencia"
+
+msgid "%s is not a valid email."
+msgstr "%s no es un correo válido."
+
+msgid "%s is not a valid date."
+msgstr "%s no es una fecha válida."
+
+msgid "The CURP does not look right: it has 18 characters (e.g. GAPA850101MDFRRN09)."
+msgstr "La CURP no parece correcta: tiene 18 caracteres (p. ej. GAPA850101MDFRRN09)."
+
+msgid "%s is required."
+msgstr "%s es obligatorio."
+
+msgid "General data saved."
+msgstr "Datos generales guardados."
+
+msgid "Log in to see your data."
+msgstr "Inicia sesión para ver tus datos."
+
+msgid "Welcome! Step 1 of 2"
+msgstr "¡Bienvenido! Paso 1 de 2"
+
+msgid "Fill in your general data to start"
+msgstr "Completa tus datos generales para comenzar"
+
+msgid "Then you can upload the documents of your file."
+msgstr "Después podrás subir los documentos de tu expediente."
+
+msgid "Your data was saved."
+msgstr "Tus datos se guardaron."
+
+msgid "Save and continue"
+msgstr "Guardar y continuar"
+
+msgid "Missing: %s"
+msgstr "Falta: %s"
+
+msgid "Complete."
+msgstr "Completos."
+
+msgid "Save general data"
+msgstr "Guardar datos generales"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Long text"
+msgstr "Texto largo"
+
+msgid "List of options"
+msgstr "Lista de opciones"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Field"
+msgstr "Campo"
+
+msgid "Options (comma separated)"
+msgstr "Opciones (separadas por comas)"
+
+msgid "Required"
+msgstr "Obligatorio"
+
+msgid "New field…"
+msgstr "Nuevo campo…"
+
+msgid "Fill in the empty row to add a field (save to get another empty row). The code in braces can be used in document templates. Removing a field hides it but keeps the data already captured."
+msgstr "Llena la fila vacía para agregar un campo (al guardar aparece otra fila vacía). El código entre llaves se puede usar en las plantillas de documentos. Quitar un campo lo oculta, pero conserva los datos ya capturados."
 
 msgid "Not uploaded"
 msgstr "Sin subir"
@@ -1057,9 +1207,6 @@ msgstr "Límite del servidor: %s"
 
 msgid "The description written in the editor is shown to the student as instructions. Order: \"Order\" field in Page attributes."
 msgstr "La descripción del editor se muestra al alumno como instrucciones. Orden: campo «Orden» en Atributos."
-
-msgid "Required"
-msgstr "Obligatorio"
 
 msgid "Yes"
 msgstr "Sí"
@@ -1141,6 +1288,18 @@ msgstr "%1$d de %2$d documentos validados"
 
 msgid "Log in to see your file."
 msgstr "Inicia sesión para ver tu expediente."
+
+msgid "Step 2 of 2"
+msgstr "Paso 2 de 2"
+
+msgid "Upload the documents of your file"
+msgstr "Sube los documentos de tu expediente"
+
+msgid "You can do it now or later: you can start your courses without them."
+msgstr "Puedes hacerlo ahora o después: puedes empezar tus cursos sin ellos."
+
+msgid "Go to my program"
+msgstr "Ir a mi carrera"
 
 msgid "Your file is available once you are enrolled in a program."
 msgstr "Tu expediente se habilita cuando te inscribes en una carrera."
@@ -1367,6 +1526,48 @@ msgstr "Evaluaciones SCORM"
 msgid "Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen"
 msgstr "Ofrecer las lecciones SCORM (plugin Tutor SCORM) como evaluaciones en la pantalla de ponderación"
 
+msgid "Cutoff day"
+msgstr "Día de corte"
+
+msgid "Inscribed up to this day: payments every month on that same day, starting immediately. After it: on day 1 of each month, starting next month. So payments always fall in the first days of the month."
+msgstr "Inscritos hasta este día: pagan cada mes ese mismo día, empezando de inmediato. Después: el día 1 de cada mes, empezando el mes siguiente. Así los pagos siempre caen en los primeros días del mes."
+
+msgid "Grace days"
+msgstr "Días de tolerancia"
+
+msgid "Days after the due date to pay without late fee."
+msgstr "Días después de la fecha de pago para pagar sin recargo."
+
+msgid "Late fee"
+msgstr "Recargo"
+
+msgid "Added once to each payment not made within the grace days. Staff can waive it."
+msgstr "Se suma una vez a cada pago no hecho dentro de los días de tolerancia. El personal puede condonarlo."
+
+msgid "Lock courses"
+msgstr "Bloquear cursos"
+
+msgid "With an overdue payment (grace days over), the courses of the program are locked until it is paid"
+msgstr "Con un pago vencido (pasada la tolerancia), los cursos de la carrera se bloquean hasta que se pague"
+
+msgid "Reminder before the due date (days)"
+msgstr "Recordatorio antes de la fecha de pago (días)"
+
+msgid "Emails"
+msgstr "Correos"
+
+msgid "Email the student before each due date and when a late fee is added"
+msgstr "Enviar correo al alumno antes de cada fecha de pago y cuando se aplica un recargo"
+
+msgid "The months and the monthly amount are set in each term. Online payments use WooCommerce with any installed payment gateway; staff can also record payments by hand."
+msgstr "Los meses y la mensualidad se definen en cada tetramestre. Los pagos en línea usan WooCommerce con la pasarela que tengas instalada; el personal también puede registrar pagos a mano."
+
+msgid "General data of the student"
+msgstr "Datos generales del alumno"
+
+msgid "Ask enrolled students for their general data before using the platform (first step after paying the inscription)"
+msgstr "Pedir a los alumnos inscritos sus datos generales antes de usar la plataforma (primer paso después de pagar la inscripción)"
+
 msgid "Reminder every (days)"
 msgstr "Recordatorio cada (días)"
 
@@ -1426,3 +1627,223 @@ msgstr "Asignar la siguiente matrícula consecutiva"
 
 msgid "That student ID already belongs to another user."
 msgstr "Esa matrícula ya pertenece a otro usuario."
+
+msgid "Tuition %1$d of %2$d · %3$s"
+msgstr "Colegiatura %1$d de %2$d · %3$s"
+
+msgid "Online"
+msgstr "En línea"
+
+msgid "Bank transfer"
+msgstr "Transferencia"
+
+msgid "Bank deposit"
+msgstr "Depósito bancario"
+
+msgid "Cash"
+msgstr "Efectivo"
+
+msgid "Card at the school"
+msgstr "Tarjeta en caja"
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Online payments are not available. Please contact the school."
+msgstr "Los pagos en línea no están disponibles. Contacta a la escuela."
+
+msgid "Late fee · %s"
+msgstr "Recargo · %s"
+
+msgid "Order #%d"
+msgstr "Pedido #%d"
+
+msgid "Hello %s,"
+msgstr "Hola %s:"
+
+msgid "See your payments:"
+msgstr "Consulta tus pagos:"
+
+msgid "Your tuition is due on %s"
+msgstr "Tu colegiatura vence el %s"
+
+msgid "%1$s for %2$s is due on %3$s. Pay by %4$s to avoid the late fee."
+msgstr "%1$s por %2$s vence el %3$s. Paga a más tardar el %4$s para evitar el recargo."
+
+msgid "Late fee applied to your tuition"
+msgstr "Se aplicó un recargo a tu colegiatura"
+
+msgid "%1$s (due on %2$s) was not paid within the grace days, so a late fee of %3$s was added. Total to pay: %4$s."
+msgstr "%1$s (con vencimiento el %2$s) no se pagó dentro de los días de tolerancia, por lo que se agregó un recargo de %3$s. Total a pagar: %4$s."
+
+msgid "Your courses are locked until the payment is made."
+msgstr "Tus cursos quedan bloqueados hasta que realices el pago."
+
+msgid "Paid"
+msgstr "Pagado"
+
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgid "To pay"
+msgstr "Por pagar"
+
+msgid "Overdue"
+msgstr "Vencido"
+
+msgid "Log in to see your payments."
+msgstr "Inicia sesión para ver tus pagos."
+
+msgid "payments made"
+msgstr "pagos realizados"
+
+msgid "Thank you! Your payment was received. If it does not show as paid yet, it will once the payment is confirmed."
+msgstr "¡Gracias! Recibimos tu pago. Si todavía no aparece como pagado, aparecerá en cuanto se confirme."
+
+msgid "Your courses are locked because of an overdue payment. Pay it to continue studying."
+msgstr "Tus cursos están bloqueados por un pago vencido. Págalo para seguir estudiando."
+
+msgid "You have no tuition payments scheduled."
+msgstr "No tienes colegiaturas programadas."
+
+msgid "Overdue balance (includes late fees)"
+msgstr "Adeudo vencido (incluye recargos)"
+
+msgid "Pay by %s to avoid the late fee"
+msgstr "Paga a más tardar el %s para evitar el recargo"
+
+msgid "Next payment: %s"
+msgstr "Próximo pago: %s"
+
+msgid "Pay in advance"
+msgstr "Pagar por adelantado"
+
+msgid "You are up to date with your payments."
+msgstr "Estás al corriente con tus pagos."
+
+msgid "Concept"
+msgstr "Concepto"
+
+msgid "Due date"
+msgstr "Fecha de pago"
+
+msgid "Amount"
+msgstr "Monto"
+
+msgid "No late fee until %s"
+msgstr "Sin recargo hasta el %s"
+
+msgid "Pay"
+msgstr "Pagar"
+
+msgid "Receipt"
+msgstr "Recibo"
+
+msgid "To pay, contact the school. Your payment will show here once it is recorded."
+msgstr "Para pagar, contacta a la escuela. Tu pago aparecerá aquí cuando se registre."
+
+msgid "Payment calendar updated."
+msgstr "Calendario de pagos actualizado."
+
+msgid "No payments were generated: check the date and that the terms have months and a monthly amount."
+msgstr "No se generaron pagos: revisa la fecha y que los tetramestres tengan meses y mensualidad."
+
+msgid "Payment calendar created for %d students."
+msgstr "Calendario de pagos creado para %d alumnos."
+
+msgid "Pending payments of %d students updated with the current amounts."
+msgstr "Pagos pendientes de %d alumnos actualizados con los montos actuales."
+
+msgid "Payment recorded."
+msgstr "Pago registrado."
+
+msgid "Late fee waived."
+msgstr "Recargo condonado."
+
+msgid "Payment cancelled."
+msgstr "Pago cancelado."
+
+msgid "Payment set back to pending."
+msgstr "El pago volvió a pendiente."
+
+msgid "Billing start"
+msgstr "Inicio de cobro"
+
+msgid "Update calendar"
+msgstr "Actualizar calendario"
+
+msgid "Start billing"
+msgstr "Iniciar cobro"
+
+msgid "The terms of this program have no months or monthly amount: edit each term to set them."
+msgstr "Los tetramestres de esta carrera no tienen meses ni mensualidad: edita cada tetramestre para definirlos."
+
+msgid "Up to day %d of the month, payments fall on that day starting immediately; later, on day 1 of the next month. \"Update calendar\" also applies changed amounts to pending payments."
+msgstr "Hasta el día %d del mes, los pagos caen ese día y empiezan de inmediato; después, el día 1 del mes siguiente. «Actualizar calendario» también aplica montos modificados a los pagos pendientes."
+
+msgid "Waived"
+msgstr "Condonado"
+
+msgid "Reference"
+msgstr "Referencia"
+
+msgid "Record payment"
+msgstr "Registrar pago"
+
+msgid "Waive late fee"
+msgstr "Condonar recargo"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cancel this payment? The student will no longer owe it."
+msgstr "¿Cancelar este pago? El alumno ya no lo deberá."
+
+msgid "Set back to pending"
+msgstr "Regresar a pendiente"
+
+msgid "Set this payment back to pending?"
+msgstr "¿Regresar este pago a pendiente?"
+
+msgid "To collect"
+msgstr "Por cobrar"
+
+msgid "Paid from"
+msgstr "Pagado desde"
+
+msgid "Due from"
+msgstr "Vence desde"
+
+msgid "to"
+msgstr "hasta"
+
+msgid "No payments found."
+msgstr "No se encontraron pagos."
+
+msgid "includes %s late fee"
+msgstr "incluye %s de recargo"
+
+msgid "Calendars"
+msgstr "Calendarios"
+
+msgid "Create their calendars"
+msgstr "Crear sus calendarios"
+
+msgid "Apply the current months and monthly amounts of every term to all pending payments?"
+msgstr "¿Aplicar los meses y mensualidades actuales de cada tetramestre a todos los pagos pendientes?"
+
+msgid "Apply term changes to pending payments"
+msgstr "Aplicar cambios de tetramestres a pagos pendientes"
+
+msgid "Changing the months or the monthly amount of a term does not change existing calendars until you press this button (or \"Update calendar\" on a student)."
+msgstr "Cambiar los meses o la mensualidad de un tetramestre no modifica los calendarios existentes hasta que pulses este botón (o «Actualizar calendario» en un alumno)."
+
+msgid "%1$d payment · %2$s"
+msgid_plural "%1$d payments · %2$s"
+msgstr[0] "%1$d pago · %2$s"
+msgstr[1] "%1$d pagos · %2$s"
+
+msgid "%d active student has no payment calendar (enrolled before tuition was set up)."
+msgid_plural "%d active students have no payment calendar (enrolled before tuition was set up)."
+msgstr[0] "%d alumno activo no tiene calendario de pagos (se inscribió antes de configurar las colegiaturas)."
+msgstr[1] "%d alumnos activos no tienen calendario de pagos (se inscribieron antes de configurar las colegiaturas)."

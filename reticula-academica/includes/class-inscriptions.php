@@ -20,6 +20,9 @@ class Inscriptions {
 		add_action( 'before_delete_post', array( __CLASS__, 'on_delete_post' ) );
 		add_action( 'admin_post_ra_enroll_program', array( __CLASS__, 'handle_self_enroll' ) );
 		add_action( 'admin_post_nopriv_ra_enroll_program', array( __CLASS__, 'handle_self_enroll' ) );
+		add_action( 'woocommerce_add_to_cart', array( __CLASS__, 'remember_checkout_program' ) );
+		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'checkout_order_program' ) );
+		add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'order_program_to_user' ), 5 );
 	}
 
 	public static function statuses() {
@@ -168,7 +171,9 @@ class Inscriptions {
 		$allowed['updated_at'] = current_time( 'mysql', true );
 		$wpdb->update( Installer::table(), $allowed, array( 'id' => absint( $id ) ) ); // phpcs:ignore WordPress.DB
 		unset( self::$progress_cache[ $id ] );
-		return self::sync( self::get( $id ) );
+		$row = self::sync( self::get( $id ) );
+		do_action( 'ra_inscription_updated', $row );
+		return $row;
 	}
 
 	public static function delete( $id ) {
@@ -211,6 +216,7 @@ class Inscriptions {
 				'inscription_fee' => $settings['fee_course'],
 				'mode'            => $settings['mode'],
 				'courses'         => Tutor::course_states( Curriculum::all_course_ids( $program_id ), (int) $inscription['user_id'] ),
+				'tuition_blocked' => Tuition::blocked( $inscription ),
 			)
 		);
 		self::$progress_cache[ $id ] = apply_filters( 'ra_progress', $progress, $inscription );
@@ -279,7 +285,79 @@ class Inscriptions {
 	public static function on_enrolled( $course_id, $user_id ) {
 		if ( $user_id ) {
 			Tutor::remember( $course_id, $user_id, 'enrolled' );
+			self::inscribe_from_fee( (int) $course_id, (int) $user_id );
 			self::sync_user( (int) $user_id );
+		}
+	}
+
+	/**
+	 * Paying a program's inscription fee without being inscribed (e.g. as a new customer at checkout, which
+	 * creates the account) inscribes the student in that program.
+	 */
+	public static function inscribe_from_fee( $course_id, $user_id ) {
+		$programs = array();
+		foreach ( Curriculum::programs() as $program ) {
+			$settings = Curriculum::program_settings( $program->ID );
+			if ( $settings['self_enroll'] && (int) $settings['fee_course'] === $course_id ) {
+				$programs[] = (int) $program->ID;
+			}
+		}
+		if ( ! $programs ) {
+			return;
+		}
+		foreach ( $programs as $program_id ) {
+			if ( self::find( $user_id, $program_id ) ) {
+				return; // Already inscribed in one of them (activation is handled by sync).
+			}
+		}
+		$chosen = (int) get_user_meta( $user_id, '_ra_checkout_program', true );
+		$chosen = in_array( $chosen, $programs, true ) ? $chosen : $programs[0];
+		delete_user_meta( $user_id, '_ra_checkout_program' );
+		self::create( $user_id, $chosen, array( 'source' => 'self' ) );
+	}
+
+	/**
+	 * Checkout link for a program's inscription fee when it is sold with WooCommerce (lets new students pay
+	 * and create their account in one step).
+	 */
+	public static function checkout_url( $program_id ) {
+		$fee = Curriculum::program_settings( $program_id )['fee_course'];
+		if ( ! $fee || ! function_exists( 'wc_get_checkout_url' ) || ! Tutor::active() || ! method_exists( tutor_utils(), 'get_course_product_id' ) ) {
+			return '';
+		}
+		$product = (int) tutor_utils()->get_course_product_id( $fee );
+		if ( ! $product || ! function_exists( 'wc_get_product' ) || ! wc_get_product( $product ) ) {
+			return '';
+		}
+		return add_query_arg(
+			array(
+				'add-to-cart' => $product,
+				'ra_enroll'   => (int) $program_id,
+			),
+			wc_get_checkout_url()
+		);
+	}
+
+	/**
+	 * Remember the program chosen at checkout so the inscription goes to it.
+	 */
+	public static function remember_checkout_program() {
+		$program = isset( $_GET['ra_enroll'] ) ? absint( $_GET['ra_enroll'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+		if ( $program && function_exists( 'WC' ) && WC()->session ) {
+			WC()->session->set( 'ra_program', $program );
+		}
+	}
+
+	public static function checkout_order_program( $order ) {
+		if ( function_exists( 'WC' ) && WC()->session && WC()->session->get( 'ra_program' ) ) {
+			$order->update_meta_data( '_ra_program', (int) WC()->session->get( 'ra_program' ) );
+		}
+	}
+
+	public static function order_program_to_user( $order_id ) {
+		$order = function_exists( 'wc_get_order' ) ? wc_get_order( $order_id ) : null;
+		if ( $order && $order->get_customer_id() && $order->get_meta( '_ra_program' ) ) {
+			update_user_meta( $order->get_customer_id(), '_ra_checkout_program', (int) $order->get_meta( '_ra_program' ) );
 		}
 	}
 
@@ -306,7 +384,9 @@ class Inscriptions {
 	public static function handle_self_enroll() {
 		$program_id = isset( $_GET['program'] ) ? absint( $_GET['program'] ) : 0;
 		if ( ! is_user_logged_in() ) {
-			wp_safe_redirect( wp_login_url( get_permalink( $program_id ) ) );
+			// New students pay the inscription and create their account at the checkout.
+			$checkout = Curriculum::program_settings( $program_id )['self_enroll'] ? self::checkout_url( $program_id ) : '';
+			wp_safe_redirect( $checkout ? $checkout : wp_login_url( get_permalink( $program_id ) ) );
 			exit;
 		}
 		check_admin_referer( 'ra_enroll_' . $program_id );

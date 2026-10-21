@@ -592,12 +592,12 @@ class Records {
 		wp_clear_scheduled_hook( self::CRON );
 	}
 
-	private static function institution() {
+	public static function institution() {
 		$name = (string) Settings::get( 'institution' );
 		return '' !== $name ? $name : get_bloginfo( 'name' );
 	}
 
-	private static function mail( $to, $subject, $body ) {
+	public static function mail( $to, $subject, $body ) {
 		$from_name = self::institution();
 		$filter    = static function () use ( $from_name ) {
 			return $from_name;
@@ -795,6 +795,9 @@ class Records {
 		}
 		echo '</header>';
 		echo self::notice_html(); // phpcs:ignore WordPress.Security.EscapeOutput
+		if ( ! empty( $_GET['ra_step'] ) && $file['items'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			echo '<div class="ra-next ra-welcome"><div><p class="ra-next-label">' . esc_html__( 'Step 2 of 2', 'reticula-academica' ) . '</p><p class="ra-next-title">' . esc_html__( 'Upload the documents of your file', 'reticula-academica' ) . '</p><p class="ra-lock">' . esc_html__( 'You can do it now or later: you can start your courses without them.', 'reticula-academica' ) . '</p></div><a class="ra-btn ra-btn-secondary" href="' . esc_url( Inscriptions::my_program_url() ) . '">' . esc_html__( 'Go to my program', 'reticula-academica' ) . ' &rarr;</a></div>';
+		}
 
 		if ( ! self::user_programs( $user_id ) ) {
 			echo '<div class="ra-next ra-next-empty"><p>' . esc_html__( 'Your file is available once you are enrolled in a program.', 'reticula-academica' ) . '</p></div></div>';

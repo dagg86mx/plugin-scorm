@@ -227,6 +227,16 @@ class Post_Types {
 			<?php self::course_select( 'ra_term_fee', get_post_meta( $post->ID, '_ra_fee_course', true ), __( '— No fee —', 'reticula-academica' ), 'ra_term_fee' ); ?>
 			<span class="description"><?php esc_html_e( 'Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it.', 'reticula-academica' ); ?></span>
 		</p>
+		<?php $billing = Tuition::term_billing( $post->ID ); ?>
+		<p>
+			<label for="ra_months"><strong><?php esc_html_e( 'Months of tuition', 'reticula-academica' ); ?></strong></label><br>
+			<input type="number" min="0" max="24" name="ra_months" id="ra_months" value="<?php echo esc_attr( $billing['months'] ); ?>" class="small-text">
+		</p>
+		<p>
+			<label for="ra_monthly_amount"><strong><?php esc_html_e( 'Monthly tuition', 'reticula-academica' ); ?></strong></label><br>
+			<input type="number" min="0" step="0.01" name="ra_monthly_amount" id="ra_monthly_amount" value="<?php echo esc_attr( $billing['amount'] ? $billing['amount'] : '' ); ?>" class="regular-text" placeholder="2500">
+			<span class="description"><?php esc_html_e( 'Charged every month of the term (e.g. 4 months × 2,500). 0 months = no tuition. The next term continues the next month.', 'reticula-academica' ); ?></span>
+		</p>
 		<?php
 	}
 
@@ -301,6 +311,8 @@ class Post_Types {
 		add_action( 'save_post_' . Curriculum::TERM, array( __CLASS__, 'save_term' ) );
 
 		update_post_meta( $post_id, '_ra_fee_course', isset( $_POST['ra_term_fee'] ) ? absint( $_POST['ra_term_fee'] ) : 0 );
+		update_post_meta( $post_id, '_ra_months', isset( $_POST['ra_months'] ) ? min( 24, absint( $_POST['ra_months'] ) ) : 0 );
+		update_post_meta( $post_id, '_ra_monthly_amount', isset( $_POST['ra_monthly_amount'] ) ? round( max( 0, (float) wp_unslash( $_POST['ra_monthly_amount'] ) ), 2 ) : 0 );
 		if ( ! empty( $_POST['ra_courses_present'] ) ) {
 			$courses = isset( $_POST['ra_courses'] ) ? array_map( 'absint', (array) $_POST['ra_courses'] ) : array();
 			$courses = array_values( array_unique( array_filter( $courses ) ) );
@@ -363,6 +375,7 @@ class Post_Types {
 		$columns['ra_program'] = __( 'Program', 'reticula-academica' );
 		$columns['ra_number']  = '#';
 		$columns['ra_courses'] = __( 'Courses', 'reticula-academica' );
+		$columns['ra_tuition'] = __( 'Tuition', 'reticula-academica' );
 		$columns['date']       = $date;
 		return $columns;
 	}
@@ -378,6 +391,11 @@ class Post_Types {
 				break;
 			case 'ra_courses':
 				echo (int) count( Curriculum::term_courses( $post_id ) );
+				break;
+			case 'ra_tuition':
+				$billing = Tuition::term_billing( $post_id );
+				/* translators: 1: months, 2: monthly amount. */
+				echo $billing['months'] && $billing['amount'] > 0 ? esc_html( sprintf( __( '%1$d × %2$s', 'reticula-academica' ), $billing['months'], Tuition::money( $billing['amount'] ) ) ) : '&mdash;';
 				break;
 		}
 	}

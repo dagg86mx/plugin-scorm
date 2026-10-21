@@ -53,8 +53,8 @@ class Grades {
 				'fields'         => 'ids',
 			)
 		);
-		$quiz_type   = ( Tutor::active() && isset( tutor()->quiz_post_type ) ) ? tutor()->quiz_post_type : 'tutor_quiz';
-		$lesson_type = ( Tutor::active() && isset( tutor()->lesson_post_type ) ) ? tutor()->lesson_post_type : 'lesson';
+		$quiz_type   = (string) Tutor::config( 'quiz_post_type', 'tutor_quiz' );
+		$lesson_type = Tutor::lesson_post_type();
 		$with_scorm  = Settings::get( 'grade_scorm' ) && self::scorm_available();
 		foreach ( $topics as $topic_id ) {
 			$children = get_posts(

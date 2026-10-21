@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Retícula Académica
  * Description:       Organiza cursos de Tutor LMS en carreras y tetramestres. Los alumnos se inscriben a una carrera, pagan sus cuotas con el checkout de Tutor, ven qué curso sigue avanzan de tetramestre automáticamente, tienen matrícula consecutiva, calificaciones ponderadas, boletas y constancias en PDF.
- * Version:           1.3.1
+ * Version:           1.4.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            The Future Institute
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RA_VERSION', '1.3.1' );
+define( 'RA_VERSION', '1.4.0' );
 define( 'RA_FILE', __FILE__ );
 define( 'RA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RA_URL', plugin_dir_url( __FILE__ ) );
@@ -38,9 +38,13 @@ require_once RA_DIR . 'includes/class-grades.php';
 require_once RA_DIR . 'includes/class-documents.php';
 require_once RA_DIR . 'includes/class-record-rules.php';
 require_once RA_DIR . 'includes/class-records.php';
+require_once RA_DIR . 'includes/class-tuition-rules.php';
+require_once RA_DIR . 'includes/class-tuition.php';
+require_once RA_DIR . 'includes/class-profile.php';
 require_once RA_DIR . 'includes/class-plugin.php';
 
 register_activation_hook( __FILE__, array( 'ReticulaAcademica\\Installer', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'ReticulaAcademica\\Records', 'unschedule' ) );
+register_deactivation_hook( __FILE__, array( 'ReticulaAcademica\\Tuition', 'unschedule' ) );
 
 add_action( 'plugins_loaded', array( 'ReticulaAcademica\\Plugin', 'instance' ), 20 );

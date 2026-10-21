@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Reticula Academica 1.3.0\n"
+"Project-Id-Version: Reticula Academica 1.4.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -153,6 +153,12 @@ msgid "The school has not requested any documents."
 msgstr ""
 
 msgid "Open file"
+msgstr ""
+
+msgid "Tuition"
+msgstr ""
+
+msgid "General data"
 msgstr ""
 
 msgid "Grades and extraordinary exams"
@@ -615,6 +621,12 @@ msgstr ""
 msgid "My file"
 msgstr ""
 
+msgid "My payments"
+msgstr ""
+
+msgid "My data"
+msgstr ""
+
 msgid "There are no programs available yet."
 msgstr ""
 
@@ -630,6 +642,18 @@ msgstr ""
 msgid "Enrollment in this program is managed by the school. Please contact us to join."
 msgstr ""
 
+msgid "Inscription fee: %s. Pay it and create your account in the same step."
+msgstr ""
+
+msgid "Pay the inscription and create your account in the same step."
+msgstr ""
+
+msgid "Enroll in this program"
+msgstr ""
+
+msgid "I already have an account"
+msgstr ""
+
 msgid "Log in or create an account to enroll in this program."
 msgstr ""
 
@@ -640,9 +664,6 @@ msgid "Inscription fee: %s. You will be taken to the checkout after enrolling."
 msgstr ""
 
 msgid "You will be taken to pay the inscription fee after enrolling."
-msgstr ""
-
-msgid "Enroll in this program"
 msgstr ""
 
 msgid "RVOE %1$s, %2$s"
@@ -705,10 +726,19 @@ msgstr ""
 msgid "Your inscription is not active. Please contact the school to continue."
 msgstr ""
 
-msgid "Pay your inscription"
+msgid "Your next step"
+msgstr ""
+
+msgid "Pay your overdue tuition"
+msgstr ""
+
+msgid "Your courses are locked until you pay."
 msgstr ""
 
 msgid "Pay now"
+msgstr ""
+
+msgid "Pay your inscription"
 msgstr ""
 
 msgid "Pay the fee of %s"
@@ -727,9 +757,6 @@ msgid "Enroll"
 msgstr ""
 
 msgid "View course"
-msgstr ""
-
-msgid "Your next step"
 msgstr ""
 
 msgid "Next"
@@ -757,6 +784,9 @@ msgid "Pay your program inscription to unlock this course."
 msgstr ""
 
 msgid "Pay the term fee to unlock the courses of this term."
+msgstr ""
+
+msgid "You have an overdue tuition payment. Pay it to unlock your courses."
 msgstr ""
 
 msgid "This course belongs to a later term of your program."
@@ -960,6 +990,15 @@ msgstr ""
 msgid "Paid Tutor course (e.g. re-enrollment). The courses of this term stay locked until the student buys it."
 msgstr ""
 
+msgid "Months of tuition"
+msgstr ""
+
+msgid "Monthly tuition"
+msgstr ""
+
+msgid "Charged every month of the term (e.g. 4 months × 2,500). 0 months = no tuition. The next term continues the next month."
+msgstr ""
+
 msgid "Course code"
 msgstr ""
 
@@ -993,12 +1032,123 @@ msgstr ""
 msgid "Strict"
 msgstr ""
 
+msgid "%1$d × %2$s"
+msgstr ""
+
 msgctxt "URL slug"
 msgid "programs"
 msgstr ""
 
 msgctxt "URL slug"
 msgid "program"
+msgstr ""
+
+msgid "First name(s)"
+msgstr ""
+
+msgid "First last name"
+msgstr ""
+
+msgid "Second last name"
+msgstr ""
+
+msgid "Date of birth"
+msgstr ""
+
+msgid "Sex"
+msgstr ""
+
+msgid "Female, Male"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "City and state"
+msgstr ""
+
+msgid "Postal code"
+msgstr ""
+
+msgid "Previous school"
+msgstr ""
+
+msgid "Emergency contact"
+msgstr ""
+
+msgid "Emergency phone"
+msgstr ""
+
+msgid "%s is not a valid email."
+msgstr ""
+
+msgid "%s is not a valid date."
+msgstr ""
+
+msgid "The CURP does not look right: it has 18 characters (e.g. GAPA850101MDFRRN09)."
+msgstr ""
+
+msgid "%s is required."
+msgstr ""
+
+msgid "General data saved."
+msgstr ""
+
+msgid "Log in to see your data."
+msgstr ""
+
+msgid "Welcome! Step 1 of 2"
+msgstr ""
+
+msgid "Fill in your general data to start"
+msgstr ""
+
+msgid "Then you can upload the documents of your file."
+msgstr ""
+
+msgid "Your data was saved."
+msgstr ""
+
+msgid "Save and continue"
+msgstr ""
+
+msgid "Missing: %s"
+msgstr ""
+
+msgid "Complete."
+msgstr ""
+
+msgid "Save general data"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Long text"
+msgstr ""
+
+msgid "List of options"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Field"
+msgstr ""
+
+msgid "Options (comma separated)"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid "New field…"
+msgstr ""
+
+msgid "Fill in the empty row to add a field (save to get another empty row). The code in braces can be used in document templates. Removing a field hides it but keeps the data already captured."
 msgstr ""
 
 msgid "Not uploaded"
@@ -1056,9 +1206,6 @@ msgid "Server limit: %s"
 msgstr ""
 
 msgid "The description written in the editor is shown to the student as instructions. Order: \"Order\" field in Page attributes."
-msgstr ""
-
-msgid "Required"
 msgstr ""
 
 msgid "Yes"
@@ -1140,6 +1287,18 @@ msgid "%1$d of %2$d documents validated"
 msgstr ""
 
 msgid "Log in to see your file."
+msgstr ""
+
+msgid "Step 2 of 2"
+msgstr ""
+
+msgid "Upload the documents of your file"
+msgstr ""
+
+msgid "You can do it now or later: you can start your courses without them."
+msgstr ""
+
+msgid "Go to my program"
 msgstr ""
 
 msgid "Your file is available once you are enrolled in a program."
@@ -1359,6 +1518,48 @@ msgstr ""
 msgid "Offer SCORM lessons (Tutor SCORM plugin) as gradable items in the weighting screen"
 msgstr ""
 
+msgid "Cutoff day"
+msgstr ""
+
+msgid "Inscribed up to this day: payments every month on that same day, starting immediately. After it: on day 1 of each month, starting next month. So payments always fall in the first days of the month."
+msgstr ""
+
+msgid "Grace days"
+msgstr ""
+
+msgid "Days after the due date to pay without late fee."
+msgstr ""
+
+msgid "Late fee"
+msgstr ""
+
+msgid "Added once to each payment not made within the grace days. Staff can waive it."
+msgstr ""
+
+msgid "Lock courses"
+msgstr ""
+
+msgid "With an overdue payment (grace days over), the courses of the program are locked until it is paid"
+msgstr ""
+
+msgid "Reminder before the due date (days)"
+msgstr ""
+
+msgid "Emails"
+msgstr ""
+
+msgid "Email the student before each due date and when a late fee is added"
+msgstr ""
+
+msgid "The months and the monthly amount are set in each term. Online payments use WooCommerce with any installed payment gateway; staff can also record payments by hand."
+msgstr ""
+
+msgid "General data of the student"
+msgstr ""
+
+msgid "Ask enrolled students for their general data before using the platform (first step after paying the inscription)"
+msgstr ""
+
 msgid "Reminder every (days)"
 msgstr ""
 
@@ -1418,3 +1619,223 @@ msgstr ""
 
 msgid "That student ID already belongs to another user."
 msgstr ""
+
+msgid "Tuition %1$d of %2$d · %3$s"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Bank transfer"
+msgstr ""
+
+msgid "Bank deposit"
+msgstr ""
+
+msgid "Cash"
+msgstr ""
+
+msgid "Card at the school"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Online payments are not available. Please contact the school."
+msgstr ""
+
+msgid "Late fee · %s"
+msgstr ""
+
+msgid "Order #%d"
+msgstr ""
+
+msgid "Hello %s,"
+msgstr ""
+
+msgid "See your payments:"
+msgstr ""
+
+msgid "Your tuition is due on %s"
+msgstr ""
+
+msgid "%1$s for %2$s is due on %3$s. Pay by %4$s to avoid the late fee."
+msgstr ""
+
+msgid "Late fee applied to your tuition"
+msgstr ""
+
+msgid "%1$s (due on %2$s) was not paid within the grace days, so a late fee of %3$s was added. Total to pay: %4$s."
+msgstr ""
+
+msgid "Your courses are locked until the payment is made."
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Cancelled"
+msgstr ""
+
+msgid "To pay"
+msgstr ""
+
+msgid "Overdue"
+msgstr ""
+
+msgid "Log in to see your payments."
+msgstr ""
+
+msgid "payments made"
+msgstr ""
+
+msgid "Thank you! Your payment was received. If it does not show as paid yet, it will once the payment is confirmed."
+msgstr ""
+
+msgid "Your courses are locked because of an overdue payment. Pay it to continue studying."
+msgstr ""
+
+msgid "You have no tuition payments scheduled."
+msgstr ""
+
+msgid "Overdue balance (includes late fees)"
+msgstr ""
+
+msgid "Pay by %s to avoid the late fee"
+msgstr ""
+
+msgid "Next payment: %s"
+msgstr ""
+
+msgid "Pay in advance"
+msgstr ""
+
+msgid "You are up to date with your payments."
+msgstr ""
+
+msgid "Concept"
+msgstr ""
+
+msgid "Due date"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "No late fee until %s"
+msgstr ""
+
+msgid "Pay"
+msgstr ""
+
+msgid "Receipt"
+msgstr ""
+
+msgid "To pay, contact the school. Your payment will show here once it is recorded."
+msgstr ""
+
+msgid "Payment calendar updated."
+msgstr ""
+
+msgid "No payments were generated: check the date and that the terms have months and a monthly amount."
+msgstr ""
+
+msgid "Payment calendar created for %d students."
+msgstr ""
+
+msgid "Pending payments of %d students updated with the current amounts."
+msgstr ""
+
+msgid "Payment recorded."
+msgstr ""
+
+msgid "Late fee waived."
+msgstr ""
+
+msgid "Payment cancelled."
+msgstr ""
+
+msgid "Payment set back to pending."
+msgstr ""
+
+msgid "Billing start"
+msgstr ""
+
+msgid "Update calendar"
+msgstr ""
+
+msgid "Start billing"
+msgstr ""
+
+msgid "The terms of this program have no months or monthly amount: edit each term to set them."
+msgstr ""
+
+msgid "Up to day %d of the month, payments fall on that day starting immediately; later, on day 1 of the next month. \"Update calendar\" also applies changed amounts to pending payments."
+msgstr ""
+
+msgid "Waived"
+msgstr ""
+
+msgid "Reference"
+msgstr ""
+
+msgid "Record payment"
+msgstr ""
+
+msgid "Waive late fee"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Cancel this payment? The student will no longer owe it."
+msgstr ""
+
+msgid "Set back to pending"
+msgstr ""
+
+msgid "Set this payment back to pending?"
+msgstr ""
+
+msgid "To collect"
+msgstr ""
+
+msgid "Paid from"
+msgstr ""
+
+msgid "Due from"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "No payments found."
+msgstr ""
+
+msgid "includes %s late fee"
+msgstr ""
+
+msgid "Calendars"
+msgstr ""
+
+msgid "Create their calendars"
+msgstr ""
+
+msgid "Apply the current months and monthly amounts of every term to all pending payments?"
+msgstr ""
+
+msgid "Apply term changes to pending payments"
+msgstr ""
+
+msgid "Changing the months or the monthly amount of a term does not change existing calendars until you press this button (or \"Update calendar\" on a student)."
+msgstr ""
+
+msgid "%1$d payment · %2$s"
+msgid_plural "%1$d payments · %2$s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d active student has no payment calendar (enrolled before tuition was set up)."
+msgid_plural "%d active students have no payment calendar (enrolled before tuition was set up)."
+msgstr[0] ""
+msgstr[1] ""

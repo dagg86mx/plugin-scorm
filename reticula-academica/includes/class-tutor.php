@@ -31,8 +31,34 @@ class Tutor {
 		return function_exists( 'tutor' ) && function_exists( 'tutor_utils' );
 	}
 
+	/**
+	 * A Tutor setting such as course_post_type. tutor() exposes them through __get(), so isset() is always false.
+	 */
+	public static function config( $key, $default = '' ) {
+		if ( ! self::active() ) {
+			return $default;
+		}
+		try {
+			$value = tutor()->$key;
+		} catch ( \Throwable $e ) {
+			$value = null;
+		}
+		return ( null === $value || '' === $value ) ? $default : $value;
+	}
+
 	public static function course_post_type() {
-		return ( self::active() && isset( tutor()->course_post_type ) ) ? tutor()->course_post_type : 'courses';
+		return (string) self::config( 'course_post_type', 'courses' );
+	}
+
+	public static function lesson_post_type() {
+		return (string) self::config( 'lesson_post_type', 'lesson' );
+	}
+
+	/**
+	 * Post types of course content (lessons, quizzes, assignments, meetings).
+	 */
+	public static function content_post_types() {
+		return array( self::lesson_post_type(), 'tutor_quiz', 'tutor_assignments', 'tutor-zoom-meeting', 'tutor-google-meet' );
 	}
 
 	public static function is_enrolled( $course_id, $user_id ) {

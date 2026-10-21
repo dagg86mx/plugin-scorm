@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Installer {
 
-	const DB_VERSION = '3';
+	const DB_VERSION = '4';
 
 	public static function table() {
 		global $wpdb;
@@ -53,6 +53,7 @@ class Installer {
   created_at datetime NOT NULL,
   updated_at datetime NOT NULL,
   completed_at datetime DEFAULT NULL,
+  billing_start date DEFAULT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY user_program (user_id,program_id),
   KEY program_id (program_id),
@@ -119,6 +120,37 @@ class Installer {
   PRIMARY KEY  (id),
   KEY user_requirement (user_id,requirement_id),
   KEY status (status)
+) {$charset};"
+		);
+
+		$payments = $wpdb->prefix . 'ra_payments';
+		dbDelta(
+			"CREATE TABLE {$payments} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) unsigned NOT NULL,
+  inscription_id bigint(20) unsigned NOT NULL,
+  program_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  term_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  seq smallint(5) unsigned NOT NULL DEFAULT 1,
+  months smallint(5) unsigned NOT NULL DEFAULT 1,
+  due_date date NOT NULL,
+  amount decimal(12,2) NOT NULL DEFAULT 0,
+  late_fee decimal(12,2) NOT NULL DEFAULT 0,
+  late_waived tinyint(1) NOT NULL DEFAULT 0,
+  status varchar(20) NOT NULL DEFAULT 'pending',
+  order_id bigint(20) unsigned NOT NULL DEFAULT 0,
+  method varchar(20) NOT NULL DEFAULT '',
+  reference varchar(191) NOT NULL DEFAULT '',
+  paid_at datetime DEFAULT NULL,
+  paid_by bigint(20) unsigned NOT NULL DEFAULT 0,
+  notified_at datetime DEFAULT NULL,
+  created_at datetime NOT NULL,
+  updated_at datetime NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY inscription_term_seq (inscription_id,term_id,seq),
+  KEY user_id (user_id),
+  KEY status_due (status,due_date),
+  KEY order_id (order_id)
 ) {$charset};"
 		);
 

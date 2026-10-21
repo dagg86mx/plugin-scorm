@@ -7,11 +7,13 @@ require dirname( __DIR__ ) . '/includes/class-progress.php';
 require dirname( __DIR__ ) . '/includes/class-grade-calculator.php';
 require dirname( __DIR__ ) . '/includes/class-template-renderer.php';
 require dirname( __DIR__ ) . '/includes/class-record-rules.php';
+require dirname( __DIR__ ) . '/includes/class-tuition-rules.php';
 
 use ReticulaAcademica\Progress;
 use ReticulaAcademica\Grade_Calculator as GC;
 use ReticulaAcademica\Template_Renderer as TR;
 use ReticulaAcademica\Record_Rules as RR;
+use ReticulaAcademica\Tuition_Rules as TU;
 
 $failures = 0;
 $count    = 0;
@@ -201,6 +203,44 @@ check( 'next reminder 30 days after the last one', array( RR::reminder_due( $t0,
 check( 'reminders off', RR::reminder_due( $t0, 0, 0, $t0 + 900 * $day ), false );
 check( 'extensions are limited to safe types', RR::extensions( 'PDF, jpg, php, svg' ), array( 'pdf', 'jpg', 'jpeg' ) );
 check( 'default extensions', RR::extensions( '' ), array( 'pdf', 'jpg', 'jpeg', 'png' ) );
+
+// Overdue tuition locks courses not started yet and asks to pay.
+$tb = Progress::compute( array( 'terms' => $terms, 'courses' => array( 101 => array( 'enrolled' => true ) ), 'tuition_blocked' => true ) );
+check( 'tuition lock', array( $statuses( $tb )[101], $statuses( $tb )[102] ), array( 'in_progress', 'locked:tuition' ) );
+check( 'tuition next step', $tb['next']['action'], 'pay_tuition' );
+check( 'no tuition lock', $statuses( Progress::compute( array( 'terms' => $terms, 'courses' => array() ) ) )[101], 'available' );
+
+// ---------------- Tuition ----------------
+check( 'enrolled on the 13th pays on the 13th, starting now', TU::first_due( '2026-01-13' ), array( 13, '2026-01-13' ) );
+check( 'the 15th keeps its day', TU::first_due( '2026-01-15' ), array( 15, '2026-01-15' ) );
+check( 'the 16th moves to day 1 of next month', TU::first_due( '2026-01-16' ), array( 1, '2026-02-01' ) );
+check( 'the 26th of December moves to January 1st', TU::first_due( '2026-12-26' ), array( 1, '2027-01-01' ) );
+$terms = array(
+	array( 'id' => 1, 'months' => 4, 'amount' => 2500 ),
+	array( 'id' => 2, 'months' => 4, 'amount' => 2800 ),
+	array( 'id' => 3, 'months' => 0, 'amount' => 0 ), // Not billed.
+);
+$plan = TU::schedule( '2026-01-13', $terms );
+check( 'eight monthly payments', count( $plan ), 8 );
+check( 'term 1 on the 13th', array_column( array_slice( $plan, 0, 4 ), 'due' ), array( '2026-01-13', '2026-02-13', '2026-03-13', '2026-04-13' ) );
+check( 'term 2 follows without pause', array_column( array_slice( $plan, 4 ), 'due' ), array( '2026-05-13', '2026-06-13', '2026-07-13', '2026-08-13' ) );
+check( 'amounts per term', array( $plan[0]['amount'], $plan[4]['amount'], $plan[4]['seq'], $plan[4]['term_id'] ), array( 2500.0, 2800.0, 1, 2 ) );
+check( 'enrolled on the 26th pays every 1st', array_column( array_slice( TU::schedule( '2026-01-26', $terms ), 0, 3 ), 'due' ), array( '2026-02-01', '2026-03-01', '2026-04-01' ) );
+check( 'crosses the year', TU::schedule( '2026-11-10', $terms )[3]['due'], '2027-02-10' );
+check( 'grace: 5 days without late fee', array( TU::moment( '2026-02-13', '2026-02-12', 5 ), TU::moment( '2026-02-13', '2026-02-13', 5 ), TU::moment( '2026-02-13', '2026-02-18', 5 ), TU::moment( '2026-02-13', '2026-02-19', 5 ) ), array( 'upcoming', 'due', 'due', 'overdue' ) );
+check( 'grace until', TU::grace_until( '2026-02-27', 5 ), '2026-03-04' );
+$rows = array(
+	array( 'status' => 'paid', 'due' => '2026-01-13', 'amount' => 2500, 'late_fee' => 0 ),
+	array( 'status' => 'pending', 'due' => '2026-02-13', 'amount' => 2500, 'late_fee' => 500 ),
+	array( 'status' => 'pending', 'due' => '2026-03-13', 'amount' => 2500, 'late_fee' => 0 ),
+	array( 'status' => 'pending', 'due' => '2026-04-13', 'amount' => 2500, 'late_fee' => 0 ),
+	array( 'status' => 'cancelled', 'due' => '2026-05-13', 'amount' => 2500, 'late_fee' => 0 ),
+);
+$sum = TU::summary( $rows, '2026-03-14', 5 );
+check( 'one overdue (with late fee), one within grace', array( count( $sum['overdue'] ), count( $sum['due'] ), $sum['balance'] ), array( 1, 1, 5500.0 ) );
+check( 'next payment and counts', array( $sum['next']['due'], $sum['paid'], $sum['total'] ), array( '2026-04-13', 1, 4 ) );
+check( 'blocked while a payment is overdue', $sum['blocked'], true );
+check( 'not blocked within grace', TU::summary( array_slice( $rows, 2 ), '2026-03-18', 5 )['blocked'], false );
 
 echo ( $failures ? "\n{$failures} of {$count} checks failed.\n" : "All {$count} checks passed.\n" );
 exit( $failures ? 1 : 0 );

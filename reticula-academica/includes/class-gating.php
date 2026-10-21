@@ -44,6 +44,7 @@ class Gating {
 		$messages = array(
 			'inscription' => __( 'Pay your program inscription to unlock this course.', 'reticula-academica' ),
 			'fee'         => __( 'Pay the term fee to unlock the courses of this term.', 'reticula-academica' ),
+			'tuition'     => __( 'You have an overdue tuition payment. Pay it to unlock your courses.', 'reticula-academica' ),
 			'term'        => __( 'This course belongs to a later term of your program.', 'reticula-academica' ),
 			'order'       => __( 'Complete the previous course of your program first.', 'reticula-academica' ),
 			'status'      => __( 'Your program inscription is not active.', 'reticula-academica' ),

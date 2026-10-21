@@ -160,3 +160,33 @@
 	.ra-rec-review { justify-content: flex-start; }
 	.ra-rec-upload .ra-lock { text-align: left; }
 }
+
+/* Tuition and general data */
+.ra-badge-pay-paid { background: var(--ra-success, #1c7d43); border-color: var(--ra-success, #1c7d43); color: #fff; }
+.ra-badge-pay-due { background: #fff4e5; border-color: #f5c27a; color: var(--ra-warning, #b26200); }
+.ra-badge-pay-overdue { background: #fdecec; border-color: #f3b4b4; color: #a12626; }
+.ra-badge-pay-upcoming,
+.ra-badge-pay-cancelled { background: #f6f7f9; border-color: #e3e5eb; color: #5b616f; }
+.ra-pay-alert { border-left-color: #a12626; }
+.ra-pay-table td:first-child,
+.ra-pay-table th:first-child { text-align: left; }
+.ra-pay-table td:last-child { text-align: right; white-space: nowrap; }
+.ra-pay-table tr.ra-pay-paid td { color: var(--ra-muted); }
+.ra-pay-table tr.ra-pay-overdue td { background: #fff8f8; }
+.ra-pay-action { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 2px 6px 2px 0; }
+.ra-pay-start { margin-bottom: 12px; }
+.ra-pay-start label { margin-right: 6px; }
+.ra-welcome { border-left-color: var(--ra-success, #1c7d43); }
+.ra-profile-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 20px; }
+.ra-field { margin: 0 0 12px; display: flex; flex-direction: column; gap: 4px; }
+.ra-field label { font-weight: 600; font-size: 14px; }
+.ra-field input,
+.ra-field select,
+.ra-field textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--ra-border, #e3e5eb); border-radius: 6px; font: inherit; }
+.ra-field-textarea { grid-column: 1 / -1; }
+.ra-required { color: #a12626; }
+.ra-rec-notice ul { margin: 0; padding-left: 18px; }
+.ra-profile-admin .ra-profile-fields { grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) {
+	.ra-pay-table { display: block; overflow-x: auto; }
+}

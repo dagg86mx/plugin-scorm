@@ -132,6 +132,43 @@ Pestaña **Mis documentos** en el panel de Tutor (o shortcode `[reticula_documen
 - Los PDF se guardan en `wp-content/uploads/ra-documentos/` (protegido con `.htaccess`; en Nginx conviene bloquear esa carpeta). Solo el alumno dueño y el personal pueden descargarlos.
 - Los PDF se generan con [dompdf](https://github.com/dompdf/dompdf) (licencia LGPL) y los códigos QR con [php-qrcode](https://github.com/chillerlan/php-qrcode) (licencia MIT), ambos incluidos en `vendor/`.
 
+## Inscripción, datos generales y colegiaturas
+
+### El recorrido del alumno nuevo
+1. **Paga la inscripción y crea su cuenta.** En la página pública de la carrera, **Inscribirme** lo lleva directo al pago de WooCommerce. Ahí paga la cuota de inscripción y crea su usuario en el mismo paso. Al confirmarse el pago:
+   - queda inscrito en esa carrera y activo;
+   - recibe su matrícula;
+   - empieza su calendario de colegiaturas.
+2. **Datos generales.** La primera vez que entra a su panel se le piden sus datos generales en la pestaña **Mis datos**. Hasta completarlos no puede usar el panel ni las lecciones, pero sí ver y pagar sus colegiaturas. La lista de campos se edita en *Retícula → Ajustes → Datos generales del alumno*:
+   - Viene precargada con nombre, apellidos, CURP (validada), fecha de nacimiento, sexo, teléfono, dirección, escuela de procedencia y contacto de emergencia.
+   - Se pueden agregar, quitar o marcar como obligatorios.
+   - Cada campo se puede usar en las plantillas de documentos como `{clave}`, por ejemplo `{curp}` o `{fecha_nacimiento}`.
+3. **Documentos.** Después se le invita a subir su **expediente**. Es opcional en ese momento: puede pasar a *Mi carrera* y empezar sus cursos sin ellos (los recordatorios del expediente siguen funcionando).
+
+### Colegiaturas
+- **Cuánto y cuántos meses:** en cada **tetramestre** se capturan los **meses de colegiatura** y la **colegiatura mensual** (p. ej. 4 × $2,500). Otro tetramestre puede tener otro monto.
+- **Fechas de pago:**
+  - Si el alumno se inscribe **hasta el día 15** (día de corte, configurable), paga **ese mismo día** cada mes, empezando de inmediato. Si se inscribe el 13 de enero, paga el 13 de enero, 13 de febrero, 13 de marzo y 13 de abril.
+  - Si se inscribe **del 16 en adelante**, paga el **día 1** de cada mes, empezando el mes siguiente. Si se inscribe el 26 de enero, paga el 1 de febrero, 1 de marzo, etc.
+- **Continuidad:** el siguiente tetramestre sigue cobrando **sin pausa**, al mes siguiente del último pago y con su propio monto.
+- **Tolerancia y recargo:**
+  - Hay **5 días de tolerancia** (configurable) para pagar sin recargo.
+  - Después se suma un **recargo de $500** (configurable), una sola vez por pago. El personal lo puede **condonar**.
+  - Con un pago vencido, los **cursos de la carrera se bloquean** hasta que pague: lecciones, quizzes y nuevas inscripciones a cursos. Si las lecciones bloqueadas lo llevan a *Mis pagos*, ahí ve cuánto debe.
+- **Pago en línea:** en **Mis pagos** el alumno ve su calendario, lo pagado, lo pendiente y los recargos. Paga una mensualidad, todo su adeudo de una vez, o por adelantado.
+  - El pago es un pedido de WooCommerce, así que funciona con **cualquier pasarela instalada** (MIT, Stripe, Mercado Pago, OXXO, etc.).
+  - Al confirmarse el pago, la colegiatura queda pagada y los cursos se desbloquean.
+  - Si se reembolsa el pedido, vuelve a quedar pendiente.
+- **Pagos manuales:** desde la ficha del alumno (*Alumnos → Editar*, sección *Colegiaturas*), el personal registra pagos en efectivo, transferencia o depósito, con referencia y fecha. También puede condonar recargos, cancelar un pago o regresarlo a pendiente.
+- **Avisos por correo:** un recordatorio unos días antes de cada fecha de pago (3 por defecto) y un aviso cuando se aplica el recargo.
+- **Reporte:** *Retícula → Colegiaturas* muestra lo vencido, lo por cobrar y lo pagado, con filtros por carrera, fechas y alumno, totales y exportación a CSV.
+
+**Alumnos inscritos antes de esta versión:** no se les genera calendario solo. En *Retícula → Colegiaturas → Calendarios*, elige la fecha de inicio de cobro y pulsa **Crear sus calendarios**, o hazlo por alumno desde su ficha.
+
+**Si cambias meses o montos:** los calendarios ya creados no cambian solos. Usa **Aplicar cambios de tetramestres a pagos pendientes**; los pagos ya hechos nunca se modifican.
+
+**Requisitos:** WooCommerce activo, con Tutor configurado para vender con WooCommerce (*Tutor → Ajustes → Monetización*). En *WooCommerce → Ajustes → Cuentas* activa "Permitir que los clientes creen una cuenta durante el pago". La cuota de inscripción de la carrera debe ser un curso de Tutor con su producto de WooCommerce.
+
 ## Expediente del alumno (documentos que entrega)
 
 Cada alumno tiene un **expediente** con los documentos que pide la escuela (acta de nacimiento, certificado de preparatoria, CURP…), con todo su historial.
@@ -177,6 +214,8 @@ Los archivos se guardan en `wp-content/uploads/ra-expedientes/<id del alumno>/` 
 | `[reticula_mi_carrera]` | Avance del alumno en sus carreras (`program="123"` para mostrar solo una). |
 | `[reticula_documentos]` | Mis documentos: generar boleta/constancia y su historial. |
 | `[reticula_expediente]` | Mi expediente: subir los documentos solicitados y ver su estado. |
+| `[reticula_pagos]` | Mis pagos: calendario de colegiaturas, recargos y pago en línea. |
+| `[reticula_mis_datos]` | Mis datos: formulario de datos generales. |
 
 ## Hooks
 
@@ -199,6 +238,8 @@ Los archivos se guardan en `wp-content/uploads/ra-expedientes/<id del alumno>/` 
 | `ra_record_uploaded` | acción | Cuando se sube un documento al expediente. |
 | `ra_record_reviewed` | acción | Cuando un documento se valida o se rechaza. |
 | `ra_records_reminders_per_run` | filtro | Máximo de recordatorios por ejecución diaria (100). |
+| `ra_tuition_paid` | acción | Cuando se pagan colegiaturas (ids, método). |
+| `ra_profile_saved` | acción | Cuando se guardan los datos generales de un alumno. |
 
 Con estos hooks puedes, por ejemplo, enviar un correo cuando el alumno cambia de tetramestre o emitir una constancia al egresar.
 
@@ -211,5 +252,5 @@ Con estos hooks puedes, por ejemplo, enviar un correo cuando el alumno cambia de
 ## Pruebas
 
 ```bash
-php tests/run-tests.php   # avance (bloqueos, cuotas, orden, egreso), calificaciones ponderadas, plantillas y reglas del expediente
+php tests/run-tests.php   # avance (bloqueos, cuotas, orden, egreso), calificaciones ponderadas, plantillas y reglas del expediente y calendario de colegiaturas
 ```
